@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "title": "Sanatan Dharma — learn with trusted sources",
+    "description": "Understand Sanatan Dharma through trusted sources, structured learning, scriptures, philosophy, festivals and mantras — in simple English and Hindi."
+  },
+  "nav": {
+    "home": "Home",
+    "learn": "Learn",
+    "scriptures": "Scriptures",
+    "explore": "Explore",
+    "askDharma": "Ask Dharma",
+    "search": "Search",
+    "searchPlaceholder": "What would you like to understand?",
+    "library": "Library",
+    "profile": "Profile",
+    "deities": "Deities",
+    "mantras": "Mantras",
+    "festivals": "Festivals",
+    "traditions": "Traditions",
+    "philosophy": "Philosophy",
+    "openMenu": "Open menu",
+    "beta": "Beta"
+  },
+  "home": {
+    "heroEyebrow": "Sanatan Dharma",
+    "heroTitle": "Understand Sanatan Dharma through trusted sources.",
+    "heroSubtitle": "Learn scriptures, philosophy, traditions, mantras, festivals and spiritual concepts in simple English and Hindi.",
+    "startLearning": "Start Learning",
+    "askDharma": "Ask Dharma",
+    "yourJourney": "Start your journey",
+    "journeyBeginnerTitle": "New to Sanatan Dharma",
+    "journeyBeginnerDescription": "Start from the basics.",
+    "journeyGitaTitle": "Read Bhagavad Gita",
+    "journeyGitaDescription": "Explore chapters and verses.",
+    "journeyScripturesTitle": "Explore Scriptures",
+    "journeyScripturesDescription": "Discover major texts.",
+    "journeyAskTitle": "Ask Dharma",
+    "journeyAskDescription": "Ask questions in simple language.",
+    "coreConceptsTitle": "Core concepts",
+    "coreConceptsIntro": "Begin with simple ideas and go deeper.",
+    "bhagavadGitaTitle": "Bhagavad Gita",
+    "bhagavadGitaIntro": "A structured way to explore chapters and verses.",
+    "comingWithContent": "Coming with the Phase 1 content release.",
+    "dailyShlokaTitle": "Daily Shloka",
+    "dailyShlokaComingSoon": "Daily shloka is coming with the Phase 1 content release.",
+    "exploreTitle": "Explore",
+    "exploreIntro": "Deities, mantras and festivals.",
+    "trustTitle": "Learn with context, not confusion.",
+    "trustScripture": "Scripture — the original source.",
+    "trustCommentary": "Commentary — clearly attributed interpretation.",
+    "trustExplanation": "Explanation — a simple modern explanation.",
+    "trustAi": "AI — AI-generated answers are always labeled.",
+    "coreConcepts": [
+      { "key": "dharma", "en": "Dharma", "hi": "धर्म" },
+      { "key": "karma", "en": "Karma", "hi": "कर्म" },
+      { "key": "atman", "en": "Atman", "hi": "आत्मा" },
+      { "key": "brahman", "en": "Brahman", "hi": "ब्रह्म" },
+      { "key": "moksha", "en": "Moksha", "hi": "मोक्ष" },
+      { "key": "samsara", "en": "Samsara", "hi": "संसार" },
+      { "key": "bhakti", "en": "Bhakti", "hi": "भक्ति" },
+      { "key": "yoga", "en": "Yoga", "hi": "योग" }
+    ]
+  },
+  "placeholder": {
+    "heading": "Under construction",
+    "description": "This section is part of the Phase 1 content release. The foundation for it is ready.",
+    "backHome": "Back home",
+    "section": "Section in development"
+  },
+  "search": {
+    "title": "Search",
+    "intro": "Search across concepts, scriptures, verses, deities, mantras and festivals will arrive with the content release.",
+    "queryIntro": "You searched for",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "Search results will appear once content is released."
+  },
+  "common": {
+    "exploreMore": "Explore more",
+    "comingSoon": "Coming soon",
+    "learnMore": "Learn more",
+    "viewAll": "View all",
+    "continueReading": "Continue reading"
+  },
+  "footer": {
+    "tagline": "Sanatan Dharma — learn with trusted sources.",
+    "explore": "Explore",
+    "platform": "Platform",
+    "about": "About",
+    "mission": "Our mission",
+    "contentPolicy": "Content policy",
+    "sourcePolicy": "Source policy",
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "copyright": "All rights reserved."
+  }
+}

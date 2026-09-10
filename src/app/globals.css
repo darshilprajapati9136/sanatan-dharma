@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f1e7;
+  --foreground: #2c2620;
+  --surface: #fffdf8;
+  --surface-strong: #fbf5ea;
+  --muted-foreground: #71675b;
+  --border: #e4d9c6;
+  --primary: #c0611d;
+  --primary-foreground: #fffdf9;
+  --primary-hover: #a94f16;
+  --secondary: #58291c;
+  --secondary-foreground: #fdf3e2;
+  --secondary-hover: #471f15;
+  --accent: #b08d2d;
+  --accent-foreground: #2d2408;
+  --danger: #b3402e;
+  --ring: rgba(192, 97, 29, 0.45);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-muted: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-inter), var(--font-noto-devanagari), ui-sans-serif,
+    system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-lora), var(--font-noto-devanagari), Georgia,
+    "Times New Roman", serif;
+  --font-devanagari: var(--font-noto-devanagari);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}

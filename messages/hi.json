@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "title": "सनातन धर्म — प्रामाणिक स्रोतों के साथ सीखें",
+    "description": "सरल हिंदी और अंग्रेज़ी में ग्रंथ, दर्शन, परंपराओं, मंत्रों, त्योहारों और आध्यात्मिक अवधारणाओं को प्रामाणिक स्रोतों और संरचित अध्ययन के माध्यम से समझें।"
+  },
+  "nav": {
+    "home": "होम",
+    "learn": "सीखें",
+    "scriptures": "ग्रंथ",
+    "explore": "अन्वेषण",
+    "askDharma": "धर्म पूछें",
+    "search": "खोज",
+    "searchPlaceholder": "आप क्या समझना चाहेंगे?",
+    "library": "मेरी लाइब्रेरी",
+    "profile": "प्रोफ़ाइल",
+    "deities": "देवता",
+    "mantras": "मंत्र",
+    "festivals": "त्योहार",
+    "traditions": "परंपराएँ",
+    "philosophy": "दर्शन",
+    "openMenu": "मेन्यू खोलें",
+    "beta": "बीटा"
+  },
+  "home": {
+    "heroEyebrow": "सनातन धर्म",
+    "heroTitle": "प्रामाणिक स्रोतों के माध्यम से सनातन धर्म को समझें।",
+    "heroSubtitle": "सरल हिंदी और अंग्रेज़ी में ग्रंथ, दर्शन, परंपराओं, मंत्रों, त्योहारों और आध्यात्मिक अवधारणाओं को सीखें।",
+    "startLearning": "सीखना शुरू करें",
+    "askDharma": "धर्म पूछें",
+    "yourJourney": "अपनी यात्रा शुरू करें",
+    "journeyBeginnerTitle": "सनातन धर्म में नए हैं",
+    "journeyBeginnerDescription": "मूल बातों से शुरू करें।",
+    "journeyGitaTitle": "भगवद् गीता पढ़ें",
+    "journeyGitaDescription": "अध्यायों और श्लोकों को जानें।",
+    "journeyScripturesTitle": "ग्रंथों का अन्वेषण करें",
+    "journeyScripturesDescription": "प्रमुख ग्रंथों को जानें।",
+    "journeyAskTitle": "धर्म पूछें",
+    "journeyAskDescription": "सरल भाषा में प्रश्न पूछें।",
+    "coreConceptsTitle": "मुख्य अवधारणाएँ",
+    "coreConceptsIntro": "सरल विचारों से शुरू करें और गहराई तक जाएँ।",
+    "bhagavadGitaTitle": "भगवद् गीता",
+    "bhagavadGitaIntro": "अध्यायों और श्लोकों को जानने का एक संरचित तरीका।",
+    "comingWithContent": "सामग्री के पहले चरण के साथ आएगा।",
+    "dailyShlokaTitle": "दैनिक श्लोक",
+    "dailyShlokaComingSoon": "दैनिक श्लोक सामग्री के पहले चरण में आएगा।",
+    "exploreTitle": "अन्वेषण करें",
+    "exploreIntro": "देवता, मंत्र और त्योहार।",
+    "trustTitle": "भ्रम के बिना, संदर्भ के साथ सीखें।",
+    "trustScripture": "ग्रंथ — मूल स्रोत।",
+    "trustCommentary": "टीका — स्पष्ट रूप से बताई गई व्याख्या।",
+    "trustExplanation": "स्पष्टीकरण — सरल और आधुनिक।",
+    "trustAi": "एआई — एआई उत्तर हमेशा लेबल किए जाते हैं।",
+    "coreConcepts": [
+      { "key": "dharma", "en": "Dharma", "hi": "धर्म" },
+      { "key": "karma", "en": "Karma", "hi": "कर्म" },
+      { "key": "atman", "en": "Atman", "hi": "आत्मा" },
+      { "key": "brahman", "en": "Brahman", "hi": "ब्रह्म" },
+      { "key": "moksha", "en": "Moksha", "hi": "मोक्ष" },
+      { "key": "samsara", "en": "Samsara", "hi": "संसार" },
+      { "key": "bhakti", "en": "Bhakti", "hi": "भक्ति" },
+      { "key": "yoga", "en": "Yoga", "hi": "योग" }
+    ]
+  },
+  "placeholder": {
+    "heading": "निर्माणाधीन",
+    "description": "यह अनुभाग सामग्री के पहले चरण में आएगा। इसकी नींव तैयार है।",
+    "backHome": "होम पर वापस",
+    "section": "विकासाधीन अनुभाग"
+  },
+  "search": {
+    "title": "खोज",
+    "intro": "अवधारणाओं, ग्रंथों, श्लोकों, देवताओं, मंत्रों और त्योहारों में खोज सामग्री के साथ आएगी।",
+    "queryIntro": "आपने खोजा",
+    "emptyTitle": "अभी कुछ नहीं है",
+    "emptyDescription": "सामग्री जारी होने के बाद खोज परिणाम दिखेंगे।"
+  },
+  "common": {
+    "exploreMore": "और देखें",
+    "comingSoon": "जल्द आ रहा है",
+    "learnMore": "और जानें",
+    "viewAll": "सभी देखें",
+    "continueReading": "पढ़ना जारी रखें"
+  },
+  "footer": {
+    "tagline": "सनातन धर्म — प्रामाणिक स्रोतों के साथ सीखें।",
+    "explore": "अन्वेषण",
+    "platform": "प्लेटफ़ॉर्म",
+    "about": "हमारे बारे में",
+    "mission": "हमारा ध्येय",
+    "contentPolicy": "सामग्री नीति",
+    "sourcePolicy": "स्रोत नीति",
+    "legal": "कानूनी",
+    "privacy": "गोपनीयता",
+    "terms": "शर्तें",
+    "copyright": "सर्वाधिकार सुरक्षित।"
+  }
+}

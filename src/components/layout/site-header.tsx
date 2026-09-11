@@ -3,6 +3,9 @@ import {Link} from '@/i18n/navigation';
 import {Icon} from '@/components/ui/icon';
 import {LanguageSwitcher} from '@/components/layout/language-switcher';
 import {Badge} from '@/components/ui/badge';
+import {Avatar} from '@/components/ui/avatar';
+import {getSession} from '@/server/services/auth';
+import {cn} from '@/lib/utils';
 
 const navItems = [
   {href: '/learn', key: 'learn'},
@@ -19,6 +22,8 @@ const exploreItems = [
 
 export async function SiteHeader() {
   const t = await getTranslations('nav');
+  const {user} = await getSession();
+  const displayName = (user?.user_metadata?.name as string | undefined) ?? user?.email ?? '';
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
@@ -90,9 +95,16 @@ export async function SiteHeader() {
           <Link
             href="/profile"
             aria-label={t('profile')}
-            className="hidden h-9 w-9 items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface-strong hover:text-foreground lg:inline-flex"
+            className={cn(
+              'hidden h-9 w-9 items-center justify-center rounded-lg transition-colors lg:inline-flex',
+              user ? 'hover:bg-surface-strong' : 'text-muted hover:bg-surface-strong hover:text-foreground'
+            )}
           >
-            <Icon name="user" className="h-5 w-5" />
+            {user ? (
+              <Avatar name={displayName} size="sm" />
+            ) : (
+              <Icon name="user" className="h-5 w-5" />
+            )}
           </Link>
 
           <details className="group lg:hidden">

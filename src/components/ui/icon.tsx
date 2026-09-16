@@ -17,7 +17,10 @@ export type IconName =
   | 'logout'
   | 'arrowRight'
   | 'calendar'
-  | 'info';
+  | 'info'
+  | 'flame'
+  | 'lotus'
+  | 'temple';
 
 const paths: Record<IconName, React.ReactNode> = {
   home: (
@@ -84,6 +87,25 @@ const paths: Record<IconName, React.ReactNode> = {
       <circle cx="12" cy="12" r="9" />
       <path d="M12 11v5" />
       <path d="M12 7.5h.01" />
+    </>
+  ),
+  flame: (
+    <path d="M12 3c1 2.5 4.5 4.8 4.5 8.5a4.5 4.5 0 0 1-9 0c0-1.5.7-2.7 1.7-3.8.2 1 .9 1.8 1.8 2.2-.2-2.3.3-4.9 1-6.9z" />
+  ),
+  lotus: (
+    <>
+      <path d="M12 4c1.5 2 1.5 5 0 7-1.5-2-1.5-5 0-7z" />
+      <path d="M5 8c2.5.5 4.5 2.5 5 5-2.5-.5-4.5-2.5-5-5z" />
+      <path d="M19 8c-2.5.5-4.5 2.5-5 5 2.5-.5 4.5-2.5 5-5z" />
+      <path d="M4 16c2.5 2 5 3 8 3s5.5-1 8-3" />
+    </>
+  ),
+  temple: (
+    <>
+      <path d="M3 9.5 12 4l9 5.5" />
+      <path d="M5.5 9.5V18M10 9.5V18M14 9.5V18M18.5 9.5V18" />
+      <path d="M3 18h18" />
+      <path d="M4.5 21h15" />
     </>
   )
 };

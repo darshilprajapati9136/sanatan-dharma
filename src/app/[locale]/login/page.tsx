@@ -1,19 +1,29 @@
+import {redirect} from 'next/navigation';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {LoginForm} from '@/components/auth/login-form';
 import {Link} from '@/i18n/navigation';
+import {getSession, getSafeNextPath} from '@/server/services/auth';
 
 export default async function LoginPage({
   params,
   searchParams
 }: {
   params: Promise<{locale: string}>;
-  searchParams: Promise<{error?: string; notice?: string}>;
+  searchParams: Promise<{error?: string; notice?: string; next?: string}>;
 }) {
   const {locale} = await params;
   setRequestLocale(locale);
 
   const t = await getTranslations('auth');
-  const {error, notice} = await searchParams;
+  const {error, notice, next} = await searchParams;
+
+  // Already signed in: skip the form and go to the intended destination.
+  const {user} = await getSession();
+  const redirectTo = getSafeNextPath(next, locale);
+
+  if (user) {
+    redirect(redirectTo);
+  }
 
   return (
     <section className="mx-auto w-full max-w-md px-4 py-16 lg:px-8">
@@ -31,7 +41,7 @@ export default async function LoginPage({
           </p>
         ) : null}
 
-        <LoginForm hasError={error === 'callback_failed'} />
+        <LoginForm hasError={error === 'callback_failed'} redirectTo={redirectTo} />
 
         <p className="mt-6 text-center text-sm text-muted">
           {t('noAccount')}{' '}

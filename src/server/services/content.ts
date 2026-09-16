@@ -1,40 +1,45 @@
-import {and, desc, eq, sql} from 'drizzle-orm';
+import {and, desc, eq} from 'drizzle-orm';
 import {getDb} from '@/db';
-import {
-  concepts,
-  conceptLocalizations,
-  festivals,
-  festivalLocalizations,
-  scriptureLocalizations,
-  scriptures,
-  verses
-} from '@/db/schema';
+import {concepts, conceptLocalizations, festivals, festivalLocalizations} from '@/db/schema';
+import {createClient} from '@/lib/supabase/server';
 
-export async function listPublishedScriptures(locale: 'en' | 'hi') {
-  const db = getDb();
+/**
+ * Phase 1 content reads go through the Supabase API client (PostgREST) so
+ * live Row Level Security applies. The direct-Database (Drizzle) path is kept
+ * only for the not-yet-released Learn/Explore helpers below.
+ */
+async function getContentClient() {
+  return createClient();
+}
 
-  return db
-    .select({
-      id: scriptures.id,
-      slug: scriptures.slug,
-      canonicalName: scriptures.canonicalName,
-      sanskritName: scriptures.sanskritName,
-      scriptureType: scriptures.scriptureType,
-      primaryLanguage: scriptures.primaryLanguage,
-      structureType: scriptures.structureType,
-      verificationStatus: scriptures.verificationStatus,
-      publishedAt: scriptures.publishedAt,
-      title: scriptureLocalizations.title,
-      description: scriptureLocalizations.description,
-      summary: scriptureLocalizations.summary
-    })
-    .from(scriptures)
-    .innerJoin(
-      scriptureLocalizations,
-      and(eq(scriptureLocalizations.scriptureId, scriptures.id), eq(scriptureLocalizations.locale, locale))
-    )
-    .where(eq(scriptures.verificationStatus, 'published'))
-    .orderBy(desc(scriptures.publishedAt));
+export async function listPublishedScriptures() {
+  const supabase = await getContentClient();
+
+  if (!supabase) {
+    return [];
+  }
+
+  const {data, error} = await supabase
+    .from('scriptures')
+    .select('id,slug,tradition,title_en,title_hi,description_en,description_hi,created_at,updated_at')
+    .eq('is_published', true)
+    .order('slug', {ascending: true});
+
+  if (error || !data) {
+    return [];
+  }
+
+  return data.map((row) => ({
+    id: row.id as string,
+    slug: row.slug as string,
+    tradition: (row.tradition as string | null) ?? null,
+    titleEn: (row.title_en as string | null) ?? null,
+    titleHi: (row.title_hi as string | null) ?? null,
+    descriptionEn: (row.description_en as string | null) ?? null,
+    descriptionHi: (row.description_hi as string | null) ?? null,
+    createdAt: row.created_at as string | null,
+    updatedAt: row.updated_at as string | null
+  }));
 }
 
 export async function listPublishedConcepts(locale: 'en' | 'hi') {
@@ -84,43 +89,208 @@ export async function listPublishedFestivals(locale: 'en' | 'hi') {
     .orderBy(desc(festivals.publishedAt));
 }
 
-export async function countPublishedVerses() {
-  const db = getDb();
+export async function countScriptureVerses(scriptureId: string) {
+  const supabase = await getContentClient();
 
-  const [row] = await db
-    .select({count: sql<number>`count(*)::int`})
-    .from(verses)
-    .where(eq(verses.verificationStatus, 'published'));
+  if (!supabase) {
+    return 0;
+  }
 
-  return row?.count ?? 0;
+  const {count} = await supabase
+    .from('verses')
+    .select('id', {count: 'exact', head: true})
+    .eq('scripture_id', scriptureId);
+
+  return count ?? 0;
 }
 
-export async function getScriptureStructure(slug: string, locale: 'en' | 'hi') {
-  const db = getDb();
+export async function getScriptureStructure(slug: string) {
+  const supabase = await getContentClient();
 
-  const [scripture] = await db
-    .select({
-      id: scriptures.id,
-      slug: scriptures.slug,
-      canonicalName: scriptures.canonicalName,
-      sanskritName: scriptures.sanskritName,
-      scriptureType: scriptures.scriptureType,
-      structureType: scriptures.structureType,
-      title: scriptureLocalizations.title,
-      description: scriptureLocalizations.description
-    })
-    .from(scriptures)
-    .innerJoin(
-      scriptureLocalizations,
-      and(eq(scriptureLocalizations.scriptureId, scriptures.id), eq(scriptureLocalizations.locale, locale))
-    )
-    .where(and(eq(scriptures.slug, slug), eq(scriptures.verificationStatus, 'published')))
-    .limit(1);
-
-  if (!scripture) {
+  if (!supabase) {
     return null;
   }
 
-  const verseCount = await countPublishedVerses();
-  return {...scripture, verseCount};
+  const {data: scriptureRows} = await supabase
+    .from('scriptures')
+    .select('id,slug,tradition,title_en,title_hi,description_en,description_hi')
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .limit(1);
+
+  const scriptureRow = scriptureRows?.[0];
+
+  if (!scriptureRow) {
+    return null;
+  }
+
+  const scripture = {
+    id: scriptureRow.id as string,
+    slug: scriptureRow.slug as string,
+    tradition: (scriptureRow.tradition as string | null) ?? null,
+    titleEn: (scriptureRow.title_en as string | null) ?? null,
+    titleHi: (scriptureRow.title_hi as string | null) ?? null,
+    descriptionEn: (scriptureRow.description_en as string | null) ?? null,
+    descriptionHi: (scriptureRow.description_hi as string | null) ?? null
+  };
+
+  const {data: sectionRows} = await supabase
+    .from('scripture_sections')
+    .select(
+      'id,parent_id,section_number,slug,title_en,title_hi,description_en,description_hi,sort_order'
+    )
+    .eq('scripture_id', scripture.id)
+    .order('sort_order', {ascending: true, nullsFirst: false});
+
+  const sections = (sectionRows ?? []).map((row) => ({
+    id: row.id as string,
+    parentId: (row.parent_id as string | null) ?? null,
+    sectionNumber: (row.section_number as string | null) ?? null,
+    slug: row.slug as string,
+    titleEn: (row.title_en as string | null) ?? null,
+    titleHi: (row.title_hi as string | null) ?? null,
+    descriptionEn: (row.description_en as string | null) ?? null,
+    descriptionHi: (row.description_hi as string | null) ?? null,
+    sortOrder: (row.sort_order as string | null) ?? null
+  }));
+
+  const verseCount = await countScriptureVerses(scripture.id);
+  return {...scripture, sections, verseCount};
+}
+
+export async function getScriptureSection(scriptureId: string, sectionSlug: string) {
+  const supabase = await getContentClient();
+
+  if (!supabase) {
+    return null;
+  }
+
+  const {data: sectionRows} = await supabase
+    .from('scripture_sections')
+    .select(
+      'id,scripture_id,parent_id,section_number,slug,title_en,title_hi,description_en,description_hi,sort_order'
+    )
+    .eq('scripture_id', scriptureId)
+    .eq('slug', sectionSlug)
+    .limit(1);
+
+  const row = sectionRows?.[0];
+
+  if (!row) {
+    return null;
+  }
+
+  return {
+    id: row.id as string,
+    scriptureId: row.scripture_id as string,
+    parentId: (row.parent_id as string | null) ?? null,
+    sectionNumber: (row.section_number as string | null) ?? null,
+    slug: row.slug as string,
+    titleEn: (row.title_en as string | null) ?? null,
+    titleHi: (row.title_hi as string | null) ?? null,
+    descriptionEn: (row.description_en as string | null) ?? null,
+    descriptionHi: (row.description_hi as string | null) ?? null,
+    sortOrder: (row.sort_order as string | null) ?? null
+  };
+}
+
+export async function getSectionVerses(sectionId: string, locale: 'en' | 'hi') {
+  const supabase = await getContentClient();
+
+  if (!supabase) {
+    return [];
+  }
+
+  const {data: verseRows} = await supabase
+    .from('verses')
+    .select('id,verse_number,text_devanagari,transliteration,sort_order')
+    .eq('section_id', sectionId)
+    .order('sort_order', {ascending: true, nullsFirst: false});
+
+  if (!verseRows || verseRows.length === 0) {
+    return [];
+  }
+
+  const verseIds = verseRows.map((row) => row.id as string);
+  const languages = locale === 'hi' ? ['hi', 'en'] : ['en'];
+
+  const {data: translationRows} = await supabase
+    .from('translations')
+    .select('verse_id,language,translation,translator,source_id')
+    .in('verse_id', verseIds)
+    .in('language', languages);
+
+  const sourceIds = Array.from(
+    new Set(
+      (translationRows ?? [])
+        .map((row) => row.source_id as string | null)
+        .filter((value): value is string => value != null)
+    )
+  );
+
+  let sourcesById = new Map<string, {title: string | null; author: string | null}>();
+
+  if (sourceIds.length > 0) {
+    const {data: sourceRows} = await supabase
+      .from('sources')
+      .select('id,title,author')
+      .in('id', sourceIds);
+
+    sourcesById = new Map(
+      (sourceRows ?? []).map((row) => [
+        row.id as string,
+        {
+          title: (row.title as string | null) ?? null,
+          author: (row.author as string | null) ?? null
+        }
+      ])
+    );
+  }
+
+  const translationsByVerse = new Map<
+    string,
+    Array<{
+      language: string;
+      translation: string | null;
+      translator: string | null;
+      sourceId: string | null;
+    }>
+  >();
+
+  for (const row of translationRows ?? []) {
+    const verseId = row.verse_id as string;
+    const list = translationsByVerse.get(verseId) ?? [];
+    list.push({
+      language: row.language as string,
+      translation: (row.translation as string | null) ?? null,
+      translator: (row.translator as string | null) ?? null,
+      sourceId: (row.source_id as string | null) ?? null
+    });
+    translationsByVerse.set(verseId, list);
+  }
+
+  return verseRows.map((row) => {
+    const verseId = row.id as string;
+    const options = translationsByVerse.get(verseId) ?? [];
+    const preferred =
+      options.find((option) => option.language === locale) ??
+      options.find((option) => option.language === 'en');
+    const source = preferred?.sourceId ? sourcesById.get(preferred.sourceId) : undefined;
+
+    return {
+      id: verseId,
+      verseNumber: row.verse_number as string,
+      textDevanagari: (row.text_devanagari as string | null) ?? null,
+      transliteration: (row.transliteration as string | null) ?? null,
+      sortOrder: (row.sort_order as string | null) ?? null,
+      translation: preferred?.translation ?? null,
+      translator: preferred?.translator ?? null,
+      sourceTitle: source?.title ?? null,
+      sourceAuthor: source?.author ?? null,
+      isFallback:
+        locale !== 'en' &&
+        options.every((option) => option.language !== locale) &&
+        preferred != null
+    };
+  });
 }

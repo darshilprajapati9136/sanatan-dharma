@@ -38,32 +38,20 @@ export const sources = pgTable(
   {
     id: uuid('id').primaryKey().defaultRandom(),
     title: text('title').notNull(),
-    sourceType: sourceType('source_type').notNull(),
     author: text('author'),
-    editor: text('editor'),
-    translator: text('translator'),
     publisher: text('publisher'),
-    edition: text('edition'),
-    publicationYear: text('publication_year'),
-    language: text('language'),
-    isbn: text('isbn'),
+    sourceType: sourceType('source_type').notNull(),
     url: text('url'),
-    archiveUrl: text('archive_url'),
-    licenseId: uuid('license_id').references(() => licenses.id),
-    copyrightStatus: text('copyright_status'),
-    traditionId: uuid('tradition_id'),
-    verificationStatus: reviewStatus('verification_status').notNull().default('proposed'),
+    publicationYear: text('publication_year'),
     notes: text('notes'),
-    createdAt: timestamps.createdAt,
-    updatedAt: timestamps.updatedAt
+    createdAt: timestamps.createdAt
   },
   (table) => [
     index('sources_title_idx').on(table.title),
-    index('sources_license_idx').on(table.licenseId),
-    pgPolicy('sources_select_approved', {
+    pgPolicy('sources_select_public', {
       for: 'select',
       to: ['anon', 'authenticated'],
-      using: sql`verification_status in ('approved', 'reviewed')`
+      using: sql`true`
     })
   ]
 );
@@ -98,7 +86,7 @@ export const tags = pgTable(
     name: text('name').notNull(),
     tagType: text('tag_type')
   },
-  (table) => [
+  () => [
     pgPolicy('tags_select_public', {
       for: 'select',
       to: ['anon', 'authenticated'],

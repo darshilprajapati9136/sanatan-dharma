@@ -1,20 +1,17 @@
 import {sql} from 'drizzle-orm';
 import {
+  boolean,
   foreignKey,
   index,
   pgTable,
   text,
-  timestamp,
   uniqueIndex,
   uuid
 } from 'drizzle-orm/pg-core';
 import {
   contentType,
   locale,
-  scriptureType,
-  sectionType,
   timestamps,
-  translationType,
   verificationStatus
 } from './common';
 import {licenses, sources} from './knowledge';
@@ -26,22 +23,20 @@ export const scriptures = pgTable(
   {
     id: uuid('id').primaryKey().defaultRandom(),
     slug: text('slug').notNull().unique(),
-    canonicalName: text('canonical_name').notNull(),
-    sanskritName: text('sanskrit_name'),
-    shortDescription: text('short_description'),
-    scriptureType: scriptureType('scripture_type').notNull(),
-    primaryLanguage: locale('primary_language').notNull().default('en'),
-    structureType: text('structure_type'),
-    verificationStatus: verificationStatus('verification_status').notNull().default('draft'),
+    titleEn: text('title_en'),
+    titleHi: text('title_hi'),
+    descriptionEn: text('description_en'),
+    descriptionHi: text('description_hi'),
+    tradition: text('tradition'),
+    isPublished: boolean('is_published').notNull().default(false),
     createdAt: timestamps.createdAt,
-    updatedAt: timestamps.updatedAt,
-    publishedAt: timestamp('published_at', {withTimezone: true})
+    updatedAt: timestamps.updatedAt
   },
-  (table) => [
+  () => [
     pgPolicy('scriptures_select_published', {
       for: 'select',
       to: ['anon', 'authenticated'],
-      using: sql`verification_status = 'published'`
+      using: sql`is_published = true`
     })
   ]
 );
@@ -78,29 +73,29 @@ export const scriptureSections = pgTable(
     scriptureId: uuid('scripture_id')
       .notNull()
       .references(() => scriptures.id, {onDelete: 'cascade'}),
-    parentSectionId: uuid('parent_section_id'),
-    sectionType: sectionType('section_type').notNull().default('chapter'),
+    parentId: uuid('parent_id'),
     sectionNumber: text('section_number'),
-    sortOrder: text('sort_order'),
-    canonicalTitle: text('canonical_title'),
-    sanskritTitle: text('sanskrit_title'),
     slug: text('slug').notNull(),
-    createdAt: timestamps.createdAt,
-    updatedAt: timestamps.updatedAt
+    titleEn: text('title_en'),
+    titleHi: text('title_hi'),
+    descriptionEn: text('description_en'),
+    descriptionHi: text('description_hi'),
+    sortOrder: text('sort_order'),
+    createdAt: timestamps.createdAt
   },
   (table) => [
     uniqueIndex('scripture_sections_scripture_slug_unique').on(table.scriptureId, table.slug),
     index('scripture_sections_scripture_idx').on(table.scriptureId),
-    index('scripture_sections_parent_idx').on(table.parentSectionId),
+    index('scripture_sections_parent_idx').on(table.parentId),
     foreignKey({
-      columns: [table.parentSectionId],
+      columns: [table.parentId],
       foreignColumns: [table.id],
       name: 'scripture_sections_parent_fkey'
     }),
     pgPolicy('scripture_sections_select_published', {
       for: 'select',
       to: ['anon', 'authenticated'],
-      using: sql`exists(select 1 from ${scriptures} s where s.id = ${table.scriptureId} and s.verification_status = 'published')`
+      using: sql`exists(select 1 from ${scriptures} s where s.id = ${table.scriptureId} and s.is_published = true)`
     })
   ]
 );
@@ -138,14 +133,10 @@ export const verses = pgTable(
       .notNull()
       .references(() => scriptureSections.id, {onDelete: 'cascade'}),
     verseNumber: text('verse_number').notNull(),
-    canonicalReference: text('canonical_reference').notNull(),
-    sanskritText: text('sanskrit_text').notNull(),
-    normalizedSanskrit: text('normalized_sanskrit'),
+    textDevanagari: text('text_devanagari'),
+    transliteration: text('transliteration'),
     sortOrder: text('sort_order'),
-    sourceEditionId: uuid('source_edition_id').references(() => sources.id),
-    verificationStatus: verificationStatus('verification_status').notNull().default('draft'),
-    createdAt: timestamps.createdAt,
-    updatedAt: timestamps.updatedAt
+    createdAt: timestamps.createdAt
   },
   (table) => [
     uniqueIndex('verses_section_verse_number_unique').on(table.sectionId, table.verseNumber),
@@ -154,7 +145,7 @@ export const verses = pgTable(
     pgPolicy('verses_select_published', {
       for: 'select',
       to: ['anon', 'authenticated'],
-      using: sql`verification_status = 'published'`
+      using: sql`exists(select 1 from ${scriptures} s where s.id = ${table.scriptureId} and s.is_published = true)`
     })
   ]
 );
@@ -231,16 +222,11 @@ export const translations = pgTable(
     verseId: uuid('verse_id')
       .notNull()
       .references(() => verses.id, {onDelete: 'cascade'}),
-    locale: locale('locale').notNull(),
-    translatorId: uuid('translator_id').references(() => translators.id),
-    translationText: text('translation_text').notNull(),
+    language: text('language').notNull(),
+    translation: text('translation').notNull(),
+    translator: text('translator'),
     sourceId: uuid('source_id').references(() => sources.id),
-    translationType: translationType('translation_type').notNull().default('published'),
-    copyrightStatus: text('copyright_status'),
-    licenseId: uuid('license_id').references(() => licenses.id),
-    verificationStatus: verificationStatus('verification_status').notNull().default('draft'),
-    createdAt: timestamps.createdAt,
-    updatedAt: timestamps.updatedAt
+    createdAt: timestamps.createdAt
   },
   (table) => [
     index('translations_verse_idx').on(table.verseId),
@@ -248,7 +234,7 @@ export const translations = pgTable(
     pgPolicy('translations_select_published', {
       for: 'select',
       to: ['anon', 'authenticated'],
-      using: sql`verification_status = 'published'`
+      using: sql`exists(select 1 from ${verses} v join ${scriptures} s on s.id = v.scripture_id where v.id = ${table.verseId} and s.is_published = true)`
     })
   ]
 );

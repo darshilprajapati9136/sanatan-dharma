@@ -75,7 +75,7 @@ export const concepts = pgTable(
     updatedAt: timestamps.updatedAt,
     publishedAt: timestamp('published_at', {withTimezone: true})
   },
-  (table) => [
+  () => [
     pgPolicy('concepts_select_published', {
       for: 'select',
       to: ['anon', 'authenticated'],
@@ -228,7 +228,7 @@ export const festivals = pgTable(
     updatedAt: timestamps.updatedAt,
     publishedAt: timestamp('published_at', {withTimezone: true})
   },
-  (table) => [
+  () => [
     pgPolicy('festivals_select_published', {
       for: 'select',
       to: ['anon', 'authenticated'],

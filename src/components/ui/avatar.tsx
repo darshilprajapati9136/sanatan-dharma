@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {cn} from '@/lib/utils';
 
 function initials(name: string) {
@@ -20,7 +21,7 @@ export function Avatar({
   return (
     <span
       className={cn(
-        'inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full bg-primary/15 text-primary',
+        'relative inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full bg-primary/15 text-primary',
         size === 'sm' && 'h-8 w-8 text-xs',
         size === 'md' && 'h-10 w-10 text-sm',
         size === 'lg' && 'h-14 w-14 text-lg',
@@ -28,7 +29,13 @@ export function Avatar({
       )}
     >
       {src ? (
-        <img src={src} alt={name} className="h-full w-full object-cover" />
+        <Image
+          src={src}
+          alt={name}
+          fill
+          sizes={size === 'lg' ? '56px' : size === 'sm' ? '32px' : '40px'}
+          className="object-cover"
+        />
       ) : (
         initials(name)
       )}

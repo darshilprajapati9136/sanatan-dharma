@@ -26,14 +26,17 @@ export function ProfilePreferences({
   const [displayName, setDisplayName] = useState(initialDisplayName);
   const [language, setLanguage] = useState<'en' | 'hi'>(initialLanguage);
   const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState<string | null>(null);
 
   const supabase = createClient();
 
   async function handleSave(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSaved(false);
+    setSaveError(null);
 
     if (!supabase) {
       return;
@@ -41,18 +44,35 @@ export function ProfilePreferences({
 
     setSaving(true);
 
-    const {error} = await supabase
-      .from('profiles')
-      .update({display_name: displayName.trim(), preferred_language: language})
-      .eq('user_id', userId);
+    // Upsert (not update): the profile row is normally created by the
+    // `on_auth_user_created` trigger, but accounts that predate it would
+    // otherwise silently "save" zero rows. Requires the
+    // `profiles_insert_own` RLS policy (id = auth.uid()).
+    const {error} = await supabase.from('profiles').upsert(
+      {
+        id: userId,
+        display_name: displayName.trim(),
+        preferred_language: language,
+        updated_at: new Date().toISOString()
+      },
+      {onConflict: 'id'}
+    );
 
     setSaving(false);
 
     if (error) {
+      setSaveError(t('saveError'));
       return;
     }
 
     setSaved(true);
+
+    // If the preferred language changed, move to that locale so the UI
+    // language matches the saved preference.
+    if (language !== locale) {
+      router.replace(`/${language}/profile`);
+    }
+
     router.refresh();
   }
 
@@ -62,8 +82,17 @@ export function ProfilePreferences({
     }
 
     setSigningOut(true);
-    await supabase.auth.signOut();
-    router.push(`/${locale}`);
+    setSignOutError(null);
+
+    const {error} = await supabase.auth.signOut();
+
+    if (error) {
+      setSigningOut(false);
+      setSignOutError(t('signOutError'));
+      return;
+    }
+
+    router.replace(`/${locale}`);
     router.refresh();
   }
 
@@ -110,13 +139,25 @@ export function ProfilePreferences({
       </FormField>
 
       <div className="flex items-center justify-between gap-4">
-        {saved ? <p className="text-sm font-medium text-primary">{t('saved')}</p> : <span />}
+        <div className="flex flex-col gap-1">
+          {saved ? <p className="text-sm font-medium text-primary">{t('saved')}</p> : <span />}
+          {saveError ? (
+            <p role="alert" className="text-sm text-danger">
+              {saveError}
+            </p>
+          ) : null}
+          {signOutError ? (
+            <p role="alert" className="text-sm text-danger">
+              {signOutError}
+            </p>
+          ) : null}
+        </div>
         <div className="flex gap-2">
           <Button type="button" variant="outline" onClick={handleSignOut} disabled={signingOut || !supabase}>
-            {t('signOut')}
+            {signingOut ? t('signingOut') : t('signOut')}
           </Button>
-          <Button type="submit" disabled={saving || !supabase}>
-            {t('save')}
+          <Button type="submit" disabled={saving || signingOut || !supabase}>
+            {saving ? t('saving') : t('save')}
           </Button>
         </div>
       </div>

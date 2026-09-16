@@ -3,7 +3,7 @@ import {getCurrentProfile, getSession} from '@/server/services/auth';
 
 export async function GET() {
   const {user} = await getSession();
-  const profile = await getCurrentProfile();
+  const profile = await getCurrentProfile(user ?? undefined);
 
   return NextResponse.json({
     success: true,

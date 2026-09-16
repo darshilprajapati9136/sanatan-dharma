@@ -1,6 +1,7 @@
 import {sql} from 'drizzle-orm';
-import {boolean, index, integer, pgTable, text, timestamp, uniqueIndex, uuid} from 'drizzle-orm/pg-core';
-import {contentType, timestamps} from './common';
+import {boolean, index, numeric, pgTable, text, uniqueIndex, uuid} from 'drizzle-orm/pg-core';
+import {timestamps} from './common';
+import {scriptures, scriptureSections, verses} from './scripture';
 import {pgPolicy} from 'drizzle-orm/pg-core';
 
 export const bookmarks = pgTable(
@@ -8,13 +9,14 @@ export const bookmarks = pgTable(
   {
     id: uuid('id').primaryKey().defaultRandom(),
     userId: uuid('user_id').notNull(),
-    contentType: contentType('content_type').notNull(),
-    contentId: uuid('content_id').notNull(),
+    verseId: uuid('verse_id')
+      .notNull()
+      .references(() => verses.id, {onDelete: 'cascade'}),
     createdAt: timestamps.createdAt
   },
   (table) => [
-    uniqueIndex('bookmarks_user_content_unique').on(table.userId, table.contentType, table.contentId),
     index('bookmarks_user_idx').on(table.userId),
+    index('bookmarks_verse_idx').on(table.verseId),
     pgPolicy('bookmarks_select_own', {
       for: 'select',
       to: 'authenticated',
@@ -33,31 +35,35 @@ export const bookmarks = pgTable(
   ]
 );
 
-export const readingHistory = pgTable(
-  'reading_history',
+export const readingProgress = pgTable(
+  'reading_progress',
   {
     id: uuid('id').primaryKey().defaultRandom(),
+    // Live schema: references auth.users(id). Kept as a plain column here like
+    // bookmarks.userId; the FK lives in the live database, which is untouched.
     userId: uuid('user_id').notNull(),
-    contentType: contentType('content_type').notNull(),
-    contentId: uuid('content_id').notNull(),
-    firstViewedAt: timestamp('first_viewed_at', {withTimezone: true}).notNull().defaultNow(),
-    lastViewedAt: timestamp('last_viewed_at', {withTimezone: true}).notNull().defaultNow(),
-    viewCount: integer('view_count').notNull().default(1)
+    scriptureId: uuid('scripture_id')
+      .notNull()
+      .references(() => scriptures.id),
+    lastSectionId: uuid('last_section_id').references(() => scriptureSections.id),
+    lastVerseId: uuid('last_verse_id').references(() => verses.id),
+    progressPercentage: numeric('progress_percentage'),
+    updatedAt: timestamps.updatedAt
   },
   (table) => [
-    uniqueIndex('reading_history_user_content_unique').on(table.userId, table.contentType, table.contentId),
-    index('reading_history_user_idx').on(table.userId),
-    pgPolicy('history_select_own', {
+    uniqueIndex('reading_progress_user_scripture_unique').on(table.userId, table.scriptureId),
+    index('reading_progress_user_idx').on(table.userId),
+    pgPolicy('reading_progress_select_own', {
       for: 'select',
       to: 'authenticated',
       using: sql`user_id = auth.uid()`
     }),
-    pgPolicy('history_insert_own', {
+    pgPolicy('reading_progress_insert_own', {
       for: 'insert',
       to: 'authenticated',
       withCheck: sql`user_id = auth.uid()`
     }),
-    pgPolicy('history_update_own', {
+    pgPolicy('reading_progress_update_own', {
       for: 'update',
       to: 'authenticated',
       using: sql`user_id = auth.uid()`,
@@ -78,7 +84,7 @@ export const userPreferences = pgTable(
     preferredReadingMode: text('preferred_reading_mode').notNull().default('simple'),
     updatedAt: timestamps.updatedAt
   },
-  (table) => [
+  () => [
     pgPolicy('preferences_select_own', {
       for: 'select',
       to: 'authenticated',

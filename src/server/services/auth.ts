@@ -34,6 +34,36 @@ export async function getCurrentProfile(user?: {id: string}) {
     return null;
   }
 
-  const rows = await getDb().select().from(profiles).where(eq(profiles.userId, resolvedUser.id)).limit(1);
-  return rows[0] ?? null;
+  try {
+    const rows = await getDb().select().from(profiles).where(eq(profiles.id, resolvedUser.id)).limit(1);
+    return rows[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Validates a `?next=` redirect target to prevent open redirects.
+ * Only allows in-app localized paths such as `/en/profile`.
+ * Falls back to the locale's profile page.
+ */
+export function getSafeNextPath(next: string | undefined, locale: string, fallback = `/${locale}/profile`) {
+  if (!next || !next.startsWith('/')) {
+    return fallback;
+  }
+
+  const [path] = next.split('?');
+  const segments = path.split('/').filter(Boolean);
+
+  if (segments.length === 0 || segments[0] === '.' || segments[0] === '..') {
+    return fallback;
+  }
+
+  const [first] = segments;
+
+  if (first !== 'en' && first !== 'hi') {
+    return fallback;
+  }
+
+  return next.startsWith(`/${first}/`) || next === `/${first}` ? next : fallback;
 }

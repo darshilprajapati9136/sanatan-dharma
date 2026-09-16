@@ -9,7 +9,7 @@ import {Input} from '@/components/ui/input';
 import {FormField} from '@/components/ui/form-field';
 import {createClient} from '@/lib/supabase/client';
 
-export function LoginForm({hasError}: {hasError?: boolean}) {
+export function LoginForm({hasError, redirectTo}: {hasError?: boolean; redirectTo?: string}) {
   const t = useTranslations('auth');
   const locale = useLocale();
   const router = useRouter();
@@ -49,12 +49,21 @@ export function LoginForm({hasError}: {hasError?: boolean}) {
     const {error: signInError} = await client.auth.signInWithPassword({email, password});
 
     if (signInError) {
-      setError(t('errors.generic'));
+      const message = signInError.message.toLowerCase();
+
+      if (message.includes('invalid login credentials') || message.includes('invalid email or password')) {
+        setError(t('errors.invalidCredentials'));
+      } else if (message.includes('email not confirmed')) {
+        setError(t('checkEmail'));
+      } else {
+        setError(t('errors.generic'));
+      }
+
       setLoading(null);
       return;
     }
 
-    router.push(`/${locale}/profile`);
+    router.push(redirectTo ?? `/${locale}/profile`);
     router.refresh();
   }
 
@@ -62,11 +71,13 @@ export function LoginForm({hasError}: {hasError?: boolean}) {
     setError(null);
     setLoading('google');
 
-    const redirectTo = `${window.location.origin}/${locale}/api/auth/callback?next=/${locale}/profile`;
+    // API routes are not locale-prefixed (/en/api/... 404s); keep the locale in `next`.
+    const next = redirectTo ?? `/${locale}/profile`;
+    const redirectToUrl = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
 
     const {error: oauthError} = await client.auth.signInWithOAuth({
       provider: 'google',
-      options: {redirectTo}
+      options: {redirectTo: redirectToUrl}
     });
 
     if (oauthError) {

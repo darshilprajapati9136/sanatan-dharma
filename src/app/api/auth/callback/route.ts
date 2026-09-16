@@ -4,7 +4,12 @@ import {createClient} from '@/lib/supabase/server';
 export async function GET(request: Request) {
   const {searchParams, origin} = new URL(request.url);
   const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/';
+  const requestedNext = searchParams.get('next') ?? '/';
+  // Only allow in-app localized destinations to prevent open redirects.
+  const next =
+    requestedNext === '/en' || requestedNext === '/hi' || requestedNext.startsWith('/en/') || requestedNext.startsWith('/hi/')
+      ? requestedNext
+      : '/';
 
   if (code) {
     const supabase = await createClient();

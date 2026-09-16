@@ -1,13 +1,13 @@
 import {createBrowserClient} from '@supabase/ssr';
-import {isSupabaseConfigured} from '@/schemas/env';
+import {getSupabasePublishableKey} from '@/schemas/env';
 
 export function createClient() {
-  if (!isSupabaseConfigured()) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = getSupabasePublishableKey();
+
+  if (!url || !key) {
     return null;
   }
 
-  return createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
-  );
+  return createBrowserClient(url, key);
 }

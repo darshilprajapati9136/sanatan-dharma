@@ -6,31 +6,31 @@ import {pgPolicy} from 'drizzle-orm/pg-core';
 export const profiles = pgTable(
   'profiles',
   {
-    id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id').notNull().unique(),
+    // Live schema: profiles.id IS auth.users.id (UUID PK, no separate user_id column).
+    id: uuid('id').primaryKey(),
     displayName: text('display_name'),
+    username: text('username'),
     avatarUrl: text('avatar_url'),
     preferredLanguage: locale('preferred_language').notNull().default('en'),
-    preferredTheme: text('preferred_theme').notNull().default('light'),
     createdAt: timestamps.createdAt,
     updatedAt: timestamps.updatedAt
   },
-  (table) => [
+  () => [
     pgPolicy('profiles_select_own', {
       for: 'select',
       to: 'authenticated',
-      using: sql`user_id = auth.uid()`
+      using: sql`id = auth.uid()`
     }),
     pgPolicy('profiles_insert_own', {
       for: 'insert',
       to: 'authenticated',
-      withCheck: sql`user_id = auth.uid()`
+      withCheck: sql`id = auth.uid()`
     }),
     pgPolicy('profiles_update_own', {
       for: 'update',
       to: 'authenticated',
-      using: sql`user_id = auth.uid()`,
-      withCheck: sql`user_id = auth.uid()`
+      using: sql`id = auth.uid()`,
+      withCheck: sql`id = auth.uid()`
     })
   ]
 );
@@ -42,7 +42,7 @@ export const roles = pgTable(
     name: userRoleName('name').notNull().unique(),
     description: text('description')
   },
-  (table) => [
+  () => [
     pgPolicy('roles_select_public', {
       for: 'select',
       to: ['anon', 'authenticated'],
@@ -56,7 +56,7 @@ export const userRoles = pgTable(
   {
     userId: uuid('user_id')
       .notNull()
-      .references(() => profiles.userId),
+      .references(() => profiles.id),
     roleId: uuid('role_id')
       .notNull()
       .references(() => roles.id),

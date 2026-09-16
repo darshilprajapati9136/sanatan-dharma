@@ -143,7 +143,7 @@ export const appSettings = pgTable(
     updatedBy: uuid('updated_by'),
     updatedAt: timestamps.updatedAt
   },
-  (table) => [
+  () => [
     pgPolicy('app_settings_select_public', {
       for: 'select',
       to: ['anon', 'authenticated'],

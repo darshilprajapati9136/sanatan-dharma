@@ -9,7 +9,7 @@ import {Input} from '@/components/ui/input';
 import {FormField} from '@/components/ui/form-field';
 import {createClient} from '@/lib/supabase/client';
 
-export function SignupForm() {
+export function SignupForm({redirectTo}: {redirectTo?: string}) {
   const t = useTranslations('auth');
   const locale = useLocale();
   const router = useRouter();
@@ -47,19 +47,50 @@ export function SignupForm() {
 
     setLoading('email');
 
-    const redirectTo = `${window.location.origin}/${locale}/api/auth/callback?next=/${locale}/profile`;
+    const next = redirectTo ?? `/${locale}/profile`;
+
+    // The callback is an API route, which is NOT locale-prefixed.
+    // /<locale>/api/... does not exist (404); keep the locale in `next` instead.
+    const redirectToUrl = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
 
     const {error: signUpError} = await client.auth.signUp({
       email,
       password,
       options: {
         data: {name: name.trim()},
-        emailRedirectTo: redirectTo
+        emailRedirectTo: redirectToUrl
       }
     });
 
     if (signUpError) {
-      setError(t('errors.generic'));
+      if (process.env.NODE_ENV === 'development') {
+        // Safe: logs only the machine-readable code/status, never PII or secrets.
+        console.warn('[signup] signUp failed', {code: signUpError.code, status: signUpError.status});
+      }
+
+      const code = (signUpError.code ?? '').toLowerCase();
+      const message = signUpError.message.toLowerCase();
+
+      if (message.includes('already registered') || message.includes('already exists')) {
+        setError(t('errors.emailExists'));
+      } else if (
+        code.includes('over_email_send_rate_limit') ||
+        signUpError.status === 429 ||
+        message.includes('rate limit')
+      ) {
+        setError(t('errors.rateLimited'));
+      } else if (
+        message.includes('signup') && message.includes('disabled')
+      ) {
+        setError(t('errors.signupDisabled'));
+      } else if (message.includes('password')) {
+        setError(t('errors.weakPassword'));
+      } else if (message.includes('email') && message.includes('invalid')) {
+        setError(t('errors.invalidEmail'));
+      } else {
+        setError(t('errors.generic'));
+      }
+
       setLoading(null);
       return;
     }
@@ -67,7 +98,7 @@ export function SignupForm() {
     const {data} = await client.auth.getSession();
 
     if (data.session) {
-      router.push(`/${locale}/profile`);
+      router.push(redirectTo ?? `/${locale}/profile`);
       router.refresh();
       return;
     }
@@ -80,11 +111,14 @@ export function SignupForm() {
     setError(null);
     setLoading('google');
 
-    const redirectTo = `${window.location.origin}/${locale}/api/auth/callback?next=/${locale}/profile`;
+    const next = redirectTo ?? `/${locale}/profile`;
+
+    // Same as email signup: API routes are not locale-prefixed.
+    const redirectToUrl = `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(next)}`;
 
     const {error: oauthError} = await client.auth.signInWithOAuth({
       provider: 'google',
-      options: {redirectTo}
+      options: {redirectTo: redirectToUrl}
     });
 
     if (oauthError) {

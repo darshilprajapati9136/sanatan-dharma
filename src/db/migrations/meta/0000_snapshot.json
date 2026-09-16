@@ -1,5 +1,5 @@
 {
-  "id": "0c838b48-b0a4-4c86-876a-29719d9652ee",
+  "id": "30c444aa-81ab-44a8-bb54-1d48c90d14c5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1205,8 +1205,8 @@
         }
       },
       "foreignKeys": {
-        "deities_parent_deity_id_deities_id_fk": {
-          "name": "deities_parent_deity_id_deities_id_fk",
+        "deities_parent_fkey": {
+          "name": "deities_parent_fkey",
           "tableFrom": "deities",
           "tableTo": "deities",
           "columnsFrom": [
@@ -2178,8 +2178,8 @@
         }
       },
       "foreignKeys": {
-        "traditions_parent_tradition_id_traditions_id_fk": {
-          "name": "traditions_parent_tradition_id_traditions_id_fk",
+        "traditions_parent_fkey": {
+          "name": "traditions_parent_fkey",
           "tableFrom": "traditions",
           "tableTo": "traditions",
           "columnsFrom": [
@@ -2985,8 +2985,8 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "scripture_sections_parent_section_id_scripture_sections_id_fk": {
-          "name": "scripture_sections_parent_section_id_scripture_sections_id_fk",
+        "scripture_sections_parent_fkey": {
+          "name": "scripture_sections_parent_fkey",
           "tableFrom": "scripture_sections",
           "tableTo": "scripture_sections",
           "columnsFrom": [

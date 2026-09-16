@@ -1,16 +1,29 @@
+import {redirect} from 'next/navigation';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {SignupForm} from '@/components/auth/signup-form';
 import {Link} from '@/i18n/navigation';
+import {getSession, getSafeNextPath} from '@/server/services/auth';
 
 export default async function SignupPage({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{locale: string}>;
+  searchParams: Promise<{next?: string}>;
 }) {
   const {locale} = await params;
   setRequestLocale(locale);
 
   const t = await getTranslations('auth');
+  const {next} = await searchParams;
+
+  // Already signed in: skip the form and go to the intended destination.
+  const {user} = await getSession();
+  const redirectTo = getSafeNextPath(next, locale);
+
+  if (user) {
+    redirect(redirectTo);
+  }
 
   return (
     <section className="mx-auto w-full max-w-md px-4 py-16 lg:px-8">
@@ -22,7 +35,7 @@ export default async function SignupPage({
       </div>
 
       <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm lg:p-8">
-        <SignupForm />
+        <SignupForm redirectTo={redirectTo} />
 
         <p className="mt-6 text-center text-sm text-muted">
           {t('haveAccount')}{' '}

@@ -8,7 +8,7 @@ import {
   uniqueIndex,
   uuid
 } from 'drizzle-orm/pg-core';
-import {contentType, locale, progressStatus, timestamps, verificationStatus} from './common';
+import {contentType, locale, timestamps, verificationStatus} from './common';
 import {pgPolicy} from 'drizzle-orm/pg-core';
 
 export const learningPaths = pgTable(
@@ -23,7 +23,7 @@ export const learningPaths = pgTable(
     updatedAt: timestamps.updatedAt,
     publishedAt: timestamp('published_at', {withTimezone: true})
   },
-  (table) => [
+  () => [
     pgPolicy('learning_paths_select_published', {
       for: 'select',
       to: ['anon', 'authenticated'],
@@ -72,42 +72,6 @@ export const learningModules = pgTable(
       for: 'select',
       to: ['anon', 'authenticated'],
       using: sql`exists(select 1 from ${learningPaths} l where l.id = ${table.learningPathId} and l.verification_status = 'published')`
-    })
-  ]
-);
-
-export const userLearningProgress = pgTable(
-  'user_learning_progress',
-  {
-    id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id').notNull(),
-    learningPathId: uuid('learning_path_id').references(() => learningPaths.id),
-    moduleId: uuid('module_id')
-      .notNull()
-      .references(() => learningModules.id),
-    status: progressStatus('status').notNull().default('not_started'),
-    startedAt: timestamp('started_at', {withTimezone: true}),
-    completedAt: timestamp('completed_at', {withTimezone: true}),
-    lastAccessedAt: timestamp('last_accessed_at', {withTimezone: true})
-  },
-  (table) => [
-    uniqueIndex('user_learning_progress_unique').on(table.userId, table.learningPathId, table.moduleId),
-    index('user_learning_progress_user_idx').on(table.userId),
-    pgPolicy('progress_select_own', {
-      for: 'select',
-      to: 'authenticated',
-      using: sql`user_id = auth.uid()`
-    }),
-    pgPolicy('progress_insert_own', {
-      for: 'insert',
-      to: 'authenticated',
-      withCheck: sql`user_id = auth.uid()`
-    }),
-    pgPolicy('progress_update_own', {
-      for: 'update',
-      to: 'authenticated',
-      using: sql`user_id = auth.uid()`,
-      withCheck: sql`user_id = auth.uid()`
     })
   ]
 );

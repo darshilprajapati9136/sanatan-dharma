@@ -380,6 +380,99 @@ export const otherTopics: LearnTopic[] = [
     sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-19'
   },
+  {
+    slug: 'rama',
+    category: 'deities',
+    title: {en: 'Rama', hi: 'राम'},
+    summary: {
+      en: 'The prince of Ayodhya whose story in the Ramayana exemplifies duty, honour and compassion.',
+      hi: 'अयोध्या के राजकुमार, जिनकी कथा रामायण में कर्तव्य, मर्यादा और करुणा का आदर्श प्रस्तुत करती है।'
+    },
+    sections: [
+      {
+        heading: {en: 'Overview', hi: 'परिचय'},
+        body: {
+          en: 'Rama, prince of Ayodhya, is honoured as an avatar of Vishnu and as Maryada Purushottam — the embodiment of righteous conduct. His exile, the abduction of Sita, the alliance with Hanuman and Sugriva, and the battle with Ravana are told in Valmiki’s Ramayana and retold across Asia in many languages.',
+          hi: 'अयोध्या के राजकुमार राम विष्णु के अवतार और मर्यादा पुरुषोत्तम के रूप में पूजित हैं — धर्मपूर्ण आचरण के मूर्त रूप। उनका वनवास, सीता का हरण, हनुमान-सुग्रीव से मैत्री और रावण से युद्ध वाल्मीकि रामायण में वर्णित है और एशिया भर में अनेक भाषाओं में पुनः कहा गया है।'
+        }
+      },
+      {
+        heading: {en: 'Worship and festivals', hi: 'उपासना और पर्व'},
+        body: {
+          en: 'Rama Navami marks his birth; Dussehra recalls the victory over Ravana; Diwali homecomings are linked to his return to Ayodhya in many traditions. Tulsidas’s Ramcharitmanas carries his story to millions of households in the Hindi-speaking regions.',
+          hi: 'रामनवमी उनके जन्म की स्मृति है; दशहरा रावण पर विजय का पर्व है; अनेक परंपराओं में दीपावली उनके अयोध्या आगमन से जुड़ी है। तुलसीदास का रामचरितमानस हिंदी क्षेत्रों के लाखों घरों तक उनकी कथा पहुँचाता है।'
+        }
+      }
+    ],
+    relatedSlugs: ['ramayana', 'hanuman', 'krishna'],
+    difficulty: 'beginner',
+    readingTimeMinutes: 3,
+    status: 'draft',
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
+    updatedAt: '2026-09-19'
+  },
+  {
+    slug: 'hanuman',
+    category: 'deities',
+    title: {en: 'Hanuman', hi: 'हनुमान'},
+    summary: {
+      en: 'The devoted servant of Rama, honoured for strength, humility and selfless service.',
+      hi: 'राम के अनन्य सेवक, बल, विनम्रता और निस्वार्थ सेवा के लिए पूजित।'
+    },
+    sections: [
+      {
+        heading: {en: 'Overview', hi: 'परिचय'},
+        body: {
+          en: 'Hanuman — also called Bajrangbali, Maruti and Pavanputra — plays the central helping role in the Ramayana: leaping to Lanka, carrying the message of Rama, and bearing the mountain of herbs. He is loved as the meeting point of immense strength and complete humility.',
+          hi: 'हनुमान — बजरंगबली, मारुति और पवनपुत्र के नामों से भी जाने जाते हैं — रामायण में केंद्रीय सहायक की भूमिका निभाते हैं: लंका तक छलांग, राम का संदेश पहुँचाना और संजीवनी पर्वत उठा लाना। अपार बल और पूर्ण विनम्रता के संगम के रूप में वे प्रिय हैं।'
+        }
+      },
+      {
+        heading: {en: 'Devotion today', hi: 'आज की भक्ति'},
+        body: {
+          en: 'Tuesdays and Saturdays are widely associated with his worship; the Hanuman Chalisa of Tulsidas is among the most recited hymns in India. Wrestlers, travellers and students alike seek his example of disciplined service.',
+          hi: 'मंगलवार और शनिवार व्यापक रूप से उनकी उपासना से जुड़े हैं; तुलसीदास का हनुमान चालीसा भारत में सर्वाधिक पाठ किए जाने वाले स्तोत्रों में है। पहलवान, यात्री और विद्यार्थी — सभी उनकी अनुशासित सेवा का आदर्श अपनाते हैं।'
+        }
+      }
+    ],
+    relatedSlugs: ['rama', 'ramayana', 'bhakti'],
+    difficulty: 'beginner',
+    readingTimeMinutes: 3,
+    status: 'draft',
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
+    updatedAt: '2026-09-19'
+  },
+  {
+    slug: 'ganesha',
+    category: 'deities',
+    title: {en: 'Ganesha', hi: 'गणेश'},
+    summary: {
+      en: 'The elephant-headed remover of obstacles, invoked first in worship and new beginnings.',
+      hi: 'विघ्नहर्ता गजानन, उपासना और हर नई शुरुआत में सबसे पहले स्मरण किए जाने वाले देव।'
+    },
+    sections: [
+      {
+        heading: {en: 'Overview', hi: 'परिचय'},
+        body: {
+          en: 'Ganesha — son of Shiva and Parvati — is traditionally invoked before any rite, journey or undertaking. His elephant head, large ears and mouse vehicle each carry symbolic readings in different traditions: listening deeply, holding discernment, and keeping desire small.',
+          hi: 'गणेश — शिव-पार्वती के पुत्र — किसी भी अनुष्ठान, यात्रा या कार्य से पहले स्मरण किए जाते हैं। विभिन्न परंपराओं में उनके गजमस्तक, बड़े कान और मूषक वाहन के प्रतीकात्मक अर्थ हैं: गहराई से सुनना, विवेक रखना और इच्छा को संयमित करना।'
+        }
+      },
+      {
+        heading: {en: 'Ganesh Chaturthi', hi: 'गणेश चतुर्थी'},
+        body: {
+          en: 'The ten-day Ganesh Chaturthi festival brings community idols, daily prayer and immersion processions, most famously in Maharashtra. Household observances are simpler: a short daily prayer and an offering of modak or fruit.',
+          hi: 'दस दिवसीय गणेश चतुर्थी में सामुदायिक मूर्तियाँ, दैनिक प्रार्थना और विसर्जन शोभायात्राएँ होती हैं — महाराष्ट्र में विशेष प्रसिद्धि के साथ। घरेलू उपासना सरल होती है: संक्षिप्त दैनिक प्रार्थना और मोदक या फल का भोग।'
+        }
+      }
+    ],
+    relatedSlugs: ['shiva', 'puja', 'devi'],
+    difficulty: 'beginner',
+    readingTimeMinutes: 3,
+    status: 'draft',
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
+    updatedAt: '2026-09-19'
+  },
   // ---- More Practices ----
   {
     slug: 'bhakti',
@@ -406,6 +499,37 @@ export const otherTopics: LearnTopic[] = [
       }
     ],
     relatedSlugs: ['puja', 'mantra-japa', 'karma'],
+    difficulty: 'beginner',
+    readingTimeMinutes: 3,
+    status: 'draft',
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
+    updatedAt: '2026-09-19'
+  },
+  {
+    slug: 'dana-seva',
+    category: 'practices',
+    title: {en: 'Dana and Seva', hi: 'दान और सेवा'},
+    summary: {
+      en: 'Giving and selfless service as everyday spiritual practice.',
+      hi: 'दान और निस्वार्थ सेवा — दैनिक आध्यात्मिक अभ्यास के रूप में।'
+    },
+    sections: [
+      {
+        heading: {en: 'Overview', hi: 'परिचय'},
+        body: {
+          en: 'Dana (giving) and seva (selfless service) appear across Hindu teachings as the householder’s natural offering: food given to guests and the needy (annadana), knowledge shared freely (vidyadana), and time spent serving temples, pilgrims and community kitchens.',
+          hi: 'हिंदू शिक्षाओं में दान और सेवा गृहस्थ का स्वाभाविक अर्पण हैं: अतिथि और जरूरतमंद को अन्न (अन्नदान), ज्ञान का मुक्त वितरण (विद्यादान), और मंदिरों, तीर्थयात्रियों व सामुदायिक भंडारों में समय का समर्पण।'
+        }
+      },
+      {
+        heading: {en: 'A beginner’s start', hi: 'शुरुआत कैसे करें'},
+        body: {
+          en: 'Begin small and regular: a fixed weekly food donation, volunteering an hour at a local kitchen or cleanup, or teaching someone a skill you hold. The Gita’s counsel is to give with respect, at the right place and time, expecting nothing back.',
+          hi: 'छोटी और नियमित शुरुआत करें: साप्ताहिक अन्नदान, स्थानीय भंडारे या सफाई में एक घंटे का स्वयंसेवा, या किसी को अपना कौशल सिखाना। गीता का उपदेश है — सम्मानपूर्वक, उचित स्थान-काल में, प्रतिफल की आशा बिना दान करें।'
+        }
+      }
+    ],
+    relatedSlugs: ['karma', 'bhakti', 'puja'],
     difficulty: 'beginner',
     readingTimeMinutes: 3,
     status: 'draft',

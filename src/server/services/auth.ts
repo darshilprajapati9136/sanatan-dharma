@@ -55,7 +55,10 @@ export function getSafeNextPath(next: string | undefined, locale: string, fallba
   const [path] = next.split('?');
   const segments = path.split('/').filter(Boolean);
 
-  if (segments.length === 0 || segments[0] === '.' || segments[0] === '..') {
+  if (
+    segments.length === 0 ||
+    segments.some((segment) => segment === '.' || segment === '..')
+  ) {
     return fallback;
   }
 

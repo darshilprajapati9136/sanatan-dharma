@@ -207,5 +207,49 @@ export const festivalGuides: FestivalGuide[] = [
       label: 'Drik Panchang · Ekadashi calendar and tradition distinctions',
       href: 'https://www.drikpanchang.com/vrats/ekadashidates.html'
     }
+  },
+  {
+    slug: 'dussehra',
+    kind: 'festival',
+    title: {en: 'Dussehra', hi: 'दशहरा'},
+    summary: {
+      en: 'The triumph of Rama over Ravana, closing the nine nights of Navratri.',
+      hi: 'रावण पर राम की विजय का पर्व, नवरात्रि की नौ रातों का समापन।'
+    },
+    why: {
+      en: 'Vijayadashami — the tenth day — is read as the victory of dharma over adharma. In the north, Ramlila performances enact the Ramayana across nine nights before Ravana effigies burn; in the east, the same day follows Durga Puja and the immersion of Devi idols.',
+      hi: 'विजयादशमी — दसवाँ दिन — अधर्म पर धर्म की विजय के रूप में मनाई जाती है। उत्तर भारत में नौ रातों तक रामलीला होती है और रावण के पुतले जलते हैं; पूर्वी भारत में यही दिन दुर्गा पूजा और देवी मूर्तियों के विसर्जन के बाद आता है।'
+    },
+    practice: {
+      en: 'Watch a local Ramlila or read a short passage of the Ramayana with family. Many begin new learning or tools on this day (Vidyarambham, Shastra Puja) — follow your community’s custom.',
+      hi: 'स्थानीय रामलीला देखें या परिवार के साथ रामायण का संक्षिप्त पाठ करें। अनेक लोग इस दिन नई विद्या या उपकरणों का आरंभ करते हैं (विद्यारंभ, शस्त्र पूजा) — अपने समुदाय की परंपरा का पालन करें।'
+    },
+    related: '/learn/deities/rama',
+    source: {
+      label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
+      href: 'https://www.drikpanchang.com/'
+    }
+  },
+  {
+    slug: 'raksha-bandhan',
+    kind: 'festival',
+    title: {en: 'Raksha Bandhan', hi: 'रक्षाबंधन'},
+    summary: {
+      en: 'A full-moon day honouring the bond of protection between siblings.',
+      hi: 'भाई-बहन के रक्षा-बंधन का पूर्णिमा पर्व।'
+    },
+    why: {
+      en: 'On Shravan Purnima, sisters tie a rakhi thread and brothers pledge protection — a mutual vow of care rather than a one-sided ritual in most families today. The day also coincides with Upakarma, when many Brahmin communities renew the sacred thread.',
+      hi: 'श्रावण पूर्णिमा को बहनें राखी बाँधती हैं और भाई रक्षा का वचन देते हैं — आज अधिकांश परिवारों में यह परस्पर स्नेह का व्रत है। इसी दिन उपाकर्म भी पड़ता है, जब अनेक ब्राह्मण समुदाय यज्ञोपवीत बदलते हैं।'
+    },
+    practice: {
+      en: 'Tie the rakhi, share sweets, and speak one concrete promise of support for the year ahead. If siblings are far apart, a call and a posted rakhi carry the same meaning.',
+      hi: 'राखी बाँधें, मिठाई बाँटें और आने वाले वर्ष के लिए सहायता का एक ठोस वचन दें। भाई-बहन दूर हों तो फोन और डाक से भेजी राखी भी वही अर्थ रखती है।'
+    },
+    related: '/learn/practices/dana-seva',
+    source: {
+      label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
+      href: 'https://www.drikpanchang.com/'
+    }
   }
 ];

@@ -70,7 +70,7 @@ export const otherTopics: LearnTopic[] = [
         }
       }
     ],
-    relatedSlugs: ['shiva', 'ramayana', 'bhagavad-gita'],
+    relatedSlugs: ['shiva', 'ramayana', 'bhagavad-gita', 'krishna'],
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
@@ -316,5 +316,100 @@ export const otherTopics: LearnTopic[] = [
     status: 'draft',
     sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
+  },
+  // ---- More Deities ----
+  {
+    slug: 'devi',
+    category: 'deities',
+    title: {en: 'Devi', hi: 'देवी'},
+    summary: {
+      en: 'The Divine Feminine in her many forms, from Durga and Lakshmi to Saraswati and Kali.',
+      hi: 'दुर्गा और लक्ष्मी से सरस्वती और काली तक — अनेक रूपों में दिव्य स्त्रीशक्ति।'
+    },
+    sections: [
+      {
+        heading: {en: 'Overview', hi: 'परिचय'},
+        body: {
+          en: 'Devi, meaning goddess, is worshipped as the supreme reality in Shakta traditions and honoured across nearly all Hindu traditions. She appears in many forms — gentle as Lakshmi and Saraswati, fierce as Durga and Kali — each revealing a different face of the same power, Shakti.',
+          hi: 'देवी अर्थात् स्त्री-दिव्यता; शाक्त परंपराओं में परम तत्व के रूप में पूजित और लगभग सभी हिंदू परंपराओं में सम्मानित। उनके अनेक रूप हैं — लक्ष्मी और सरस्वती के सौम्य रूप, दुर्गा और काली के उग्र रूप — प्रत्येक उसी शक्ति का अलग मुख प्रकट करता है।'
+        }
+      },
+      {
+        heading: {en: 'Many forms, one power', hi: 'अनेक रूप, एक शक्ति'},
+        body: {
+          en: 'Navratri honours nine forms over nine nights; Durga Puja celebrates the victory over Mahisha; Diwali nights often centre on Lakshmi; spring learning rites invoke Saraswati. Regional calendars and stories differ, and each community’s telling deserves respect.',
+          hi: 'नवरात्रि में नौ रातों तक नौ रूपों की उपासना होती है; दुर्गा पूजा में महिषासुर पर विजय का उत्सव है; दीपावली की रातों में प्रायः लक्ष्मी केंद्र में हैं; वसंत में विद्या-आरंभ सरस्वती के आह्वान से होता है। क्षेत्रीय पंचांग और कथाएँ अलग हैं, और प्रत्येक समुदाय की परंपरा सम्मान की पात्र है।'
+        }
+      }
+    ],
+    relatedSlugs: ['vishnu', 'shiva', 'puja'],
+    difficulty: 'beginner',
+    readingTimeMinutes: 3,
+    status: 'draft',
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
+    updatedAt: '2026-09-19'
+  },
+  {
+    slug: 'krishna',
+    category: 'deities',
+    title: {en: 'Krishna', hi: 'कृष्ण'},
+    summary: {
+      en: 'The cowherd prince of Mathura and Vrindavan, teacher of the Bhagavad Gita.',
+      hi: 'मथुरा-वृंदावन के नंदनंदन, भगवद्गीता के उपदेशक।'
+    },
+    sections: [
+      {
+        heading: {en: 'Overview', hi: 'परिचय'},
+        body: {
+          en: 'Krishna is loved across traditions — as the child of Vrindavan, the friend and charioteer of Arjuna, and the teacher whose Gita discourse addresses duty, devotion and liberation. Vaishnava traditions hold him as supreme; the Bhagavata Purana gathers his stories most fully.',
+          hi: 'कृष्ण समस्त परंपराओं में प्रिय हैं — वृंदावन के बालक, अर्जुन के सखा-सारथि और कर्तव्य-भक्ति-मोक्ष का उपदेश देने वाले आचार्य के रूप में। वैष्णव परंपराएँ उन्हें परम मानती हैं; भागवत पुराण में उनकी कथाएँ सबसे विस्तार से मिलती हैं।'
+        }
+      },
+      {
+        heading: {en: 'Stories and teachings', hi: 'कथाएँ और उपदेश'},
+        body: {
+          en: 'Janmashtami remembers his midnight birth in Mathura. His Vrindavan pastimes (lila) fill song and dance traditions, while the Bhagavad Gita — his dialogue with Arjuna — is studied as philosophy, devotion and practical guidance together.',
+          hi: 'जन्माष्टमी मथुरा में उनके मध्यरात्रि जन्म की स्मृति है। वृंदावन की लीलाएँ गीत-नृत्य परंपराओं में बसी हैं, जबकि भगवद्गीता — अर्जुन के साथ उनका संवाद — दर्शन, भक्ति और व्यावहारिक मार्गदर्शन के रूप में पढ़ी जाती है।'
+        }
+      }
+    ],
+    relatedSlugs: ['vishnu', 'bhagavad-gita'],
+    difficulty: 'beginner',
+    readingTimeMinutes: 3,
+    status: 'draft',
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
+    updatedAt: '2026-09-19'
+  },
+  // ---- More Practices ----
+  {
+    slug: 'bhakti',
+    category: 'practices',
+    title: {en: 'Bhakti', hi: 'भक्ति'},
+    summary: {
+      en: 'The path of loving devotion, sung by saints across regions and languages.',
+      hi: 'प्रेमपूर्ण समर्पण का मार्ग, जिसे क्षेत्रों और भाषाओं के संतों ने गाया।'
+    },
+    sections: [
+      {
+        heading: {en: 'Overview', hi: 'परिचय'},
+        body: {
+          en: 'Bhakti is devotion directed toward a chosen deity or the divine in any form — through song (kirtan, bhajan), remembrance, service and surrender. The medieval bhakti movements carried this path across India in Tamil, Hindi, Marathi, Bengali and many other languages.',
+          hi: 'भक्ति इष्टदेव या किसी भी रूप में दिव्यता के प्रति समर्पण है — कीर्तन-भजन, स्मरण, सेवा और शरणागति के माध्यम से। मध्यकालीन भक्ति आंदोलनों ने तमिल, हिंदी, मराठी, बंगाली समेत अनेक भाषाओं में यह मार्ग पूरे भारत में फैलाया।'
+        }
+      },
+      {
+        heading: {en: 'How it is practised', hi: 'अभ्यास के रूप'},
+        body: {
+          en: 'Common expressions include congregational singing, daily remembrance (smarana), pilgrimage, and selfless service. Bhakti accommodates many temperaments: it can be quiet and personal, or communal and musical.',
+          hi: 'सामूहिक गायन, दैनिक स्मरण, तीर्थयात्रा और निस्वार्थ सेवा इसके सामान्य रूप हैं। भक्ति अनेक स्वभावों को समेटती है — यह शांत और व्यक्तिगत भी हो सकती है, सामुदायिक और संगीतमय भी।'
+        }
+      }
+    ],
+    relatedSlugs: ['puja', 'mantra-japa', 'karma'],
+    difficulty: 'beginner',
+    readingTimeMinutes: 3,
+    status: 'draft',
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
+    updatedAt: '2026-09-19'
   }
 ];

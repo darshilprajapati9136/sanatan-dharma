@@ -70,7 +70,7 @@ export const festivalGuides: FestivalGuide[] = [
       en: 'Follow one simple daily observance, such as lighting a lamp or reading a Devi-related passage. Fasting rules differ widely; participate only in ways that suit your health and confirm local practice with your community.',
       hi: 'कोई एक सरल दैनिक नियम अपनाएँ, जैसे दीप जलाना या देवी से जुड़ा कोई पाठ पढ़ना। उपवास के नियम बहुत भिन्न हैं; स्वास्थ्य के अनुसार ही भाग लें और स्थानीय परंपरा अपने समुदाय से जानें।'
     },
-    related: '/learn/practices/puja',
+    related: '/learn/deities/devi',
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'
@@ -92,7 +92,7 @@ export const festivalGuides: FestivalGuide[] = [
       en: 'Read or listen to a Krishna-related passage, such as a chapter of the Bhagavad Gita. If visiting a temple at night, follow local timings and guidance.',
       hi: 'कृष्ण से जुड़ा कोई पाठ पढ़ें या सुनें, जैसे भगवद्गीता का कोई अध्याय। रात्रि में मंदिर जाएँ तो स्थानीय समय और निर्देशों का पालन करें।'
     },
-    related: '/learn/scriptures/bhagavad-gita',
+    related: '/learn/deities/krishna',
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'

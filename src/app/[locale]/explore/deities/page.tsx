@@ -6,7 +6,9 @@ import {getLearnTopic} from '@/content/learn';
 
 const TOPICS = [
   ['deities', 'vishnu'],
-  ['deities', 'shiva']
+  ['deities', 'shiva'],
+  ['deities', 'devi'],
+  ['deities', 'krishna']
 ] as const;
 
 export async function generateMetadata({

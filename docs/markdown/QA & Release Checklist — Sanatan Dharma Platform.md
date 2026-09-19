@@ -998,3 +998,9 @@ Next.js dev generated AGENTS.md and CLAUDE.md; these are framework documentation
 - Added `generateMetadata` to 14 routes (home, about, privacy, terms, login, signup, profile, scriptures index/detail/section, festival detail, explore hub and gateways), reusing existing i18n keys and database-backed titles with safe fallbacks.
 - README now carries the 5-minute demonstration journey and the full bilingual route list.
 - Passed: ESLint, `tsc --noEmit`, 5 content tests, production build, HTTP smoke EN+HI (previous redirect targets now return real pages), live 200s and content/title checks for all new Explore routes in both languages.
+
+## V1 follow-up record — 19 September 2026 (learn topics: devi, krishna, bhakti)
+
+- Added three Learn topics (Devi, Krishna, Bhakti) with two-section EN+HI bodies, editorial source labels and valid related links; Learn grows from 23 to 26 topics with no new message keys.
+- Navratri and Janmashtami festival guides now link to the Devi and Krishna topics; Deities gateway lists all four deity topics; Vishnu cross-links Krishna.
+- Passed: ESLint, `tsc --noEmit`, 5 content tests (incl. slug uniqueness and link integrity), production build, HTTP smoke EN+HI, live 200s for the new topics, search pages and linked festival guides in both languages.

@@ -1004,3 +1004,10 @@ Next.js dev generated AGENTS.md and CLAUDE.md; these are framework documentation
 - Added three Learn topics (Devi, Krishna, Bhakti) with two-section EN+HI bodies, editorial source labels and valid related links; Learn grows from 23 to 26 topics with no new message keys.
 - Navratri and Janmashtami festival guides now link to the Devi and Krishna topics; Deities gateway lists all four deity topics; Vishnu cross-links Krishna.
 - Passed: ESLint, `tsc --noEmit`, 5 content tests (incl. slug uniqueness and link integrity), production build, HTTP smoke EN+HI, live 200s for the new topics, search pages and linked festival guides in both languages.
+
+## V1 follow-up record — 19 September 2026 (live Prokerala panchang)
+
+- Wired Prokerala (OAuth client-credentials, token + day caches, 8s timeouts) behind `PanchangProvider`: tithi/nakshatra/paksha/sunrise/sunset/Rahu/Abhijit EN+HI plus transitions, yoga, karana, moonrise/moonset, Yamaganda, Gulika, Abhijit details. Sample fixture retained as labelled fallback; `observance`, month and samvat stay honestly unavailable.
+- Cross-check 19 Sep 2026 New Delhi vs Drik Panchang: tithi (Ashtami→Navami 15:27), nakshatra (Moola→Purva Ashadha 01:43), yoga, karana, Rahu (09:13–10:44), Abhijit (11:50–12:38), Yamaganda match; sunrise/sunset differ ~4 min by sunrise definition (Drik Hindu sunrise vs API astronomical).
+- Homepage and Panchang page render Live badge with Prokerala attribution; sample notice hidden when live. Credentials live only in gitignored `.env.local` as server-only vars.
+- Passed: ESLint, `tsc --noEmit`, 5 content tests, production build, HTTP smoke EN+HI, live rendering checks of live values and detail fields in both languages.

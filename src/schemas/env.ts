@@ -20,7 +20,9 @@ export const serverEnvSchema = clientEnvSchema.extend({
     .default('development'),
   DATABASE_URL: z.string().min(1).optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
-  AI_API_KEY: z.string().min(1).optional()
+  AI_API_KEY: z.string().min(1).optional(),
+  PROKERALA_CLIENT_ID: z.string().min(1).optional(),
+  PROKERALA_CLIENT_SECRET: z.string().min(1).optional()
 });
 
 export type ClientEnv = z.infer<typeof clientEnvSchema>;
@@ -39,4 +41,8 @@ export function isSupabaseConfigured(): boolean {
 
 export function isDatabaseConfigured(): boolean {
   return Boolean(process.env.DATABASE_URL);
+}
+
+export function isPanchangLiveConfigured(): boolean {
+  return Boolean(process.env.PROKERALA_CLIENT_ID && process.env.PROKERALA_CLIENT_SECRET);
 }

@@ -6,7 +6,6 @@ import {LanguageSwitcher} from '@/components/layout/language-switcher';
 import {Badge} from '@/components/ui/badge';
 import {Avatar} from '@/components/ui/avatar';
 import {getSession} from '@/server/services/auth';
-import {cn} from '@/lib/utils';
 
 const navItems = [
   {href: '/', key: 'today'},
@@ -26,6 +25,7 @@ const exploreItems = [
 
 export async function SiteHeader() {
   const t = await getTranslations('nav');
+  const authT = await getTranslations('auth');
   const {user} = await getSession();
   const displayName = (user?.user_metadata?.name as string | undefined) ?? user?.email ?? '';
 
@@ -96,20 +96,22 @@ export async function SiteHeader() {
             <Icon name="bookmark" className="h-5 w-5" />
           </Link>
           <Suspense fallback={<span className="w-20" />}><LanguageSwitcher /></Suspense>
-          <Link
-            href="/profile"
-            aria-label={t('profile')}
-            className={cn(
-              'hidden h-9 w-9 items-center justify-center rounded-lg transition-colors xl:inline-flex',
-              user ? 'hover:bg-surface-strong' : 'text-muted hover:bg-surface-strong hover:text-foreground'
-            )}
-          >
-            {user ? (
+          {user ? (
+            <Link
+              href="/profile"
+              aria-label={t('profile')}
+              className="hidden h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-surface-strong xl:inline-flex"
+            >
               <Avatar name={displayName} size="sm" />
-            ) : (
-              <Icon name="user" className="h-5 w-5" />
-            )}
-          </Link>
+            </Link>
+          ) : (
+            <Link
+              href="/login"
+              className="hidden rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:opacity-90 xl:inline-flex"
+            >
+              {authT('signIn')}
+            </Link>
+          )}
 
           <details className="group xl:hidden">
             <summary className="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface-strong hover:text-foreground [&::-webkit-details-marker]:hidden">
@@ -130,8 +132,7 @@ export async function SiteHeader() {
                   ...exploreItems.map((item) => ({...item, href: item.href})),
                   {href: '/ask', key: 'askDharma'},
                   {href: '/search', key: 'search'},
-                  {href: '/library', key: 'library'},
-                  {href: '/profile', key: 'profile'}
+                  {href: '/library', key: 'library'}
                 ].map((item) => (
                   <Link
                     key={item.key}
@@ -141,6 +142,21 @@ export async function SiteHeader() {
                     {t(item.key)}
                   </Link>
                 ))}
+                {user ? (
+                  <Link
+                    href="/profile"
+                    className="rounded-lg px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-strong"
+                  >
+                    {t('profile')}
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="rounded-lg px-3 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-surface-strong"
+                  >
+                    {authT('signIn')}
+                  </Link>
+                )}
               </div>
             </nav>
           </details>

@@ -10,6 +10,19 @@ Open http://localhost:3000/en or http://localhost:3000/hi.
 
 Public Today, Panchang preview, Learn, Festivals, Search, Ask reading discovery and browser-local saved reading work without a database. Supabase configuration and published content are required for authentication and the scripture reader. Preserve the existing project's database; do not run migrations against production just to demonstrate the site.
 
+## 5-minute demonstration journey
+
+1. Open `/en` — note the IST date, the clearly labelled illustrative Panchang preview, and the festival/Vrat upcoming list.
+2. Open Panchang, expand Detailed view and the terminology glossary.
+3. Explore Festivals, filter Vrat, and read the Ekadashi WHAT → WHY → HOW → SOURCES guide.
+4. Search `karma` (or `कर्म` on `/hi`), then Ask the same question to find grounded reading.
+5. Follow Learn's first guided step, save it, and revisit Library. Switch language mid-search — query and filters persist.
+6. Open Profile while signed out to verify the localized login redirect.
+
+## Routes
+
+Today `/`, Panchang `/panchang`, Practise `/practise`, Learn `/learn`, Scriptures `/scriptures`, Explore (`/explore`, `/explore/festivals`, `/explore/deities`, `/explore/mantras`, `/explore/philosophy`, `/explore/traditions`), Ask `/ask`, Search `/search`, Library `/library`, Profile `/profile` — every route in `/en` and `/hi`.
+
 ## Checks
 
 ```sh

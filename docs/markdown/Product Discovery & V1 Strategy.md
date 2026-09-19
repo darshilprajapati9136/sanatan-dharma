@@ -15,6 +15,7 @@ Next.js App Router, TypeScript, Tailwind tokens/components, next-intl locale rou
 - Today: real civil date labelled IST, visibly illustrative Panchang preview, meaning, three optional practices, short learning, discovery, Ask and an honest observance-date availability state.
 - Panchang: typed context, provider/provenance boundary, sample values without an applicable date, unavailable unverified fields, expandable details and terminology. Preview location is fixed New Delhi; it is never presented as detected user location.
 - Festivals: Diwali, Holi, Navratri, Janmashtami, Maha Shivaratri, Ganesh Chaturthi, Makar Sankranti, Ekadashi, Pradosh; festival/vrat filters; what/why/how/source/related reading; homepage upcoming preview. No unverified dates.
+- Explore: hub plus Deities, Mantras, Philosophy and Traditions gateways over existing Learn topics (former redirects); metadata titles across public routes.
 - Learn: three guided tracks (foundations, scripture, practice) over existing articles, Hindi improvements for the primary journey, explicit fallback labels on legacy untranslated sections, browser-local saved reading and library.
 - Scriptures: existing source/translation separation retained, interpretation context and links to beginner introductions. Reader availability depends on published Supabase content.
 - Search: bilingual local index of Learn concepts, scripture introductions, festivals and Panchang terms; query normalization, typed results, filters, empty states. Not a full verse index or semantic search.

@@ -7,6 +7,22 @@ import {pickLocalizedText} from '@/lib/localized';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string; slug: string}>;
+}) {
+  const {locale, slug} = await params;
+  const navT = await getTranslations({locale, namespace: 'nav'});
+  const scripture = await getScriptureStructure(slug);
+  if (!scripture) return {title: navT('scriptures')};
+  return {
+    title: pickLocalizedText(locale, scripture.titleEn, scripture.titleHi) || scripture.slug,
+    description:
+      pickLocalizedText(locale, scripture.descriptionEn, scripture.descriptionHi) || undefined
+  };
+}
+
 type Section = {
   id: string;
   parentId: string | null;

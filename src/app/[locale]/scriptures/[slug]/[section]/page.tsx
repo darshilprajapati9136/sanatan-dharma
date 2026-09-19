@@ -8,6 +8,24 @@ import {pickLocalizedText} from '@/lib/localized';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string; slug: string; section: string}>;
+}) {
+  const {locale, slug, section: sectionSlug} = await params;
+  const navT = await getTranslations({locale, namespace: 'nav'});
+  const scripture = await getScriptureStructure(slug);
+  if (!scripture) return {title: navT('scriptures')};
+  const section = await getScriptureSection(scripture.id, sectionSlug);
+  const scriptureTitle =
+    pickLocalizedText(locale, scripture.titleEn, scripture.titleHi) || scripture.slug;
+  if (!section) return {title: scriptureTitle};
+  const sectionTitle =
+    pickLocalizedText(locale, section.titleEn, section.titleHi) || section.slug;
+  return {title: `${sectionTitle} · ${scriptureTitle}`};
+}
+
 export default async function ScriptureSectionPage({
   params
 }: {

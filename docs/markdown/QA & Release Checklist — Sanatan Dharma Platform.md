@@ -991,3 +991,10 @@ Next.js dev generated AGENTS.md and CLAUDE.md; these are framework documentation
 - Homepage Upcoming section now shows three festivals plus two Vrat guides with one-line summaries, so both recurring observances (Ekadashi, Pradosh) surface on Today.
 - Profile preferences (location, tradition, calendar) deliberately deferred: no such columns exist in `profiles`/`user_preferences`, and a live-database migration is out of scope for V1. Language preference already covers the submission need.
 - Passed: ESLint, `tsc --noEmit`, 5 content tests, production build, HTTP smoke EN+HI, live rendering checks of the spotlight rows and summaries in both languages.
+
+## V1 follow-up record — 19 September 2026 (explore gateways, metadata, readme)
+
+- Replaced the five Explore redirects with real gateway pages: hub plus Deities, Mantras, Philosophy and Traditions built from existing Learn topics with `TopicCard` rows and related-reading links. No new message keys.
+- Added `generateMetadata` to 14 routes (home, about, privacy, terms, login, signup, profile, scriptures index/detail/section, festival detail, explore hub and gateways), reusing existing i18n keys and database-backed titles with safe fallbacks.
+- README now carries the 5-minute demonstration journey and the full bilingual route list.
+- Passed: ESLint, `tsc --noEmit`, 5 content tests, production build, HTTP smoke EN+HI (previous redirect targets now return real pages), live 200s and content/title checks for all new Explore routes in both languages.

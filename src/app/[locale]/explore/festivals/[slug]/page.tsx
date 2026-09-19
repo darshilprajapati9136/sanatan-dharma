@@ -3,6 +3,20 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {festivalGuides} from '@/content/festivals';
 import {pickLocalizedText} from '@/lib/localized';
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string; slug: string}>;
+}) {
+  const {locale, slug} = await params;
+  const t = await getTranslations({locale, namespace: 'daily'});
+  const guide = festivalGuides.find((x) => x.slug === slug);
+  if (!guide) return {title: t('festivals')};
+  return {
+    title: pickLocalizedText(locale, guide.title.en, guide.title.hi),
+    description: pickLocalizedText(locale, guide.summary.en, guide.summary.hi)
+  };
+}
 export default async function FestivalPage({
   params
 }: {

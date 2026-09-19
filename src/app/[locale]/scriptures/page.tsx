@@ -4,6 +4,15 @@ import {EmptyState} from '@/components/ui/empty-state';
 import {listPublishedScriptures} from '@/server/services/content';
 import {getLearnCategory} from '@/content/learn';
 import {pickLocalizedText} from '@/lib/localized';
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string}>;
+}) {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'nav'});
+  return {title: t('scriptures')};
+}
 
 export const dynamic = 'force-dynamic';
 

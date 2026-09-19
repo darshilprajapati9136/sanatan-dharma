@@ -3,6 +3,15 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {SignupForm} from '@/components/auth/signup-form';
 import {Link} from '@/i18n/navigation';
 import {getSession, getSafeNextPath} from '@/server/services/auth';
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string}>;
+}) {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'auth'});
+  return {title: t('signupTitle')};
+}
 
 export default async function SignupPage({
   params,

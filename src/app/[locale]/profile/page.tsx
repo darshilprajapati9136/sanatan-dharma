@@ -3,6 +3,15 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ProfilePreferences} from '@/components/profile/profile-preferences';
 import {EmptyState} from '@/components/ui/empty-state';
 import {getCurrentProfile, getSession} from '@/server/services/auth';
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string}>;
+}) {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'profile'});
+  return {title: t('title')};
+}
 
 function formatMemberSince(date: Date | string, locale: string) {
   return new Intl.DateTimeFormat(locale === 'hi' ? 'hi-IN' : 'en-US', {

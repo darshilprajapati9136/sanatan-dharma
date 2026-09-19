@@ -5,6 +5,15 @@ import {PanchangSummary} from '@/components/home/panchang-summary';
 import {PracticeList} from '@/components/home/practice-list';
 import {festivalGuides} from '@/content/festivals';
 import {pickLocalizedText} from '@/lib/localized';
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string}>;
+}) {
+  const {locale} = await params;
+  const t = await getTranslations({locale, namespace: 'metadata'});
+  return {title: t('title'), description: t('description')};
+}
 export default async function HomePage({
   params
 }: {

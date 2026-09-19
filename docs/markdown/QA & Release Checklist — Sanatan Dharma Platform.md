@@ -976,3 +976,18 @@ Never:
 Authenticated signup/login/logout/profile save and session expiry were not exercised with a test account. Public-launch accessibility audit, provider integration, content review, full Hindi article translation and production RAG remain outstanding. No production deployment performed. Browser checks are recorded manual checks; the repeatable automated suite is content/HTTP based.
 
 Next.js dev generated AGENTS.md and CLAUDE.md; these are framework documentation pointers, not application feature changes.
+
+## V1 follow-up record — 19 September 2026 (festivals, guided paths, scriptures fallback)
+
+- Added six festival/vrat guides (Navratri, Janmashtami, Maha Shivaratri, Ganesh Chaturthi, Makar Sankranti, Pradosh) with English+Hindi WHAT/WHY/HOW/SOURCES/RELATED structure; no invented dates.
+- Homepage Upcoming section now previews four guides; festival detail Hindi external-source label generalised (was hardcoded to Ekadashi).
+- Learn guided path expanded from one 3-step list to three tracks (foundations, scripture, practice) with ten new `daily` message keys in both locales.
+- Scriptures page falls back to the five Learn scripture introductions when the database reader is empty.
+- Passed: ESLint, `tsc --noEmit`, 5 content tests (incl. message parity), production build (108 pages), HTTP smoke EN+HI, live 200s for new festival slugs, `/en`+`/hi` Learn pages with all three tracks rendering in both languages, and linked Learn topics.
+- Limits unchanged from the earlier record: no test-account auth exercise, no provider/RAG/production-deployment verification.
+
+## V1 follow-up record — 19 September 2026 (upcoming spotlight)
+
+- Homepage Upcoming section now shows three festivals plus two Vrat guides with one-line summaries, so both recurring observances (Ekadashi, Pradosh) surface on Today.
+- Profile preferences (location, tradition, calendar) deliberately deferred: no such columns exist in `profiles`/`user_preferences`, and a live-database migration is out of scope for V1. Language preference already covers the submission need.
+- Passed: ESLint, `tsc --noEmit`, 5 content tests, production build, HTTP smoke EN+HI, live rendering checks of the spotlight rows and summaries in both languages.

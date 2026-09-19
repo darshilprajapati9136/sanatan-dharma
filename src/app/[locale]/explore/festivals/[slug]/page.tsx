@@ -58,7 +58,7 @@ export default async function FestivalPage({
             href={g.source.href}
           >
             {locale === 'hi'
-              ? 'दृक पंचांग · एकादशी और परंपराओं का संदर्भ'
+              ? 'दृक पंचांग · पर्व-सूची और परंपराओं का संदर्भ'
               : g.source.label}{' '}
             ↗
           </a>

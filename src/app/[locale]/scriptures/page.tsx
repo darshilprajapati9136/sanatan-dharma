@@ -2,6 +2,7 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {EmptyState} from '@/components/ui/empty-state';
 import {listPublishedScriptures} from '@/server/services/content';
+import {getLearnCategory} from '@/content/learn';
 import {pickLocalizedText} from '@/lib/localized';
 
 export const dynamic = 'force-dynamic';
@@ -18,6 +19,7 @@ export default async function ScripturesPage({
   const navT = await getTranslations({locale, namespace: 'nav'});
   const daily = await getTranslations('daily');
   const scriptures = await listPublishedScriptures();
+  const introductions = getLearnCategory('scriptures')?.topics ?? [];
 
   return (
     <section className="mx-auto w-full max-w-3xl px-4 py-16 lg:px-8">
@@ -39,11 +41,34 @@ export default async function ScripturesPage({
         </Link>
       </aside>
       {scriptures.length === 0 ? (
-        <EmptyState
-          icon="book"
-          title={t('emptyTitle')}
-          description={t('emptyDescription')}
-        />
+        <>
+          <div className="flex flex-col gap-4">
+            {introductions.map((topic) => (
+              <Link
+                key={topic.slug}
+                href={`/learn/scriptures/${topic.slug}`}
+                className="block rounded-2xl border border-border bg-surface p-6 shadow-sm transition-colors hover:border-primary lg:p-8"
+              >
+                <h2 className="font-serif text-2xl font-semibold text-foreground">
+                  {pickLocalizedText(locale, topic.title.en, topic.title.hi)}
+                </h2>
+                <p className="mt-2 text-muted">
+                  {pickLocalizedText(locale, topic.summary.en, topic.summary.hi)}
+                </p>
+                <p className="mt-3 text-sm font-medium text-primary">
+                  {daily('related')} →
+                </p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8">
+            <EmptyState
+              icon="book"
+              title={t('emptyTitle')}
+              description={t('emptyDescription')}
+            />
+          </div>
+        </>
       ) : (
         <div className="flex flex-col gap-4">
           {scriptures.map((scripture) => {

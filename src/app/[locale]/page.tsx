@@ -3,6 +3,8 @@ import {Link} from '@/i18n/navigation';
 import {ButtonLink} from '@/components/ui/button';
 import {PanchangSummary} from '@/components/home/panchang-summary';
 import {PracticeList} from '@/components/home/practice-list';
+import {festivalGuides} from '@/content/festivals';
+import {pickLocalizedText} from '@/lib/localized';
 export default async function HomePage({
   params
 }: {
@@ -122,6 +124,35 @@ export default async function HomePage({
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
           {t('upcomingNote')}
         </p>
+        <div className="mt-6 divide-y divide-border border-y border-border">
+          {[
+            ...festivalGuides
+              .filter((g) => g.kind === 'festival')
+              .slice(0, 3),
+            ...festivalGuides.filter((g) => g.kind === 'vrat').slice(0, 2)
+          ].map((g) => (
+            <Link
+              key={g.slug}
+              href={`/explore/festivals/${g.slug}`}
+              className="group grid gap-1 py-5 sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-4"
+            >
+              <div>
+                <p className="text-xs uppercase tracking-widest text-muted">
+                  {t(g.kind)}
+                </p>
+                <p className="mt-1 font-serif text-lg group-hover:text-primary">
+                  {pickLocalizedText(locale, g.title.en, g.title.hi)}
+                </p>
+                <p className="mt-1 max-w-xl text-sm leading-relaxed text-muted">
+                  {pickLocalizedText(locale, g.summary.en, g.summary.hi)}
+                </p>
+              </div>
+              <span aria-hidden="true" className="text-muted">
+                →
+              </span>
+            </Link>
+          ))}
+        </div>
         <Link
           href="/explore/festivals"
           className="mt-5 inline-block text-sm font-semibold text-primary"

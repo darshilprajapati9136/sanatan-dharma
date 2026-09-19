@@ -3,6 +3,7 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ProfilePreferences} from '@/components/profile/profile-preferences';
 import {EmptyState} from '@/components/ui/empty-state';
 import {getCurrentProfile, getSession} from '@/server/services/auth';
+import {getPreferences} from '@/server/services/account';
 export async function generateMetadata({
   params
 }: {
@@ -57,6 +58,7 @@ export default async function ProfilePage({
   }
 
   const profile = await getCurrentProfile(user);
+  const prefs = await getPreferences(user.id);
 
   return (
     <section className="mx-auto w-full max-w-3xl px-4 py-16 lg:px-8">
@@ -81,6 +83,9 @@ export default async function ProfilePage({
             email={user.email ?? ''}
             initialDisplayName={profile?.displayName ?? ''}
             initialLanguage={profile?.preferredLanguage ?? 'en'}
+            initialLocation={prefs?.location ?? 'New Delhi'}
+            initialTradition={prefs?.tradition ?? null}
+            initialCalendar={prefs?.calendar ?? 'purnimanta'}
           />
         </div>
       </div>

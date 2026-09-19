@@ -56,6 +56,27 @@ test('indexed content links resolve to local records', () => {
   );
   assert.equal(new Set(slugs).size, slugs.length);
 });
+test('festival dates are well-formed, ordered and honestly noted', () => {
+  const dated = festivalGuides.filter((g) => g.dates && g.dates.length > 0);
+  // Twice-monthly vrats stay dateless and direct readers to local calendars.
+  for (const g of festivalGuides.filter((x) => x.kind === 'vrat')) {
+    assert.equal(g.dates, undefined, g.slug);
+  }
+  assert.ok(dated.length >= 9, `expected dated guides, got ${dated.length}`);
+  for (const g of dated) {
+    const years = g.dates!.map((d) => d.year);
+    assert.deepEqual(years, [...years].sort((a, b) => a - b), g.slug);
+    for (const d of g.dates!) {
+      assert.match(d.date, /^\d{4}-\d{2}-\d{2}$/, `${g.slug} ${d.year}`);
+      assert.ok(d.basis.length > 0, `${g.slug} basis`);
+      if (d.endDate) {
+        assert.match(d.endDate, /^\d{4}-\d{2}-\d{2}$/, `${g.slug} end`);
+        assert.ok(d.endDate >= d.date, `${g.slug} range`);
+      }
+      if (d.note) assert.ok(d.note.en.length > 0 && d.note.hi!.length > 0, `${g.slug} note`);
+    }
+  }
+});
 test('new interface messages are complete in both locales', () => {
   assert.deepEqual(Object.keys(en.daily).sort(), Object.keys(hi.daily).sort());
   for (const value of Object.values(hi.daily)) assert.ok(value.length > 0);

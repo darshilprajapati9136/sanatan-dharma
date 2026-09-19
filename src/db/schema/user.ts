@@ -82,6 +82,10 @@ export const userPreferences = pgTable(
     defaultTranslationId: uuid('default_translation_id'),
     defaultCommentaryId: uuid('default_commentary_id'),
     preferredReadingMode: text('preferred_reading_mode').notNull().default('simple'),
+    // Added for account preferences (migration 0002, NOT yet applied to live DB).
+    location: text('location').notNull().default('New Delhi'),
+    tradition: text('tradition'),
+    calendar: text('calendar').notNull().default('purnimanta'),
     updatedAt: timestamps.updatedAt
   },
   () => [
@@ -100,6 +104,44 @@ export const userPreferences = pgTable(
       to: 'authenticated',
       using: sql`user_id = auth.uid()`,
       withCheck: sql`user_id = auth.uid()`
+    })
+  ]
+);
+
+/**
+ * Browser-saved Learn articles synced to the account (migration 0003,
+ * NOT yet applied to live DB). Verse bookmarks keep using `bookmarks`.
+ */
+export const learnBookmarks = pgTable(
+  'learn_bookmarks',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').notNull(),
+    category: text('category').notNull(),
+    slug: text('slug').notNull(),
+    createdAt: timestamps.createdAt
+  },
+  (table) => [
+    uniqueIndex('learn_bookmarks_user_content_unique').on(
+      table.userId,
+      table.category,
+      table.slug
+    ),
+    index('learn_bookmarks_user_idx').on(table.userId),
+    pgPolicy('learn_bookmarks_select_own', {
+      for: 'select',
+      to: 'authenticated',
+      using: sql`user_id = auth.uid()`
+    }),
+    pgPolicy('learn_bookmarks_insert_own', {
+      for: 'insert',
+      to: 'authenticated',
+      withCheck: sql`user_id = auth.uid()`
+    }),
+    pgPolicy('learn_bookmarks_delete_own', {
+      for: 'delete',
+      to: 'authenticated',
+      using: sql`user_id = auth.uid()`
     })
   ]
 );

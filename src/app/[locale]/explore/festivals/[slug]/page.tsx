@@ -31,6 +31,18 @@ export default async function FestivalPage({
   const visual = await getTranslations('visual');
   const local = (v: {en: string; hi?: string}) =>
     pickLocalizedText(locale, v.en, v.hi);
+  const dateFmt = new Intl.DateTimeFormat(locale === 'hi' ? 'hi-IN' : 'en-IN', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Asia/Kolkata'
+  });
+  const formatRange = (d: {date: string; endDate?: string}) => {
+    const start = dateFmt.format(new Date(`${d.date}T00:00:00`));
+    if (!d.endDate) return start;
+    const end = dateFmt.format(new Date(`${d.endDate}T00:00:00`));
+    return `${start} – ${end}`;
+  };
   return (
     <article className="mx-auto max-w-3xl px-4 py-14 lg:px-8">
       <Link href="/explore/festivals" className="text-sm text-primary">
@@ -45,6 +57,23 @@ export default async function FestivalPage({
       <p className="my-6 rounded-lg border border-border bg-surface p-4 text-sm leading-relaxed text-muted">
         {t('dateNote')}
       </p>
+      {g.dates && g.dates.length > 0 && (
+        <section aria-label={t('observedDates')} className="my-6 rounded-lg border border-border bg-surface p-4">
+          <h2 className="font-serif text-2xl">{t('observedDates')}</h2>
+          <dl className="mt-3 divide-y divide-border">
+            {g.dates.map((d) => (
+              <div key={d.year} className="flex flex-wrap justify-between gap-2 py-2 text-sm">
+                <dt className="font-semibold">{d.year}</dt>
+                <dd className="text-muted">
+                  {formatRange(d)} · {d.basis}
+                  {d.note ? ` — ${local(d.note)}` : ''}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="mt-2 text-xs text-muted">{t('dateBasis')}</p>
+        </section>
+      )}
       {[
         ['what', g.summary],
         ['whyFestival', g.why],

@@ -4,6 +4,7 @@ import {Breadcrumb} from '@/components/ui/breadcrumb';
 import {EmptyState} from '@/components/ui/empty-state';
 import {Link} from '@/i18n/navigation';
 import {getScriptureSection, getScriptureStructure, getSectionVerses} from '@/server/services/content';
+import {ProgressReporter} from '@/components/scriptures/progress-reporter';
 import {pickLocalizedText} from '@/lib/localized';
 
 export const dynamic = 'force-dynamic';
@@ -54,6 +55,12 @@ export default async function ScriptureSectionPage({
 
   return (
     <section className="mx-auto w-full max-w-3xl px-4 py-16 lg:px-8">
+      <ProgressReporter
+        scriptureId={scripture.id}
+        sectionId={section.id}
+        sectionIndex={scripture.sections.findIndex((s) => s.id === section.id)}
+        sectionTotal={scripture.sections.length}
+      />
       <Breadcrumb
         items={[
           {label: navT('scriptures'), href: '/scriptures'},

@@ -1,4 +1,15 @@
 import type {LocalizedText} from './learn/types';
+export interface FestivalDate {
+  year: number;
+  /** ISO start date (YYYY-MM-DD). */
+  date: string;
+  /** ISO end date for multi-day observances. */
+  endDate?: string;
+  /** Location basis, e.g. 'New Delhi'. */
+  basis: string;
+  /** Regional-variation or single-source caution. */
+  note?: LocalizedText;
+}
 export interface FestivalGuide {
   slug: string;
   kind: 'festival' | 'vrat';
@@ -8,6 +19,9 @@ export interface FestivalGuide {
   practice: LocalizedText;
   related: string;
   source: {label: string; href: string};
+  /** Researched civil dates. Absent for twice-monthly vrats — those guides
+   *  direct readers to a trusted local calendar instead. */
+  dates?: FestivalDate[];
 }
 export const festivalGuides: FestivalGuide[] = [
   {
@@ -30,7 +44,11 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Diwali · existing editorial introduction',
       href: '/learn/festivals/diwali'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-11-08', basis: 'New Delhi'},
+      {year: 2027, date: '2027-10-28', basis: 'New Delhi', note: {en: '29 October in some regions — confirm locally.', hi: 'कुछ क्षेत्रों में 29 अक्टूबर — स्थानीय पंचांग जाँचें।'}}
+    ]
   },
   {
     slug: 'holi',
@@ -52,7 +70,11 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Holi · existing editorial introduction',
       href: '/learn/festivals/holi'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-03-04', basis: 'New Delhi', note: {en: 'Holika Dahan the previous evening, 3 March.', hi: 'पूर्व संध्या 3 मार्च को होलिका दहन।'}},
+      {year: 2027, date: '2027-03-22', basis: 'New Delhi', note: {en: 'Holika Dahan the previous evening, 21 March.', hi: 'पूर्व संध्या 21 मार्च को होलिका दहन।'}}
+    ]
   },
   {
     slug: 'navratri',
@@ -74,7 +96,11 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-10-11', endDate: '2026-10-19', basis: 'New Delhi'},
+      {year: 2027, date: '2027-09-30', endDate: '2027-10-08', basis: 'New Delhi'}
+    ]
   },
   {
     slug: 'janmashtami',
@@ -96,7 +122,11 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-09-04', basis: 'New Delhi', note: {en: 'Smarta calendars mark 3 September; ISKCON 4 September.', hi: 'स्मार्त पंचांगों में 3 सितंबर; इस्कॉन में 4 सितंबर।'}},
+      {year: 2027, date: '2027-08-25', basis: 'New Delhi'}
+    ]
   },
   {
     slug: 'maha-shivaratri',
@@ -118,7 +148,11 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-02-15', basis: 'New Delhi'},
+      {year: 2027, date: '2027-03-06', basis: 'New Delhi', note: {en: '5 March in US time zones.', hi: 'अमेरिकी समय क्षेत्रों में 5 मार्च।'}}
+    ]
   },
   {
     slug: 'ganesh-chaturthi',
@@ -140,7 +174,11 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-09-14', basis: 'New Delhi'},
+      {year: 2027, date: '2027-09-04', basis: 'New Delhi', note: {en: '3 September in US time zones.', hi: 'अमेरिकी समय क्षेत्रों में 3 सितंबर।'}}
+    ]
   },
   {
     slug: 'makar-sankranti',
@@ -162,7 +200,11 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-01-14', basis: 'New Delhi', note: {en: 'Sacred bathing and charity best on 15 January.', hi: 'स्नान-दान के लिए 15 जनवरी उत्तम।'}},
+      {year: 2027, date: '2027-01-14', basis: 'New Delhi', note: {en: '15 January in some regions — confirm locally.', hi: 'कुछ क्षेत्रों में 15 जनवरी — स्थानीय पंचांग जाँचें।'}}
+    ]
   },
   {
     slug: 'pradosh',
@@ -228,7 +270,11 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-10-20', basis: 'New Delhi', note: {en: '21 October in the Bengal tradition.', hi: 'बंगाल परंपरा में 21 अक्टूबर।'}},
+      {year: 2027, date: '2027-10-09', basis: 'New Delhi'}
+    ]
   },
   {
     slug: 'raksha-bandhan',
@@ -250,6 +296,10 @@ export const festivalGuides: FestivalGuide[] = [
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'
-    }
+    },
+    dates: [
+      {year: 2026, date: '2026-08-28', basis: 'New Delhi', note: {en: '27 August in US time zones.', hi: 'अमेरिकी समय क्षेत्रों में 27 अगस्त।'}},
+      {year: 2027, date: '2027-08-17', basis: 'New Delhi', note: {en: 'Single-source date — confirm locally.', hi: 'एकल स्रोत की तिथि — स्थानीय जाँच करें।'}}
+    ]
   }
 ];

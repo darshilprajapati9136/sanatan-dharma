@@ -1,8 +1,8 @@
 'use client';
-import {useSyncExternalStore} from 'react';
+import {useEffect, useSyncExternalStore} from 'react';
 import {useTranslations} from 'next-intl';
 import {Link} from '@/i18n/navigation';
-import {readingListSnapshot, subscribeReadingList} from '@/lib/reading-list';
+import {readingListSnapshot, subscribeReadingList, syncReadingList} from '@/lib/reading-list';
 import {BookmarkButton} from './bookmark-button';
 export function ReadingList({
   topics
@@ -10,6 +10,10 @@ export function ReadingList({
   topics: {id: string; title: string; summary: string}[];
 }) {
   const t = useTranslations('daily');
+  // Best-effort account sync on library visits; local list always works.
+  useEffect(() => {
+    syncReadingList();
+  }, []);
   const snapshot = useSyncExternalStore(
     subscribeReadingList,
     readingListSnapshot,

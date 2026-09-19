@@ -9,24 +9,36 @@ import {Input} from '@/components/ui/input';
 import {FormField} from '@/components/ui/form-field';
 import {createClient} from '@/lib/supabase/client';
 
+import {CALENDARS, LOCATIONS, TRADITIONS} from '@/schemas/account';
+
 export function ProfilePreferences({
   userId,
   email,
   initialDisplayName,
-  initialLanguage
+  initialLanguage,
+  initialLocation,
+  initialTradition,
+  initialCalendar
 }: {
   userId: string;
   email: string;
   initialDisplayName: string;
   initialLanguage: 'en' | 'hi';
+  initialLocation: string;
+  initialTradition: string | null;
+  initialCalendar: string;
 }) {
   const t = useTranslations('profile');
   const locale = useLocale();
   const router = useRouter();
   const [displayName, setDisplayName] = useState(initialDisplayName);
   const [language, setLanguage] = useState<'en' | 'hi'>(initialLanguage);
+  const [location, setLocation] = useState(initialLocation);
+  const [tradition, setTradition] = useState(initialTradition ?? '');
+  const [calendar, setCalendar] = useState(initialCalendar);
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [syncNote, setSyncNote] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
   const [signOutError, setSignOutError] = useState<string | null>(null);
@@ -63,6 +75,25 @@ export function ProfilePreferences({
     if (error) {
       setSaveError(t('saveError'));
       return;
+    }
+
+    // Account preferences (location/tradition/calendar) save best-effort:
+    // when migration 0002 is unapplied the API answers 503 and the profile
+    // save above still stands. Never blocks the main save.
+    setSyncNote(null);
+    try {
+      const res = await fetch('/api/preferences', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          location,
+          tradition: tradition === '' ? null : tradition,
+          calendar
+        })
+      });
+      if (!res.ok) setSyncNote(t('syncUnavailable'));
+    } catch {
+      setSyncNote(t('syncUnavailable'));
     }
 
     setSaved(true);
@@ -138,9 +169,56 @@ export function ProfilePreferences({
         </div>
       </FormField>
 
+      <FormField label={t('location')} hint={t('locationHint')}>
+        <select
+          value={LOCATIONS.includes(location as (typeof LOCATIONS)[number]) ? location : 'Other'}
+          onChange={(event) => setLocation(event.target.value)}
+          disabled={!supabase}
+          className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-foreground"
+        >
+          {LOCATIONS.map((city) => (
+            <option key={city} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+      </FormField>
+
+      <FormField label={t('tradition')} hint={t('traditionHint')}>
+        <select
+          value={tradition}
+          onChange={(event) => setTradition(event.target.value)}
+          disabled={!supabase}
+          className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-foreground"
+        >
+          <option value="">{t('traditionUnspecified')}</option>
+          {TRADITIONS.map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </FormField>
+
+      <FormField label={t('calendar')} hint={t('calendarHint')}>
+        <select
+          value={CALENDARS.includes(calendar as (typeof CALENDARS)[number]) ? calendar : 'purnimanta'}
+          onChange={(event) => setCalendar(event.target.value)}
+          disabled={!supabase}
+          className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-foreground"
+        >
+          {CALENDARS.map((value) => (
+            <option key={value} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </FormField>
+
       <div className="flex items-center justify-between gap-4">
         <div className="flex flex-col gap-1">
           {saved ? <p className="text-sm font-medium text-primary">{t('saved')}</p> : <span />}
+          {syncNote ? <p className="text-xs text-muted">{syncNote}</p> : null}
           {saveError ? (
             <p role="alert" className="text-sm text-danger">
               {saveError}

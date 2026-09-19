@@ -46,3 +46,30 @@ RAG stays OFF until all hold:
 5. Still required at activation time: multilingual evaluations, rate limiting,
    provider-failure drills, cost caps, and editorial sign-off of the approved
    corpus (`verification_status` in `approved`/`reviewed`).
+
+## 5. Account features staging runbook (code complete, migration unapplied)
+
+Shipped in main but inert until migration `0002_account_features_manual.sql`
+is applied to a staging database: new API routes answer 401 signed-out and
+503 on any database error; profile shows defaults; reading list stays local;
+progress reporting is silent. Nothing writes when the tables are absent.
+
+Known pre-existing drift (do NOT paper over — reconcile first): the live
+`bookmarks` table uses `(content_type, content_id)` while the Drizzle schema
+expects `verse_id`; `reading_progress` exists in the schema but not in the
+0000 migration. The 0002 file is deliberately untracked by the drizzle
+journal so `db:migrate` can never apply it by accident.
+
+Staging apply and verify:
+
+1. `psql "$STAGING_DATABASE_URL" -f src/db/migrations/0002_account_features_manual.sql`
+2. Point `.env.local` at staging (Supabase URL/key + `DATABASE_URL`), run
+   `npm run dev`, complete the §2 manual run with a disposable test address.
+3. Save location/tradition/calendar on `/en/profile` — reload shows them.
+4. Save two Learn articles signed out, sign in, open Library — both persist;
+   remove one, reload — removal persists.
+5. Open a scripture section signed in — `reading_progress` gains a row with
+   an honest section-position percentage.
+6. Confirm RLS: direct anon-key reads of `learn_bookmarks` return nothing;
+   authenticated reads return own rows only.
+7. Restore `.env.local` to project values when done.

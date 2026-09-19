@@ -957,3 +957,22 @@ Never:
 **Build → Assume → Release**
 
 **End of QA & Release Checklist**
+
+# V1 execution record — 19 September 2026
+
+## Passed
+
+- Baseline and final ESLint, TypeScript checking and production build.
+- Five content regression tests: bilingual retrieval, filters/unknown queries, sample data provenance, content-link integrity and message parity.
+- HTTP smoke checks for 22 pages in each language (44 total), signed-out profile redirects, missing festival/noindex state, and signed-out account API returning null user/profile. Repeated against the production build on port 3001.
+- Browser: Today inspected in English/Hindi at 320, 390, 768, 1024 and 1440 pixels, with no horizontal page overflow after refinements.
+- Browser: saved article added, shown in Library, removed and empty state shown; language switch retains search query/filter; festival Vrat filter; Ask form returns related reading; Panchang details expand; mobile menu closes on navigation.
+- Existing published Bhagavad Gita appears through the Supabase scripture library.
+- Fresh production browser check: Hindi search renders with no console errors.
+- Whitespace/diff check passes. No dependency or database changes.
+
+## Limits requiring later verification
+
+Authenticated signup/login/logout/profile save and session expiry were not exercised with a test account. Public-launch accessibility audit, provider integration, content review, full Hindi article translation and production RAG remain outstanding. No production deployment performed. Browser checks are recorded manual checks; the repeatable automated suite is content/HTTP based.
+
+Next.js dev generated AGENTS.md and CLAUDE.md; these are framework documentation pointers, not application feature changes.

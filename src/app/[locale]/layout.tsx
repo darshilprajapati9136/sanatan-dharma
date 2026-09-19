@@ -60,6 +60,7 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale);
+  const daily = await getTranslations("daily");
 
   return (
     <html
@@ -68,11 +69,12 @@ export default async function LocaleLayout({
     >
       <body className="flex min-h-screen flex-col bg-background font-sans text-foreground antialiased">
         <NextIntlClientProvider>
+          <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-surface focus:p-4">{daily("skip")}</a>
           <SiteHeader />
           <main id="main-content" className="flex-1">
             {children}
           </main>
-          <SiteFooter />
+          <div className="pb-16 md:pb-0"><SiteFooter /></div>
           <MobileNav />
         </NextIntlClientProvider>
       </body>

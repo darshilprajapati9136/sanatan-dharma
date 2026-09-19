@@ -1,5 +1,11 @@
 # UI/UX Design Specification
 
+## Current V1 direction — 19 September 2026
+
+Today is the daily entry point: honest calendar preview, contextual explanation, optional practice, short learning, discovery and reading assistance. Keep the existing warm palette and type system. Use editorial rows and restrained surfaces, native progressive disclosure, visible data provenance, keyboard focus and reduced-motion support. Historical homepage suggestions below are superseded by the daily companion direction.
+
+---
+
 # 1. Design Goal
 
 The platform should feel like a modern, trustworthy, peaceful, and deeply respectful digital space for learning about Sanatan Dharma.

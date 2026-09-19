@@ -25,6 +25,7 @@ export function sectionAnchor(index: number, headingEn: string): string {
  */
 export async function TopicArticle({topic, locale}: {topic: LearnTopic; locale: string}) {
   const t = await getTranslations('learn');
+  const daily = await getTranslations('daily');
   const title = pickLocalizedText(locale, topic.title.en, topic.title.hi);
   const summary = pickLocalizedText(locale, topic.summary.en, topic.summary.hi);
   const related = getRelatedTopics(topic);
@@ -78,6 +79,7 @@ export async function TopicArticle({topic, locale}: {topic: LearnTopic; locale: 
         </nav>
       ) : null}
 
+      {locale === 'hi' && topic.sections.some(section => !section.body.hi) && <p className="text-sm text-muted">{daily('translationPending')}</p>}
       <div className="flex flex-col gap-8">
         {topic.sections.map((section, index) => (
           <section key={sectionAnchor(index, section.heading.en)} id={sectionAnchor(index, section.heading.en)} className="scroll-mt-24">

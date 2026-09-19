@@ -1,5 +1,11 @@
 # Information Architecture
 
+## Current V1 direction — 19 September 2026
+
+Current primary routes: /[locale] (Today), /panchang, /practise, /learn, /scriptures, /explore/festivals, /ask, /search. Secondary: /library and /profile. Festival detail routes are /explore/festivals/[slug]. Legacy Explore entries connect to existing Learn categories. All routes support en and hi. Historical Learn-first navigation below is superseded.
+
+---
+
 # 1. Purpose
 
 The Information Architecture defines the structure of the Sanatan Dharma platform.

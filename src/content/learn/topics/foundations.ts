@@ -23,15 +23,17 @@ export const foundationsTopics: LearnTopic[] = [
         }
       },
       {
-        heading: {en: 'Key ideas'},
+        heading: {en: 'Key ideas', hi: 'मुख्य विचार'},
         body: {
-          en: 'Traditions commonly distinguish personal duties (such as honesty and compassion) from role-based duties (such as those of a student, householder or teacher). Different texts and teachers explain these duties differently.'
+          en: 'Traditions commonly distinguish personal duties (such as honesty and compassion) from role-based duties (such as those of a student, householder or teacher). Different texts and teachers explain these duties differently.',
+          hi: 'परंपराओं में प्रायः व्यक्तिगत कर्तव्यों (जैसे सत्यनिष्ठा और करुणा) तथा भूमिका के अनुसार कर्तव्यों (जैसे विद्यार्थी, गृहस्थ या शिक्षक के) में अंतर किया जाता है। विभिन्न ग्रंथ और शिक्षक इनकी अलग-अलग व्याख्या करते हैं।'
         }
       },
       {
-        heading: {en: 'Practical relevance'},
+        heading: {en: 'Practical relevance', hi: 'जीवन में उपयोग'},
         body: {
-          en: 'Many learners use the idea of dharma as a reflective tool: asking what is fair, kind and responsible in a given situation before acting.'
+          en: 'Many learners use the idea of dharma as a reflective tool: asking what is fair, kind and responsible in a given situation before acting.',
+          hi: 'धर्म के विचार से मनन किया जा सकता है: कार्य करने से पहले पूछें कि इस परिस्थिति में न्यायपूर्ण, दयालु और उत्तरदायी आचरण क्या होगा।'
         }
       }
     ],
@@ -41,7 +43,7 @@ export const foundationsTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Bhagavad Gita — discussions of duty (svadharma)'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; needs review by a knowledgeable editor before being marked reviewed.',
     updatedAt: '2026-09-12'
@@ -63,15 +65,17 @@ export const foundationsTopics: LearnTopic[] = [
         }
       },
       {
-        heading: {en: 'Key ideas'},
+        heading: {en: 'Key ideas', hi: 'मुख्य विचार'},
         body: {
-          en: 'Texts describe different aspects of karma, such as accumulated past actions, actions currently bearing fruit, and new actions being created now. Interpretations vary across philosophical schools.'
+          en: 'Texts describe different aspects of karma, such as accumulated past actions, actions currently bearing fruit, and new actions being created now. Interpretations vary across philosophical schools.',
+          hi: 'ग्रंथों में कर्म के विभिन्न पक्ष बताए गए हैं, जैसे संचित पूर्व कर्म, अभी फल देने वाले कर्म और वर्तमान में किए जा रहे नए कर्म। विभिन्न दर्शन इनकी भिन्न व्याख्या करते हैं।'
         }
       },
       {
-        heading: {en: 'Practical relevance'},
+        heading: {en: 'Practical relevance', hi: 'जीवन में उपयोग'},
         body: {
-          en: 'The teaching is commonly applied as encouragement toward mindful, responsible action rather than speculation about specific past events.'
+          en: 'The teaching is commonly applied as encouragement toward mindful, responsible action rather than speculation about specific past events.',
+          hi: 'इस शिक्षा से सजग और उत्तरदायी कर्म की प्रेरणा ली जाती है; इसे विशिष्ट पिछली घटनाओं के बारे में अनुमान लगाने का आधार नहीं बनाना चाहिए।'
         }
       }
     ],
@@ -81,7 +85,7 @@ export const foundationsTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Bhagavad Gita — teachings on selfless action (karma yoga)'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; needs review by a knowledgeable editor before being marked reviewed.',
     updatedAt: '2026-09-12'
@@ -103,13 +107,13 @@ export const foundationsTopics: LearnTopic[] = [
         }
       },
       {
-        heading: {en: 'Different viewpoints'},
+        heading: {en: 'Different viewpoints', hi: 'विभिन्न दृष्टिकोण'},
         body: {
           en: 'Schools of thought differ on the nature of atman and its relationship with ultimate reality (Brahman). Advaita traditions emphasize non-difference, while other schools preserve a distinction. The topic page should present these differences side by side as content grows.'
         }
       },
       {
-        heading: {en: 'Practical relevance'},
+        heading: {en: 'Practical relevance', hi: 'जीवन में उपयोग'},
         body: {
           en: 'Practices such as self-inquiry and meditation are traditionally associated with understanding this teaching through direct reflection.'
         }
@@ -121,7 +125,7 @@ export const foundationsTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Upanishads — inquiries into the nature of the self'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; Vedanta viewpoints need careful multi-tradition review.',
     updatedAt: '2026-09-12'
@@ -143,7 +147,7 @@ export const foundationsTopics: LearnTopic[] = [
         }
       },
       {
-        heading: {en: 'Key ideas'},
+        heading: {en: 'Key ideas', hi: 'मुख्य विचार'},
         body: {
           en: 'The cycle is traditionally linked with karma: actions shape the conditions of future experience. Different traditions describe the mechanics of this process differently.'
         }
@@ -153,7 +157,7 @@ export const foundationsTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     sourceNotes: 'Sample text; needs review by a knowledgeable editor before being marked reviewed.',
     updatedAt: '2026-09-12'
   },
@@ -174,7 +178,7 @@ export const foundationsTopics: LearnTopic[] = [
         }
       },
       {
-        heading: {en: 'Different paths'},
+        heading: {en: 'Different paths', hi: 'विभिन्न मार्ग'},
         body: {
           en: 'Traditions describe several paths toward liberation, commonly grouped as the paths of knowledge, devotion, selfless action and meditation. Each path is emphasized differently by different teachers and lineages.'
         }
@@ -186,7 +190,7 @@ export const foundationsTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Upanishads and Bhagavad Gita — teachings on liberation'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; path descriptions need multi-tradition review.',
     updatedAt: '2026-09-12'

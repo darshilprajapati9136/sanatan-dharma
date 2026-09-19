@@ -1,5 +1,11 @@
 # Product Requirements Document
 
+## Current V1 direction — 19 September 2026
+
+V1 is a trusted daily companion for understanding and practising Sanatan Dharma. Priorities: Today, Panchang, Festivals/Vrat, guided Learn, Scriptures, Search, safe Ask, and preserved authentication. Four pillars: TODAY → UNDERSTAND → PRACTISE → LEARN. The historical feature lists below are a long-term backlog, not the submission acceptance scope.
+
+---
+
 # 1. Product Overview
 
 **Working Product Name:** To be decided

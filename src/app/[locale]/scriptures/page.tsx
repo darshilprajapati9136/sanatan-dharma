@@ -16,6 +16,7 @@ export default async function ScripturesPage({
 
   const t = await getTranslations('scriptures');
   const navT = await getTranslations({locale, namespace: 'nav'});
+  const daily = await getTranslations('daily');
   const scriptures = await listPublishedScriptures();
 
   return (
@@ -26,12 +27,31 @@ export default async function ScripturesPage({
         </h1>
       </div>
 
+      <aside className="mb-8 rounded-xl border border-border bg-surface p-5">
+        <p className="text-sm leading-relaxed text-muted">
+          {daily('traditionNote')}
+        </p>
+        <Link
+          href="/learn/scriptures"
+          className="mt-3 inline-block text-sm font-semibold text-primary"
+        >
+          {daily('scripture')} →
+        </Link>
+      </aside>
       {scriptures.length === 0 ? (
-        <EmptyState icon="book" title={t('emptyTitle')} description={t('emptyDescription')} />
+        <EmptyState
+          icon="book"
+          title={t('emptyTitle')}
+          description={t('emptyDescription')}
+        />
       ) : (
         <div className="flex flex-col gap-4">
           {scriptures.map((scripture) => {
-            const title = pickLocalizedText(locale, scripture.titleEn, scripture.titleHi);
+            const title = pickLocalizedText(
+              locale,
+              scripture.titleEn,
+              scripture.titleHi
+            );
             const description = pickLocalizedText(
               locale,
               scripture.descriptionEn,
@@ -47,9 +67,13 @@ export default async function ScripturesPage({
                 <h2 className="font-serif text-2xl font-semibold text-foreground">
                   {title || scripture.slug}
                 </h2>
-                {description ? <p className="mt-2 text-muted">{description}</p> : null}
+                {description ? (
+                  <p className="mt-2 text-muted">{description}</p>
+                ) : null}
                 {scripture.tradition ? (
-                  <p className="mt-3 text-sm text-muted">{scripture.tradition}</p>
+                  <p className="mt-3 text-sm text-muted">
+                    {scripture.tradition}
+                  </p>
                 ) : null}
               </Link>
             );

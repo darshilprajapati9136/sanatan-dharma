@@ -1,10 +1,8 @@
-import {getTranslations} from 'next-intl/server';
-import {setRequestLocale} from 'next-intl/server';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {ButtonLink} from '@/components/ui/button';
-import {Badge} from '@/components/ui/badge';
-import {HeroSearch} from '@/components/home/hero-search';
-
+import {PanchangSummary} from '@/components/home/panchang-summary';
+import {PracticeList} from '@/components/home/practice-list';
 export default async function HomePage({
   params
 }: {
@@ -12,146 +10,124 @@ export default async function HomePage({
 }) {
   const {locale} = await params;
   setRequestLocale(locale);
-
-  const t = await getTranslations('home');
-  const tNav = await getTranslations('nav');
-  const tCommon = await getTranslations('common');
-
-  const concepts = t.raw('coreConcepts') as Array<{key: string; en: string; hi: string}>;
-  const displayName = (concept: {en: string; hi: string}) =>
-    locale === 'hi' ? concept.hi : concept.en;
-
+  const t = await getTranslations('daily');
+  const date = new Intl.DateTimeFormat(locale === 'hi' ? 'hi-IN' : 'en-IN', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Asia/Kolkata'
+  }).format(new Date());
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 lg:px-8">
-      <section className="flex flex-col items-start gap-6 py-16 lg:py-24">
-        <Badge variant="accent">{t('heroEyebrow')}</Badge>
-        <h1 className="max-w-2xl font-serif text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl">
-          {t('heroTitle')}
-        </h1>
-        <p className="max-w-xl text-lg leading-relaxed text-muted">{t('heroSubtitle')}</p>
-        <div className="flex flex-wrap items-center gap-3">
-          <ButtonLink href="/learn" size="lg">
-            {t('startLearning')}
-          </ButtonLink>
-          <ButtonLink href="/ask" variant="secondary" size="lg">
-            {t('askDharma')}
-          </ButtonLink>
-        </div>
-        <div className="mt-4">
-          <HeroSearch />
-        </div>
-      </section>
-
-      <section className="py-12">
-        <div className="mb-6 flex items-end justify-between">
-          <div>
-            <h2 className="font-serif text-2xl font-semibold text-foreground">{t('yourJourney')}</h2>
+    <div className="mx-auto max-w-6xl px-4 lg:px-8">
+      <div className="flex flex-wrap justify-between gap-2 border-b border-border py-5 text-xs text-muted">
+        <p>{t('today')}</p>
+        <p>{date} · IST</p>
+      </div>
+      <section className="grid items-center gap-10 py-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:py-16">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+            {t('eyebrow')}
+          </p>
+          <h1 className="mt-5 max-w-xl font-serif text-4xl font-medium leading-[1.15] tracking-tight sm:text-5xl lg:text-6xl">
+            {t('title')}
+          </h1>
+          <p className="mt-6 max-w-md text-base leading-relaxed text-muted">
+            {t('intro')}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <ButtonLink href="/practise">{t('practiceLabel')}</ButtonLink>
+            <ButtonLink href="/learn" variant="outline">
+              {t('learnNav')}
+            </ButtonLink>
           </div>
+          <p className="mt-8 text-xs text-muted">
+            {t('todayNav')} → {t('understand')} → {t('practiceLabel')} →{' '}
+            {t('learnNav')}
+          </p>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {href: '/learn', icon: 'sparkles', title: t('journeyBeginnerTitle'), description: t('journeyBeginnerDescription')},
-            {href: '/scriptures/bhagavad-gita', icon: 'book', title: t('journeyGitaTitle'), description: t('journeyGitaDescription')},
-            {href: '/scriptures', icon: 'bookmark', title: t('journeyScripturesTitle'), description: t('journeyScripturesDescription')},
-            {href: '/ask', icon: 'chat', title: t('journeyAskTitle'), description: t('journeyAskDescription')}
-          ].map((card) => (
-            <Link
-              key={card.href}
-              href={card.href}
-              className="group flex flex-col gap-3 rounded-xl border border-border bg-surface p-6 transition-colors hover:border-primary/50"
-            >
-              <span className="text-sm font-medium text-primary">{tCommon('learnMore')}</span>
-              <h3 className="font-serif text-lg font-semibold text-foreground">{card.title}</h3>
-              <p className="text-sm text-muted">{card.description}</p>
-            </Link>
-          ))}
+        <PanchangSummary locale={locale} />
+      </section>
+      <section className="grid gap-8 border-y border-border py-10 md:grid-cols-[1fr_2fr]">
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+          {t('why')}
+        </p>
+        <div>
+          <h2 className="font-serif text-2xl sm:text-3xl">{t('whyTitle')}</h2>
+          <p className="mt-4 max-w-2xl leading-relaxed text-muted">
+            {t('whyBody')}
+          </p>
+          <Link
+            href="/panchang#glossary"
+            className="mt-4 inline-block text-sm font-semibold text-primary"
+          >
+            {t('glossary')} →
+          </Link>
         </div>
       </section>
-
-      <section className="py-12">
-        <div className="mb-6">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">{t('coreConceptsTitle')}</h2>
-          <p className="mt-1 text-muted">{t('coreConceptsIntro')}</p>
+      <section className="grid gap-12 py-14 lg:grid-cols-[1.2fr_1fr]">
+        <div>
+          <h2 className="font-serif text-3xl">{t('practice')}</h2>
+          <p className="mt-2 text-sm text-muted">{t('practiceIntro')}</p>
+          <PracticeList />
         </div>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {concepts.map((concept) => (
-            <Link
-              key={concept.key}
-              href="/learn"
-              className="group flex items-center justify-between rounded-xl border border-border bg-surface px-5 py-6 transition-colors hover:border-primary/50"
-            >
-              <span className="font-serif text-base font-semibold text-foreground">
-                {displayName(concept)}
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="py-12">
-        <div className="rounded-2xl bg-[#e7d5bb] p-8 lg:p-12">
-          <div className="mb-4 flex flex-col gap-2">
-            <Badge variant="accent">{t('bhagavadGitaTitle')}</Badge>
-            <h2 className="font-serif text-3xl font-semibold tracking-tight text-secondary">
-              श्रीमद्भगवद्गीता
+        <aside className="flex flex-col justify-between rounded-2xl bg-secondary p-8 text-secondary-foreground sm:p-10">
+          <p className="text-xs uppercase tracking-widest">{t('five')}</p>
+          <div className="py-8">
+            <h2 className="font-serif text-3xl leading-snug">
+              {t('fiveTitle')}
             </h2>
-            <p className="text-secondary/80">{t('bhagavadGitaIntro')}</p>
+            <p className="mt-4 leading-relaxed opacity-85">{t('fiveBody')}</p>
           </div>
-          <p className="mb-6 text-sm font-medium text-secondary/70">{t('comingWithContent')}</p>
-          <ButtonLink href="/scriptures/bhagavad-gita" variant="secondary">
-            {tCommon('exploreMore')}
-          </ButtonLink>
-        </div>
+          <Link
+            href="/learn/foundations/dharma"
+            className="border-t border-white/25 pt-5 text-sm font-semibold"
+          >
+            {t('read')} →
+          </Link>
+        </aside>
       </section>
-
-      <section className="py-12">
-        <div className="mb-6">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">{t('dailyShlokaTitle')}</h2>
-        </div>
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border bg-surface px-6 py-16 text-center">
-          <p className="text-sm text-muted">{t('dailyShlokaComingSoon')}</p>
-          <Badge>{tCommon('comingSoon')}</Badge>
-        </div>
-      </section>
-
-      <section className="py-12">
-        <div className="mb-6">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">{t('exploreTitle')}</h2>
-          <p className="mt-1 text-muted">{t('exploreIntro')}</p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-3">
+      <section className="border-t border-border py-10">
+        <h2 className="font-serif text-3xl">{t('explore')}</h2>
+        <div className="mt-6 grid grid-cols-2 gap-x-8 md:grid-cols-4">
           {[
-            {href: '/explore/deities', key: 'deities'},
-            {href: '/explore/mantras', key: 'mantras'},
-            {href: '/explore/festivals', key: 'festivals'}
-          ].map((item) => (
+            ['/learn/foundations', 'foundation'],
+            ['/scriptures', 'scriptures'],
+            ['/explore/festivals', 'festivals'],
+            ['/learn/yoga-meditation', 'yoga']
+          ].map(([href, key]) => (
             <Link
-              key={item.key}
-              href={item.href}
-              className="flex items-center justify-between rounded-xl border border-border bg-surface px-6 py-5 transition-colors hover:border-primary/50"
+              key={key}
+              href={href}
+              className="border-b border-border py-5 text-sm font-medium hover:text-primary"
             >
-              <span className="font-serif text-lg font-semibold text-foreground">{tNav(item.key)}</span>
+              {t(key)} <span aria-hidden="true">↗</span>
             </Link>
           ))}
         </div>
       </section>
-
+      <section className="my-6 flex flex-col justify-between gap-6 rounded-2xl border border-border bg-surface p-8 sm:flex-row sm:items-center">
+        <div>
+          <h2 className="font-serif text-2xl">{t('askTitle')}</h2>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
+            {t('askBody')}
+          </p>
+        </div>
+        <ButtonLink href="/ask" variant="outline">
+          {t('ask')}
+        </ButtonLink>
+      </section>
       <section className="py-12">
-        <div className="mb-6">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">{t('trustTitle')}</h2>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {label: t('trustScripture')},
-            {label: t('trustCommentary')},
-            {label: t('trustExplanation')},
-            {label: t('trustAi')}
-          ].map((item, index) => (
-            <div key={index} className="rounded-xl border border-border bg-surface p-6 text-sm text-muted">
-              {item.label}
-            </div>
-          ))}
-        </div>
+        <h2 className="font-serif text-2xl">{t('upcoming')}</h2>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+          {t('upcomingNote')}
+        </p>
+        <Link
+          href="/explore/festivals"
+          className="mt-5 inline-block text-sm font-semibold text-primary"
+        >
+          {t('festivals')} →
+        </Link>
       </section>
     </div>
   );

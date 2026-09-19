@@ -1,13 +1,13 @@
 import {getTranslations} from 'next-intl/server';
-import {Link} from '@/i18n/navigation';
+import {NavigationLink as Link} from './navigation-link';
 import {Icon, type IconName} from '@/components/ui/icon';
 
 const items = [
-  {href: '/', key: 'home', icon: 'home'},
+  {href: '/', key: 'today', icon: 'home'},
   {href: '/learn', key: 'learn', icon: 'book'},
   {href: '/search', key: 'search', icon: 'search'},
   {href: '/ask', key: 'askDharma', icon: 'chat'},
-  {href: '/library', key: 'library', icon: 'bookmark'}
+  {href: '/practise', key: 'practise', icon: 'flame'}
 ] as const;
 
 export async function MobileNav() {

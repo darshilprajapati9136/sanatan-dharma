@@ -1,4 +1,10 @@
 # Design System Rules
+
+## Current V1 direction — 19 September 2026
+
+The product now combines daily utility with learning: TODAY → UNDERSTAND → PRACTISE → LEARN. Existing typography, warm neutrals, earth accents and reusable components remain. Calendar sample labels must be visible beside values; do not imply live calculation.
+
+---
 ## Sanatan Dharma Platform
 
 **Purpose:** Define the visual and interaction rules for the entire product.

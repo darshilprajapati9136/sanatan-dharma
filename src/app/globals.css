@@ -63,3 +63,9 @@ body {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+header nav a[aria-current="page"], nav[aria-label="Mobile primary"] a[aria-current="page"] { color: var(--primary); font-weight: 600; }

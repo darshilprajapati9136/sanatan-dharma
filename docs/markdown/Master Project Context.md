@@ -1,5 +1,11 @@
 # Master Project Context & Coding Agent Brief
 
+## Current V1 direction — 19 September 2026
+
+The current product promise is a trusted daily companion for understanding and practising Sanatan Dharma. Daily usefulness leads; existing education, scripture, Next.js, Supabase and English/Hindi infrastructure remain. See Product Discovery & V1 Strategy.md for current shipped scope and explicit limitations.
+
+---
+
 # 1. Project Summary
 
 Build a modern bilingual web platform for learning and exploring Sanatan Dharma.

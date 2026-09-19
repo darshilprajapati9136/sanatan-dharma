@@ -17,7 +17,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Hindu philosophy is traditionally grouped into six orthodox schools (shad-darshana) that accept the authority of the Vedas. Each school has its own methods and emphases, and later Vedanta sub-schools — Advaita, Vishishtadvaita, Dvaita — differ on key questions.'
         }
@@ -27,7 +27,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'intermediate',
     readingTimeMinutes: 4,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   {
@@ -40,7 +40,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Advaita teaches the non-difference of atman and Brahman. Other Vedanta schools read the same texts differently — future versions of this topic should present those readings side by side.'
         }
@@ -50,7 +50,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'advanced',
     readingTimeMinutes: 4,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   // ---- Deities ----
@@ -64,7 +64,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Vishnu is worshipped as the preserver and protector of cosmic order. Vaishnava traditions hold him as the supreme being, while other traditions honor him within a broader pantheon.'
         }
@@ -74,7 +74,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   {
@@ -87,7 +87,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Shiva is associated with meditation, asceticism and the cyclical renewal of the cosmos. Shaiva traditions hold him as supreme; symbolism such as the lingam, damru and third eye carries layered meanings explored in later articles.'
         }
@@ -97,7 +97,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   // ---- Practices ----
@@ -111,7 +111,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Puja typically involves offerings such as flowers, incense, light and food before a consecrated image or symbol, accompanied by prayers or mantras. Forms vary widely by region, tradition and occasion.'
         }
@@ -121,7 +121,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   {
@@ -134,7 +134,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Japa is the repeated recitation of a mantra, often counted on a mala of 108 beads. Traditions describe different modes — audible, whispered and mental — with distinct roles in practice.'
         }
@@ -144,7 +144,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   // ---- Festivals ----
@@ -158,9 +158,10 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Diwali is observed with lamps, prayers, gatherings and festive foods. Associated stories differ by region — including Rama’s return to Ayodhya, Lakshmi worship and other traditions — and all deserve representation as content grows.'
+          en: 'Diwali is observed with lamps, prayers, gatherings and festive foods. Associated stories differ by region — including Rama’s return to Ayodhya, Lakshmi worship and other traditions — and all deserve representation as content grows.',
+          hi: 'दीपावली पर दीप, प्रार्थना, मिलन और विशेष भोजन की परंपराएँ हैं। संबंधित कथाएँ क्षेत्र के अनुसार अलग हैं — जैसे राम की अयोध्या वापसी, लक्ष्मी पूजा और अन्य परंपराएँ।'
         }
       }
     ],
@@ -168,7 +169,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   {
@@ -181,9 +182,10 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Holi welcomes spring with colors, music and community gatherings. Traditions link it with stories of Prahlada and Holika, and with Krishna’s playful pastimes in Braj.'
+          en: 'Holi welcomes spring with colors, music and community gatherings. Traditions link it with stories of Prahlada and Holika, and with Krishna’s playful pastimes in Braj.',
+          hi: 'होली रंगों, संगीत और सामुदायिक मिलन से वसंत का स्वागत करती है। इसकी परंपराएँ प्रह्लाद और होलिका की कथा तथा ब्रज में कृष्ण की लीलाओं से जुड़ी हैं।'
         }
       }
     ],
@@ -191,7 +193,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   // ---- Yoga & Meditation ----
@@ -205,7 +207,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'The word yoga comes from a root meaning “to join”. Classical texts describe yoga as the stilling of the movements of the mind, with physical postures (asana) as one limb among eight in Patanjali’s system.'
         }
@@ -215,7 +217,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 3,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   {
@@ -228,7 +230,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Patanjali’s Yoga Sutras outline eight limbs: ethical restraints (yama), observances (niyama), posture (asana), breath regulation (pranayama), sense withdrawal (pratyahara), concentration (dharana), meditation (dhyana) and absorption (samadhi).'
         }
@@ -240,7 +242,7 @@ export const otherTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Patanjali’s Yoga Sutras (primary text)'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     updatedAt: '2026-09-12'
   },
@@ -254,9 +256,10 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Beginners are usually advised to start with short sessions, a steady posture and attention on the breath or a mantra. Traditions differ on technique — future articles can compare approaches without ranking them.'
+          en: 'Beginners are usually advised to start with short sessions, a steady posture and attention on the breath or a mantra. Traditions differ on technique — future articles can compare approaches without ranking them.',
+          hi: 'नए साधकों को प्रायः छोटे सत्रों, सहज स्थिर आसन और श्वास या मंत्र पर ध्यान से शुरू करने की सलाह दी जाती है। तकनीकें परंपरा के अनुसार अलग हैं; किसी एक को सभी के लिए श्रेष्ठ नहीं माना जाता।'
         }
       }
     ],
@@ -264,7 +267,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   // ---- Temples & Traditions ----
@@ -278,7 +281,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Temples are traditionally understood as dwelling places of the deity, designed according to architectural treatises. Daily rituals, festivals and pilgrimages structure communal religious life around them.'
         }
@@ -288,7 +291,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   },
   {
@@ -301,7 +304,7 @@ export const otherTopics: LearnTopic[] = [
     },
     sections: [
       {
-        heading: {en: 'Overview'},
+        heading: {en: 'Overview', hi: 'परिचय'},
         body: {
           en: 'Pilgrimage (tirtha-yatra) journeys to sacred rivers, mountains and temples are an ancient practice. Well-known circuits include the Char Dham, while countless regional sites matter deeply to local traditions.'
         }
@@ -311,7 +314,7 @@ export const otherTopics: LearnTopic[] = [
     difficulty: 'beginner',
     readingTimeMinutes: 2,
     status: 'draft',
-    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}],
+    sources: [{kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}],
     updatedAt: '2026-09-12'
   }
 ];

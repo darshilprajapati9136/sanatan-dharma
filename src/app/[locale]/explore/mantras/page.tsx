@@ -1,14 +1,9 @@
-import {getTranslations, setRequestLocale} from 'next-intl/server';
-import PlaceholderPage from '@/components/placeholder-page';
-
-export default async function MantrasPage({
+import {redirect} from '@/i18n/navigation';
+export default async function Page({
   params
 }: {
   params: Promise<{locale: string}>;
 }) {
   const {locale} = await params;
-  setRequestLocale(locale);
-  const t = await getTranslations({locale, namespace: 'nav'});
-
-  return <PlaceholderPage title={t('mantras')} />;
+  redirect({href: '/learn/practices', locale});
 }

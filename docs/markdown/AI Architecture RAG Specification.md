@@ -1,5 +1,11 @@
 # AI Architecture & RAG Specification
 
+## Current V1 direction — 19 September 2026
+
+Submission mode is a deterministic reading finder over labelled editorial content, not a generative AI assistant. It returns links and summaries, never generated scripture quotations or Panchang calculations. Draft introductions are explicitly labelled and are NOT an approved production RAG corpus. Production generation remains disabled until reviewed sources, retrieval, citation validation, evaluation, provider credentials and rate limits are in place. The architecture below remains a future design, not a claim of implementation.
+
+---
+
 # 1. Purpose
 
 The AI system should help users understand Sanatan Dharma while remaining grounded in trusted sources.

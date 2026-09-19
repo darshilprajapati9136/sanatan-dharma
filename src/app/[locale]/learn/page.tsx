@@ -1,3 +1,4 @@
+import {GuidedPath} from '@/components/learn/guided-path';
 import type {Metadata} from 'next';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
@@ -29,7 +30,10 @@ export default async function LearnPage({
 
   const t = await getTranslations('learn');
   const categories = getLearnCategories();
-  const totalTopics = categories.reduce((sum, category) => sum + category.topics.length, 0);
+  const totalTopics = categories.reduce(
+    (sum, category) => sum + category.topics.length,
+    0
+  );
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:py-16 lg:px-8">
@@ -44,6 +48,7 @@ export default async function LearnPage({
         <p className="leading-relaxed text-muted">{t('intro')}</p>
       </header>
 
+      <GuidedPath />
       <nav aria-label={t('allCategories')} className="mt-8">
         <ol className="flex flex-col gap-3">
           {categories.map((category, index) => (
@@ -64,7 +69,9 @@ export default async function LearnPage({
         <Icon name="info" className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
         <div className="flex flex-col gap-1">
           <p className="font-medium text-foreground">{t('startWith')}</p>
-          <p className="text-sm leading-relaxed text-muted">{t('startWithDescription')}</p>
+          <p className="text-sm leading-relaxed text-muted">
+            {t('startWithDescription')}
+          </p>
           <Link
             href="/learn/foundations"
             className="mt-1 inline-flex w-fit items-center gap-1 text-sm font-medium text-primary hover:underline"

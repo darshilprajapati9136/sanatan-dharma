@@ -1,5 +1,11 @@
 # Technical Requirements Document
 
+## Current V1 direction — 19 September 2026
+
+Current V1 adds typed Panchang provider/data boundaries with a sample fixture, a bilingual local content search service, deterministic Ask reading retrieval, and browser-local topic bookmarks. No database migrations or auth rewrites are part of this change. Real Panchang and production RAG integrations remain gated. Historical recommendations below are not all implemented.
+
+---
+
 # 1. Purpose
 
 This document defines the technical architecture and implementation requirements for the Sanatan Dharma platform.

@@ -22,7 +22,7 @@ export const scripturesTopics: LearnTopic[] = [
         }
       },
       {
-        heading: {en: 'What they contain'},
+        heading: {en: 'What they contain', hi: 'इनमें क्या है'},
         body: {
           en: 'Vedic literature includes hymns (samhitas), ritual manuals (brahmanas), forest reflections (aranyakas) and philosophical inquiries (upanishads). Later articles can explore each layer in depth.'
         }
@@ -34,7 +34,7 @@ export const scripturesTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Rigveda, Samaveda, Yajurveda, Atharvaveda (primary texts)'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; needs review by a knowledgeable editor before being marked reviewed.',
     updatedAt: '2026-09-12'
@@ -56,7 +56,7 @@ export const scripturesTopics: LearnTopic[] = [
         }
       },
       {
-        heading: {en: 'Key ideas'},
+        heading: {en: 'Key ideas', hi: 'मुख्य विचार'},
         body: {
           en: 'Central themes include atman (the self), Brahman (ultimate reality) and their relationship — interpreted differently by later philosophical schools.'
         }
@@ -68,7 +68,7 @@ export const scripturesTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Principal Upanishads, e.g. Isha, Kena, Katha, Chandogya'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; needs review by a knowledgeable editor before being marked reviewed.',
     updatedAt: '2026-09-12'
@@ -90,9 +90,10 @@ export const scripturesTopics: LearnTopic[] = [
         }
       },
       {
-        heading: {en: 'On this platform'},
+        heading: {en: 'On this platform', hi: 'इस मंच पर'},
         body: {
-          en: 'The Scriptures section hosts the chapter-and-verse reading experience for the Gita. This Learn topic is the beginner-friendly orientation around it.'
+          en: 'The Scriptures section hosts the chapter-and-verse reading experience for the Gita. This Learn topic is the beginner-friendly orientation around it.',
+          hi: 'ग्रंथ अनुभाग में गीता के अध्याय और श्लोक पढ़ने की व्यवस्था है। यह पाठ नए पाठकों के लिए उसका प्रारंभिक परिचय है।'
         }
       }
     ],
@@ -102,7 +103,7 @@ export const scripturesTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Bhagavad Gita (primary text); verse readings in Scriptures'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; needs review by a knowledgeable editor before being marked reviewed.',
     updatedAt: '2026-09-12'
@@ -130,7 +131,7 @@ export const scripturesTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Valmiki Ramayana (primary text)'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; needs review by a knowledgeable editor before being marked reviewed.',
     updatedAt: '2026-09-12'
@@ -158,7 +159,7 @@ export const scripturesTopics: LearnTopic[] = [
     status: 'draft',
     sources: [
       {kind: 'scripture', label: {en: 'Mahabharata, traditionally attributed to Vyasa'}},
-      {kind: 'editorial', label: {en: 'Editorial summary written for beginners'}}
+      {kind: 'editorial', label: {en: 'Editorial summary written for beginners', hi: 'नए पाठकों के लिए संपादकीय सार'}}
     ],
     sourceNotes: 'Sample text; needs review by a knowledgeable editor before being marked reviewed.',
     updatedAt: '2026-09-12'

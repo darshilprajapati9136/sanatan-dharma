@@ -100,14 +100,14 @@ export async function SiteHeader() {
             <Link
               href="/profile"
               aria-label={t('profile')}
-              className="hidden h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-surface-strong xl:inline-flex"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-surface-strong"
             >
               <Avatar name={displayName} size="sm" />
             </Link>
           ) : (
             <Link
               href="/login"
-              className="hidden rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:opacity-90 xl:inline-flex"
+              className="inline-flex shrink-0 items-center rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:opacity-90 sm:px-4"
             >
               {authT('signIn')}
             </Link>

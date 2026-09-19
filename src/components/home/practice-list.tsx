@@ -9,8 +9,8 @@ export async function PracticeList() {
         '/learn/foundations/karma',
         '/learn/foundations/dharma'
       ].map((href, i) => (
-        <li key={href} className="flex gap-5 py-6">
-          <span className="pt-1 font-serif text-lg text-primary">0{i + 1}</span>
+        <li key={href} className="practice-row flex gap-5 py-6">
+          <span className="practice-number">0{i + 1}</span>
           <div>
             <Link
               href={href}

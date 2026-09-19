@@ -1,7 +1,11 @@
+import {Icon, type IconName} from '@/components/ui/icon';
 import {getTranslations} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {type PanchangData} from '@/content/panchang';
-import {defaultPanchangContext, getDayPanchang} from '@/server/services/panchang-live';
+import {
+  defaultPanchangContext,
+  getDayPanchang
+} from '@/server/services/panchang-live';
 export async function PanchangSummary({
   locale,
   full = false,
@@ -16,13 +20,15 @@ export async function PanchangSummary({
   const live = day.status === 'live';
   const hi = locale === 'hi';
   return (
-    <section
-      className="rounded-2xl border border-border bg-surface p-6 sm:p-8"
-      aria-label={t('panchang')}
-    >
+    <section className="panchang-panel" aria-label={t('panchang')}>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-serif text-2xl font-semibold">{t('panchang')}</h2>
-        <span className="rounded-full bg-surface-strong px-3 py-1 text-xs font-medium text-secondary">
+        <h2 className="flex items-center gap-3 font-serif text-2xl font-semibold">
+          <span className="calendar-seal">
+            <Icon name="calendar" />
+          </span>
+          {t('panchang')}
+        </h2>
+        <span className={`calendar-status ${live ? 'is-live' : ''}`}>
           {live ? (hi ? 'लाइव' : 'Live') : t('preview')}
         </span>
       </div>
@@ -46,11 +52,26 @@ export async function PanchangSummary({
           .filter(([key]) => full || !['muhurat', 'observance'].includes(key))
           .map(([key, value]) => (
             <div key={key} className="border-b border-border py-4">
-              <dt className="text-xs text-muted">{t(key)}</dt>
+              <dt className="flex items-center gap-2 text-xs text-muted">
+                <Icon
+                  name={
+                    (
+                      {
+                        tithi: 'moon',
+                        nakshatra: 'sparkles',
+                        paksha: 'moon',
+                        sunrise: 'sunrise',
+                        sunset: 'sunset',
+                        rahu: 'clock'
+                      } as Record<string, IconName>
+                    )[key] ?? 'calendar'
+                  }
+                  className="h-4 w-4"
+                />
+                {t(key)}
+              </dt>
               <dd className="mt-2 text-base font-medium">
-                {value
-                  ? value[hi ? 'hi' : 'en']
-                  : t('unavailable')}
+                {value ? value[hi ? 'hi' : 'en'] : t('unavailable')}
               </dd>
             </div>
           ))}

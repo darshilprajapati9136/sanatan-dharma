@@ -1,3 +1,4 @@
+import {EditorialBanner} from '@/components/ui/editorial-banner';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {EmptyState} from '@/components/ui/empty-state';
@@ -23,6 +24,7 @@ export default async function ScripturesPage({
 }) {
   const {locale} = await params;
   setRequestLocale(locale);
+  const visual = await getTranslations('visual');
 
   const t = await getTranslations('scriptures');
   const navT = await getTranslations({locale, namespace: 'nav'});
@@ -31,12 +33,8 @@ export default async function ScripturesPage({
   const introductions = getLearnCategory('scriptures')?.topics ?? [];
 
   return (
-    <section className="mx-auto w-full max-w-3xl px-4 py-16 lg:px-8">
-      <div className="mb-8 flex flex-col gap-2">
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
-          {navT('scriptures')}
-        </h1>
-      </div>
+    <section className="mx-auto w-full max-w-5xl px-4 py-16 lg:px-8">
+      <EditorialBanner title={visual('scriptureTitle')} description={visual('scriptureBody')} image="quiet-study" eyebrow={navT('scriptures')}/>
 
       <aside className="mb-8 rounded-xl border border-border bg-surface p-5">
         <p className="text-sm leading-relaxed text-muted">

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import {notFound} from 'next/navigation';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
@@ -27,6 +28,7 @@ export default async function FestivalPage({
   const g = festivalGuides.find((x) => x.slug === slug);
   if (!g) notFound();
   const t = await getTranslations('daily');
+  const visual = await getTranslations('visual');
   const local = (v: {en: string; hi?: string}) =>
     pickLocalizedText(locale, v.en, v.hi);
   return (
@@ -38,6 +40,7 @@ export default async function FestivalPage({
         {t(g.kind)}
       </p>
       <h1 className="mt-3 font-serif text-5xl">{local(g.title)}</h1>
+      {slug === 'diwali' && <figure className="festival-detail-art"><Image src="/images/diya-evening.webp" alt="" fill sizes="(max-width: 768px) 100vw, 768px"/><figcaption>{visual('art')}</figcaption></figure>}
       <p className="mt-5 text-sm text-muted">{t('editorial')}</p>
       <p className="my-6 rounded-lg border border-border bg-surface p-4 text-sm leading-relaxed text-muted">
         {t('dateNote')}

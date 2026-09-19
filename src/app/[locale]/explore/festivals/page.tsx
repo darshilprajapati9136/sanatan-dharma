@@ -1,3 +1,4 @@
+import {EditorialBanner} from '@/components/ui/editorial-banner';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {festivalGuides} from '@/content/festivals';
@@ -17,6 +18,7 @@ export default async function FestivalsPage({
 }) {
   const {locale} = await params;
   setRequestLocale(locale);
+  const visual = await getTranslations('visual');
   const t = await getTranslations('daily');
   const {kind} = await searchParams;
   const filter = kind === 'festival' || kind === 'vrat' ? kind : 'all';
@@ -24,14 +26,8 @@ export default async function FestivalsPage({
     (g) => filter === 'all' || g.kind === filter
   );
   return (
-    <section className="mx-auto max-w-4xl px-4 py-14 lg:px-8">
-      <p className="text-xs uppercase tracking-widest text-primary">
-        {t('understand')} / {t('practiceLabel')}
-      </p>
-      <h1 className="mt-4 font-serif text-4xl">{t('festivals')}</h1>
-      <p className="mt-4 max-w-xl leading-relaxed text-muted">
-        {t('festivalIntro')}
-      </p>
+    <section className="mx-auto max-w-6xl px-4 py-14 lg:px-8">
+      <EditorialBanner title={visual('festivalTitle')} description={visual('festivalBody')} image="diya-evening" eyebrow={t('festivals')}/>
       <nav aria-label={t('festivals')} className="my-8 flex flex-wrap gap-2">
         {['all', 'festival', 'vrat'].map((k) => (
           <Link
@@ -49,12 +45,12 @@ export default async function FestivalsPage({
         ))}
       </nav>
       <p className="mb-6 text-sm text-muted">{t('dateNote')}</p>
-      <div className="divide-y divide-border border-y border-border">
+      <div className="festival-directory">
         {guides.map((g, i) => (
           <Link
             key={g.slug}
             href={`/explore/festivals/${g.slug}`}
-            className="group grid gap-4 py-8 sm:grid-cols-[50px_1fr_24px]"
+            className="festival-directory-item group"
           >
             <span className="font-serif text-2xl text-primary">0{i + 1}</span>
             <div>

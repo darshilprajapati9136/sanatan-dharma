@@ -1,9 +1,9 @@
 import {Suspense} from 'react';
 import {getTranslations} from 'next-intl/server';
 import {NavigationLink as Link} from './navigation-link';
+import {BrandMark} from './brand-mark';
 import {Icon} from '@/components/ui/icon';
 import {LanguageSwitcher} from '@/components/layout/language-switcher';
-import {Badge} from '@/components/ui/badge';
 import {Avatar} from '@/components/ui/avatar';
 import {getSession} from '@/server/services/auth';
 
@@ -27,24 +27,25 @@ export async function SiteHeader() {
   const t = await getTranslations('nav');
   const authT = await getTranslations('auth');
   const {user} = await getSession();
-  const displayName = (user?.user_metadata?.name as string | undefined) ?? user?.email ?? '';
+  const displayName =
+    (user?.user_metadata?.name as string | undefined) ?? user?.email ?? '';
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-2 px-4 lg:px-8">
+    <header className="site-header sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+      <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-2 px-4 lg:px-8">
         <div className="flex items-center gap-4">
           <Link
             href="/"
             className="flex items-center gap-2 font-serif text-lg font-semibold tracking-tight text-foreground"
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <Icon name="sparkles" className="h-5 w-5" />
-            </span>
-            <span className="whitespace-nowrap text-base sm:text-lg">Sanatan Dharma</span>
-            <span className="hidden sm:block"><Badge>{t('beta')}</Badge></span>
+            <BrandMark className="h-10 w-10 shrink-0 text-secondary" />
+            <span className="brand-wordmark">Sanatan Dharma</span>
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-1 xl:flex">
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-1 xl:flex"
+          >
             {navItems.map((item) => (
               <Link
                 key={item.key}
@@ -57,7 +58,10 @@ export async function SiteHeader() {
             <details className="group relative">
               <summary className="flex cursor-pointer list-none items-center gap-1 rounded-lg px-2 py-2 text-sm font-medium text-muted transition-colors hover:bg-surface-strong hover:text-foreground [&::-webkit-details-marker]:hidden">
                 {t('explore')}
-                <Icon name="chevronDown" className="h-4 w-4 transition-transform group-open:rotate-180" />
+                <Icon
+                  name="chevronDown"
+                  className="h-4 w-4 transition-transform group-open:rotate-180"
+                />
               </summary>
               <div className="absolute left-0 top-full mt-2 w-48 rounded-xl border border-border bg-surface p-1.5 shadow-lg">
                 {exploreItems.map((item) => (
@@ -95,7 +99,9 @@ export async function SiteHeader() {
           >
             <Icon name="bookmark" className="h-5 w-5" />
           </Link>
-          <Suspense fallback={<span className="w-20" />}><LanguageSwitcher /></Suspense>
+          <Suspense fallback={<span className="w-20" />}>
+            <LanguageSwitcher />
+          </Suspense>
           {user ? (
             <Link
               href="/profile"
@@ -107,9 +113,11 @@ export async function SiteHeader() {
           ) : (
             <Link
               href="/login"
-              className="inline-flex shrink-0 items-center rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:opacity-90 sm:px-4"
+              aria-label={authT('signIn')}
+              className="header-signin"
             >
-              {authT('signIn')}
+              <Icon name="user" className="h-4 w-4 sm:hidden" />
+              <span className="hidden sm:inline">{authT('signIn')}</span>
             </Link>
           )}
 

@@ -1,6 +1,10 @@
 import type {SVGProps} from 'react';
 
 export type IconName =
+  | 'sunrise'
+  | 'sunset'
+  | 'moon'
+  | 'clock'
   | 'home'
   | 'book'
   | 'search'
@@ -23,6 +27,23 @@ export type IconName =
   | 'temple';
 
 const paths: Record<IconName, React.ReactNode> = {
+  sunrise: (
+    <>
+      <path d="M3 17h18M5 21h14M7 17a5 5 0 0 1 10 0M12 2v4M3 9l3 2m15-2-3 2M9 5l3-3 3 3" />
+    </>
+  ),
+  sunset: (
+    <>
+      <path d="M3 17h18M5 21h14M7 17a5 5 0 0 1 10 0M12 2v6M3 9l3 2m15-2-3 2M9 5l3 3 3-3" />
+    </>
+  ),
+  moon: <path d="M20 14a8 8 0 0 1-10-10 9 9 0 1 0 10 10Z" />,
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </>
+  ),
   home: (
     <>
       <path d="M3 10.5 12 3.75l9 6.75" />
@@ -42,7 +63,9 @@ const paths: Record<IconName, React.ReactNode> = {
       <path d="m21 21-4.35-4.35" />
     </>
   ),
-  chat: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
+  chat: (
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+  ),
   bookmark: <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />,
   user: (
     <>

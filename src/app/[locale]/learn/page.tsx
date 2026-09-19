@@ -1,3 +1,4 @@
+import {EditorialBanner} from '@/components/ui/editorial-banner';
 import {GuidedPath} from '@/components/learn/guided-path';
 import type {Metadata} from 'next';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
@@ -27,6 +28,7 @@ export default async function LearnPage({
 }) {
   const {locale} = await params;
   setRequestLocale(locale);
+  const visual = await getTranslations('visual');
 
   const t = await getTranslations('learn');
   const categories = getLearnCategories();
@@ -36,21 +38,12 @@ export default async function LearnPage({
   );
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:py-16 lg:px-8">
-      <header className="flex flex-col gap-3 border-b border-border pb-8">
-        <p className="text-sm font-medium uppercase tracking-wide text-primary">
-          {t('topicsCount', {count: totalTopics})}
-        </p>
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
-          {t('title')}
-        </h1>
-        <p className="text-lg leading-relaxed text-muted">{t('subtitle')}</p>
-        <p className="leading-relaxed text-muted">{t('intro')}</p>
-      </header>
+    <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:py-16 lg:px-8">
+      <EditorialBanner title={visual('learnTitle')} description={visual('learnBody')} image="quiet-study" eyebrow={t('topicsCount', {count: totalTopics})}/>
 
       <GuidedPath />
       <nav aria-label={t('allCategories')} className="mt-8">
-        <ol className="flex flex-col gap-3">
+        <ol className="grid gap-4 md:grid-cols-2">
           {categories.map((category, index) => (
             <CategoryCard
               key={category.slug}

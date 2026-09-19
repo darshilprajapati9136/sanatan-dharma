@@ -4,14 +4,42 @@ import {samplePanchang, type PanchangContext, type PanchangData} from '@/content
 const TOKEN_URL = 'https://api.prokerala.com/token';
 const API_BASE = 'https://api.prokerala.com/v2/astrology';
 const FETCH_TIMEOUT_MS = 8000;
+/** Day cache lives at most 12h and is capped to avoid unbounded growth. */
+const DAY_CACHE_TTL_MS = 12 * 60 * 60 * 1000;
+const DAY_CACHE_MAX_ENTRIES = 31;
 
 let cachedToken: {value: string; expiresAt: number} | null = null;
-const dayCache = new Map<string, PanchangData>();
+/** Guards concurrent token fetches so parallel page renders share one request. */
+let inflightToken: Promise<string> | null = null;
+const dayCache = new Map<string, {data: PanchangData; storedAt: number}>();
+/** Guards concurrent live fetches for the same day+coordinates. */
+const inflightDay = new Map<string, Promise<PanchangData>>();
 
-async function getAccessToken(): Promise<string> {
-  if (cachedToken && Date.now() < cachedToken.expiresAt) {
-    return cachedToken.value;
+function pruneDayCache(): void {
+  if (dayCache.size <= DAY_CACHE_MAX_ENTRIES) return;
+  const oldest = [...dayCache.keys()].slice(0, dayCache.size - DAY_CACHE_MAX_ENTRIES);
+  for (const key of oldest) dayCache.delete(key);
+}
+
+function readDayCache(key: string): PanchangData | null {
+  const entry = dayCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.storedAt > DAY_CACHE_TTL_MS) {
+    dayCache.delete(key);
+    return null;
   }
+  return entry.data;
+}
+
+/** Test-only escape hatch: clears module-level caches. */
+export function __clearPanchangCachesForTests(): void {
+  cachedToken = null;
+  inflightToken = null;
+  dayCache.clear();
+  inflightDay.clear();
+}
+
+async function fetchToken(): Promise<string> {
   const clientId = process.env.PROKERALA_CLIENT_ID;
   const clientSecret = process.env.PROKERALA_CLIENT_SECRET;
   if (!clientId || !clientSecret) {
@@ -40,6 +68,17 @@ async function getAccessToken(): Promise<string> {
     expiresAt: Date.now() + (json.expires_in ?? 3600) * 1000 - 180_000
   };
   return cachedToken.value;
+}
+
+async function getAccessToken(): Promise<string> {
+  if (cachedToken && Date.now() < cachedToken.expiresAt) {
+    return cachedToken.value;
+  }
+  if (inflightToken) return inflightToken;
+  inflightToken = fetchToken().finally(() => {
+    inflightToken = null;
+  });
+  return inflightToken;
 }
 
 async function prokeralaGet<T>(path: string, params: Record<string, string>): Promise<T> {
@@ -71,9 +110,28 @@ interface ProkeralaMuhurat {
   period?: Array<{start?: string; end?: string}>;
 }
 
-function hhmm(iso: string | undefined): string | null {
-  if (!iso || iso.length < 16) return null;
-  return iso.slice(11, 16);
+/** Extract HH:MM in IST. Tolerates ISO strings with/without offsets. */
+export function hhmm(iso: string | undefined): string | null {
+  if (!iso || typeof iso !== 'string') return null;
+  const trimmed = iso.trim();
+  if (trimmed.length < 10) return null;
+  const parsed = new Date(trimmed);
+  if (!Number.isNaN(parsed.getTime())) {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).format(parsed);
+    if (/^\d{2}:\d{2}$/.test(parts)) return parts;
+  }
+  // Fallback for non-parseable clock strings: look for HH:MM anywhere.
+  const match = trimmed.match(/(\d{1,2}):(\d{2})/);
+  if (!match) return null;
+  const hh = match[1].padStart(2, '0');
+  const mm = match[2];
+  if (Number(hh) > 23 || Number(mm) > 59) return null;
+  return `${hh}:${mm}`;
 }
 
 function spanRange(span: ProkeralaSpan | undefined): string | null {
@@ -92,8 +150,20 @@ function first<T>(value: T[] | undefined): T | undefined {
   return Array.isArray(value) && value.length > 0 ? value[0] : undefined;
 }
 
-function muhuratRange(list: ProkeralaMuhurat[] | undefined, name: string): string | null {
-  const entry = (Array.isArray(list) ? list : []).find((m) => m.name === name);
+function normalizeMuhuratName(name: string | undefined): string {
+  return (name ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+export function muhuratRange(list: ProkeralaMuhurat[] | undefined, name: string): string | null {
+  const want = normalizeMuhuratName(name);
+  const entries = Array.isArray(list) ? list : [];
+  // Exact match first, then tolerant contains-match for API naming drift
+  // (e.g. "Rahu Kalam" vs "Rahu", "Abhijit" vs "Abhijit Muhurat").
+  const entry =
+    entries.find((m) => normalizeMuhuratName(m.name) === want) ??
+    entries.find(
+      (m) => normalizeMuhuratName(m.name).includes(want) || want.includes(normalizeMuhuratName(m.name))
+    );
   return spanRange(first(entry?.period));
 }
 
@@ -120,10 +190,16 @@ export function defaultPanchangContext(date: string = istDateString()): Panchang
 
 async function fetchLive(context: PanchangContext): Promise<PanchangData> {
   const date = context.date ?? istDateString();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    throw new Error('PROKERALA_BAD_DATE');
+  }
   const coords = `${context.latitude},${context.longitude}`;
   const datetime = `${date}T12:00:00+05:30`;
   const base = {ayanamsa: '1', coordinates: coords, datetime};
-  const [en, hi, ausp, inausp] = await Promise.all([
+  // English panchang is required; Hindi names and muhurat windows are
+  // best-effort so a partial provider outage still yields honest live data
+  // instead of dropping all the way back to the sample fixture.
+  const [enSettled, hiSettled, auspSettled, inauspSettled] = await Promise.allSettled([
     prokeralaGet<{
       tithi?: ProkeralaSpan[];
       nakshatra?: ProkeralaSpan[];
@@ -141,11 +217,18 @@ async function fetchLive(context: PanchangContext): Promise<PanchangData> {
     prokeralaGet<{muhurat?: ProkeralaMuhurat[]}>('/auspicious-period', base),
     prokeralaGet<{muhurat?: ProkeralaMuhurat[]}>('/inauspicious-period', base)
   ]);
+  if (enSettled.status !== 'fulfilled') {
+    throw enSettled.reason instanceof Error ? enSettled.reason : new Error('PROKERALA_EN_FAILED');
+  }
+  const en = enSettled.value;
+  const hi = hiSettled.status === 'fulfilled' ? hiSettled.value : undefined;
+  const ausp = auspSettled.status === 'fulfilled' ? auspSettled.value : undefined;
+  const inausp = inauspSettled.status === 'fulfilled' ? inauspSettled.value : undefined;
 
   const tithi = first(en.tithi);
-  const tithiHi = first(hi.tithi);
+  const tithiHi = first(hi?.tithi);
   const nakshatra = first(en.nakshatra);
-  const nakshatraHi = first(hi.nakshatra);
+  const nakshatraHi = first(hi?.nakshatra);
   const pakshaEn = shortPaksha(tithi?.paksha);
   const pakshaHi = shortPaksha(tithiHi?.paksha);
   const calculatedAt = new Date().toISOString();
@@ -155,7 +238,7 @@ async function fetchLive(context: PanchangContext): Promise<PanchangData> {
   const yoga = first(en.yoga);
   const karana = first(en.karana);
 
-  return {
+  const data: PanchangData = {
     status: 'live',
     context: {...context, date},
     provenance: {
@@ -172,11 +255,11 @@ async function fetchLive(context: PanchangContext): Promise<PanchangData> {
       sunrise: hhmm(en.sunrise) ? {en: hhmm(en.sunrise)!, hi: hhmm(en.sunrise)!} : null,
       sunset: hhmm(en.sunset) ? {en: hhmm(en.sunset)!, hi: hhmm(en.sunset)!} : null,
       rahu: (() => {
-        const range = muhuratRange(inausp.muhurat, 'Rahu');
+        const range = muhuratRange(inausp?.muhurat, 'Rahu');
         return range ? {en: range, hi: range} : null;
       })(),
       muhurat: (() => {
-        const range = muhuratRange(ausp.muhurat, 'Abhijit Muhurat');
+        const range = muhuratRange(ausp?.muhurat, 'Abhijit Muhurat');
         return range ? {en: range, hi: range} : null;
       })(),
       observance: null
@@ -193,19 +276,29 @@ async function fetchLive(context: PanchangContext): Promise<PanchangData> {
       ...(hhmm(en.moonrise) ? {moonrise: hhmm(en.moonrise)!} : {}),
       ...(hhmm(en.moonset) ? {moonset: hhmm(en.moonset)!} : {}),
       ...(() => {
-        const y = muhuratRange(inausp.muhurat, 'Yamaganda');
+        const y = muhuratRange(inausp?.muhurat, 'Yamaganda');
         return y ? {yamaganda: y} : {};
       })(),
       ...(() => {
-        const g = muhuratRange(inausp.muhurat, 'Gulika');
+        const g = muhuratRange(inausp?.muhurat, 'Gulika');
         return g ? {gulika: g} : {};
       })(),
       ...(() => {
-        const a = muhuratRange(ausp.muhurat, 'Abhijit Muhurat');
+        const a = muhuratRange(ausp?.muhurat, 'Abhijit Muhurat');
         return a ? {abhijit: a} : {};
       })()
     }
   };
+  // Never show a "Live" badge with no usable values — fall back honestly.
+  if (!hasCriticalLiveValues(data)) {
+    throw new Error('PROKERALA_EMPTY');
+  }
+  return data;
+}
+
+function hasCriticalLiveValues(data: PanchangData): boolean {
+  const v = data.values;
+  return Boolean(v.tithi || v.nakshatra || v.sunrise || v.sunset);
 }
 
 /**
@@ -219,14 +312,25 @@ export async function getDayPanchang(context?: PanchangContext): Promise<Panchan
     return samplePanchang;
   }
   const cacheKey = `${ctx.date ?? istDateString()}|${ctx.latitude},${ctx.longitude}`;
-  const cached = dayCache.get(cacheKey);
+  const cached = readDayCache(cacheKey);
   if (cached) return cached;
-  try {
-    const live = await fetchLive(ctx);
-    dayCache.set(cacheKey, live);
-    return live;
-  } catch (error) {
-    console.error('Live Panchang unavailable, serving sample fixture', error);
-    return samplePanchang;
-  }
+  const inflight = inflightDay.get(cacheKey);
+  if (inflight) return inflight;
+  const task = (async () => {
+    try {
+      const live = await fetchLive(ctx);
+      dayCache.set(cacheKey, {data: live, storedAt: Date.now()});
+      pruneDayCache();
+      return live;
+    } catch (error) {
+      // Log a stable code only — never tokens, coordinates in full, or bodies.
+      const code = error instanceof Error ? error.message : 'UNKNOWN';
+      console.error(`Live Panchang unavailable (${code}), serving sample fixture`);
+      return samplePanchang;
+    } finally {
+      inflightDay.delete(cacheKey);
+    }
+  })();
+  inflightDay.set(cacheKey, task);
+  return task;
 }

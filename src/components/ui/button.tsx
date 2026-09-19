@@ -3,7 +3,7 @@ import {cn} from '@/lib/utils';
 import {Link} from '@/i18n/navigation';
 
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors disabled:pointer-events-none disabled:opacity-60';
+  'action-button inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors disabled:pointer-events-none disabled:opacity-60';
 
 const variants = {
   primary: 'bg-primary text-primary-foreground hover:bg-primary-hover',

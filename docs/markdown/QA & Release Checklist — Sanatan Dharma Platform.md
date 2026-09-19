@@ -1011,3 +1011,13 @@ Next.js dev generated AGENTS.md and CLAUDE.md; these are framework documentation
 - Cross-check 19 Sep 2026 New Delhi vs Drik Panchang: tithi (Ashtami→Navami 15:27), nakshatra (Moola→Purva Ashadha 01:43), yoga, karana, Rahu (09:13–10:44), Abhijit (11:50–12:38), Yamaganda match; sunrise/sunset differ ~4 min by sunrise definition (Drik Hindu sunrise vs API astronomical).
 - Homepage and Panchang page render Live badge with Prokerala attribution; sample notice hidden when live. Credentials live only in gitignored `.env.local` as server-only vars.
 - Passed: ESLint, `tsc --noEmit`, 5 content tests, production build, HTTP smoke EN+HI, live rendering checks of live values and detail fields in both languages.
+
+
+## Visual redesign — 20 September 2026
+
+- Added lotus/sun brand mark, ivory/maroon/saffron styling, illustrated homepage hero, daily Panchang section, practice and learning features, festival spotlight and discovery links.
+- Added matching Learn, Scriptures and Festivals banners, full English/Hindi copy, responsive navigation and restrained entrance/hover animations with reduced-motion support.
+- Three original local WebP illustrations include AI-art captions; live/sample Panchang provenance remains visible.
+- Passed ESLint, TypeScript checks, 11 tests, production build and HTTP smoke checks for 22 pages in each language, protected-profile redirects, festival 404 and unauthenticated account privacy.
+- Browser checks: homepage images loaded, desktop and mobile widths did not overflow, Hindi content rendered, mobile menu opened and navigated to Learn.
+- Production preview: http://localhost:3004/en. No Vercel deployment performed during this redesign. Existing concurrent Panchang-service edits and tests were preserved.

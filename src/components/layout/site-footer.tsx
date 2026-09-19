@@ -1,6 +1,6 @@
 import {getTranslations} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
-import {Icon} from '@/components/ui/icon';
+import {BrandMark} from './brand-mark';
 
 export async function SiteFooter() {
   const t = await getTranslations('footer');
@@ -21,13 +21,11 @@ export async function SiteFooter() {
   ] as const;
 
   return (
-    <footer className="border-t border-border bg-surface">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
+    <footer className="editorial-footer border-t border-border">
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div className="sm:col-span-2 lg:col-span-2">
           <Link href="/" className="inline-flex items-center gap-2 font-serif text-lg font-semibold text-foreground">
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <Icon name="sparkles" className="h-5 w-5" />
-            </span>
+            <BrandMark className="h-10 w-10 shrink-0 text-secondary"/>
             Sanatan Dharma
           </Link>
           <p className="mt-3 max-w-sm text-sm text-muted">{t('tagline')}</p>
@@ -63,7 +61,7 @@ export async function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between lg:px-8">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between lg:px-8">
           <p>
             © {new Date().getFullYear()} Sanatan Dharma. {t('copyright')}
           </p>

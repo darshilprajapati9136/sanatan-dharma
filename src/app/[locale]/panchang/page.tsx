@@ -79,7 +79,7 @@ export default async function PanchangPage({
       </details>
       <section id="glossary" className="scroll-mt-24 py-8">
         <h2 className="font-serif text-2xl">{t('glossary')}</h2>
-        {['tithi', 'nakshatra', 'paksha', 'rahu'].map((key) => (
+        {['tithi', 'nakshatra', 'paksha', 'rahu', 'karana', 'yogaTerm', 'muhuratTerm'].map((key) => (
           <details id={key} className="border-b border-border py-5" key={key}>
             <summary className="cursor-pointer font-medium">{t(key)}</summary>
             <p className="mt-3 leading-relaxed text-muted">

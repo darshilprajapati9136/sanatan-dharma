@@ -10,9 +10,39 @@ export interface SearchEntry {
   searchText: string;
   draft: boolean;
 }
+// Common transliteration variants folded to the canonical form used in
+// titles and slugs. Applied to whole tokens on both query and index sides.
+const TRANSLIT_ALIASES: Record<string, string> = {
+  krsna: 'krishna',
+  krisna: 'krishna',
+  siva: 'shiva',
+  shiv: 'shiva',
+  visnu: 'vishnu',
+  ganesh: 'ganesha',
+  ganpati: 'ganesha',
+  laxmi: 'lakshmi',
+  luxmi: 'lakshmi',
+  pooja: 'puja',
+  ram: 'rama',
+  ramayan: 'ramayana',
+  mahabharat: 'mahabharata',
+  geeta: 'gita',
+  deepavali: 'diwali',
+  dipavali: 'diwali',
+  navaratri: 'navratri',
+  ved: 'veda',
+  vedas: 'veda',
+  puran: 'purana',
+  moksh: 'moksha',
+  sansar: 'samsara',
+  dharm: 'dharma',
+  karm: 'karma',
+  upvas: 'vrat',
+  tyohar: 'festival'
+};
 // Preserve Devanagari marks; only remove diacritics from Latin characters.
 export function normalizeQuery(value: string) {
-  return value
+  const cleaned = value
     .normalize('NFKC')
     .toLocaleLowerCase()
     .replace(
@@ -39,6 +69,41 @@ export function normalizeQuery(value: string) {
     )
     .replace(/[^\p{L}\p{N}\p{M}]+/gu, ' ')
     .trim();
+  return cleaned
+    .split(' ')
+    .map((t) => TRANSLIT_ALIASES[t] ?? t)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** True when two words differ by at most one insertion, deletion or swap. */
+export function isNearMatch(a: string, b: string): boolean {
+  if (a === b) return true;
+  const la = a.length;
+  const lb = b.length;
+  if (Math.abs(la - lb) > 1) return false;
+  let i = 0;
+  let j = 0;
+  let edits = 0;
+  while (i < la && j < lb) {
+    if (a[i] === b[j]) {
+      i++;
+      j++;
+      continue;
+    }
+    if (edits > 0) return false;
+    edits++;
+    if (la === lb) {
+      i++;
+      j++;
+    } else if (la > lb) {
+      i++;
+    } else {
+      j++;
+    }
+  }
+  return edits + (la - i + (lb - j)) <= 1;
 }
 export function getSearchEntries(locale: string): SearchEntry[] {
   const local = (v: {en: string; hi?: string}) =>
@@ -84,7 +149,10 @@ export function getSearchEntries(locale: string): SearchEntry[] {
     ['tithi', 'Tithi', 'तिथि'],
     ['nakshatra', 'Nakshatra', 'नक्षत्र'],
     ['paksha', 'Paksha', 'पक्ष'],
-    ['rahu', 'Rahu Kaal', 'राहु काल']
+    ['rahu', 'Rahu Kaal', 'राहु काल'],
+    ['karana', 'Karana', 'करण'],
+    ['yogaTerm', 'Yoga (calendar)', 'योग (पंचांग)'],
+    ['muhuratTerm', 'Muhurat', 'मुहूर्त']
   ].map(([key, en, hi]) => ({
     id: `calendar:${key}`,
     href: `/panchang#${key}`,
@@ -118,6 +186,12 @@ const stopWords = new Set([
   'can',
   'me',
   'tell',
+  'who',
+  'whom',
+  'whose',
+  'when',
+  'where',
+  'which',
   'क्या',
   'है',
   'हैं',
@@ -129,7 +203,17 @@ const stopWords = new Set([
   'क्यों',
   'मुझे',
   'बताएं',
-  'बताएँ'
+  'बताएँ',
+  'कौन',
+  'कब',
+  'कहाँ',
+  'किस',
+  'करें',
+  'करना',
+  'करे',
+  'होता',
+  'होती',
+  'होते'
 ]);
 export function searchContent(
   query: string,
@@ -143,17 +227,37 @@ export function searchContent(
     .filter((e) => !kind || kind === 'all' || e.kind === kind)
     .map((entry) => {
       const title = normalizeQuery(entry.title);
+      const titleWords = title.split(' ').filter(Boolean);
       const hay = normalizeQuery(entry.searchText);
-      const matches = tokens.filter((t) => hay.includes(t));
-      const score =
-        matches.length === tokens.length
-          ? matches.reduce((n, t) => n + (title.includes(t) ? 5 : 1), 0) +
-            (title === normalized ? 20 : 0)
-          : 0;
+      let score = 0;
+      let matchedAll = true;
+      for (const t of tokens) {
+        if (hay.includes(t)) {
+          score += title.includes(t) ? 5 : 1;
+          continue;
+        }
+        // Typo tolerance (tokens of 5+ chars): one-edit match against
+        // title words only, so body text can never promote a result.
+        if (t.length >= 5 && titleWords.some((w) => isNearMatch(t, w))) {
+          score += 3;
+          continue;
+        }
+        matchedAll = false;
+        break;
+      }
+      if (!matchedAll) return {entry, score: 0};
+      if (title === normalized) score += 20;
       return {entry, score};
     })
     .filter((r) => r.score > 0)
-    .sort((a, b) => b.score - a.score || a.entry.id.localeCompare(b.entry.id))
+    // Higher score first; on ties prefer festival guides, then full topics,
+    // then scripture introductions, with glossary stubs last.
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      const rank = (k: SearchEntry['kind']) =>
+        k === 'festival' || k === 'vrat' ? 0 : k === 'learn' ? 1 : k === 'scripture' ? 2 : 3;
+      return rank(a.entry.kind) - rank(b.entry.kind) || a.entry.id.localeCompare(b.entry.id);
+    })
     .map((r) => r.entry)
     .slice(0, 40);
 }

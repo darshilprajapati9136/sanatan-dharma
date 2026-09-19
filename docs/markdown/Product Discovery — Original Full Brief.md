@@ -1,5 +1,9 @@
 # Product Discovery & V1 Strategy
 
+> Original full brief (862 lines). The implementation summary lives in
+> `Product Discovery & V1 Strategy.md` in this folder; the build record is in
+> `QA & Release Checklist — Sanatan Dharma Platform.md`.
+
 **Project:** Sanatan Dharma Digital Platform  
 **Status:** V1 Direction Locked  
 **Purpose:** College project now, potentially expandable into a real consumer product later.

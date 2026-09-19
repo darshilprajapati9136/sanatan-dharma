@@ -109,13 +109,15 @@ export const foundationsTopics: LearnTopic[] = [
       {
         heading: {en: 'Different viewpoints', hi: 'विभिन्न दृष्टिकोण'},
         body: {
-          en: 'Schools of thought differ on the nature of atman and its relationship with ultimate reality (Brahman). Advaita traditions emphasize non-difference, while other schools preserve a distinction. The topic page should present these differences side by side as content grows.'
+          en: 'Schools of thought differ on the nature of atman and its relationship with ultimate reality (Brahman). Advaita traditions emphasize non-difference, while other schools preserve a distinction. The topic page should present these differences side by side as content grows.',
+          hi: 'आत्मा के स्वरूप और परम तत्व (ब्रह्म) से उसके संबंध पर दार्शनिक मतों में भिन्नता है। अद्वैत परंपराएँ अभेद पर बल देती हैं, जबकि अन्य मत भेद बनाए रखते हैं। सामग्री बढ़ने पर ये भिन्नताएँ साथ-साथ प्रस्तुत की जानी चाहिए।'
         }
       },
       {
         heading: {en: 'Practical relevance', hi: 'जीवन में उपयोग'},
         body: {
-          en: 'Practices such as self-inquiry and meditation are traditionally associated with understanding this teaching through direct reflection.'
+          en: 'Practices such as self-inquiry and meditation are traditionally associated with understanding this teaching through direct reflection.',
+          hi: 'इस शिक्षा को प्रत्यक्ष मनन से समझने के लिए परंपरागत रूप से आत्म-विचार और ध्यान जैसे अभ्यास जुड़े हैं।'
         }
       }
     ],
@@ -149,7 +151,8 @@ export const foundationsTopics: LearnTopic[] = [
       {
         heading: {en: 'Key ideas', hi: 'मुख्य विचार'},
         body: {
-          en: 'The cycle is traditionally linked with karma: actions shape the conditions of future experience. Different traditions describe the mechanics of this process differently.'
+          en: 'The cycle is traditionally linked with karma: actions shape the conditions of future experience. Different traditions describe the mechanics of this process differently.',
+          hi: 'यह चक्र परंपरागत रूप से कर्म से जुड़ा है — कर्म भावी अनुभव की परिस्थितियाँ गढ़ते हैं। इस प्रक्रिया की कार्यप्रणाली का वर्णन विभिन्न परंपराएँ अलग-अलग करती हैं।'
         }
       }
     ],
@@ -180,7 +183,8 @@ export const foundationsTopics: LearnTopic[] = [
       {
         heading: {en: 'Different paths', hi: 'विभिन्न मार्ग'},
         body: {
-          en: 'Traditions describe several paths toward liberation, commonly grouped as the paths of knowledge, devotion, selfless action and meditation. Each path is emphasized differently by different teachers and lineages.'
+          en: 'Traditions describe several paths toward liberation, commonly grouped as the paths of knowledge, devotion, selfless action and meditation. Each path is emphasized differently by different teachers and lineages.',
+          hi: 'मुक्ति के कई मार्ग बताए गए हैं — प्रायः ज्ञान, भक्ति, निष्काम कर्म और ध्यान के मार्गों में बाँटकर। प्रत्येक मार्ग पर अलग-अलग आचार्यों और परंपराओं ने अलग बल दिया है।'
         }
       }
     ],

@@ -7,16 +7,16 @@
   --surface-strong: #fbf5ea;
   --muted-foreground: #71675b;
   --border: #e4d9c6;
-  --primary: #c0611d;
+  --primary: #a94f16;
   --primary-foreground: #fffdf9;
-  --primary-hover: #a94f16;
+  --primary-hover: #833d10;
   --secondary: #58291c;
   --secondary-foreground: #fdf3e2;
   --secondary-hover: #471f15;
   --accent: #b08d2d;
   --accent-foreground: #2d2408;
   --danger: #b3402e;
-  --ring: rgba(192, 97, 29, 0.45);
+  --ring: rgba(169, 79, 22, 0.45);
 }
 
 @theme inline {
@@ -616,7 +616,7 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
 }
 .list-number {
   font-family: var(--font-serif);
-  color: var(--accent);
+  color: #7a611c;
   font-size: 19px;
   margin-top: 3px;
 }

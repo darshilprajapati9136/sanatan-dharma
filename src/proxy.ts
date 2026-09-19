@@ -2,6 +2,7 @@ import createMiddleware from 'next-intl/middleware';
 import {NextResponse, type NextRequest} from 'next/server';
 import {routing} from './i18n/routing';
 import {updateSession} from './lib/supabase/middleware';
+import {checkRateLimit, clientIdentity} from './lib/rate-limit';
 
 const handleI18n = createMiddleware(routing);
 
@@ -9,6 +10,11 @@ const handleI18n = createMiddleware(routing);
 // Add future authenticated-only sections here (e.g. 'dashboard' already
 // covered); each entry matches `/en/<segment>` and anything below it.
 const PROTECTED_SEGMENTS = ['profile', 'bookmarks', 'dashboard'];
+
+// Compute-heavy localized routes throttled per client (30 req/min each).
+const THROTTLED_SEGMENTS = ['ask', 'search'];
+const THROTTLE_LIMIT = 30;
+const THROTTLE_WINDOW_MS = 60_000;
 
 // Next.js 16 convention: `proxy.ts` replaces `middleware.ts`.
 // Runs locale routing first, then refreshes the Supabase session so auth
@@ -22,6 +28,31 @@ export default async function proxy(request: NextRequest) {
   const segments = request.nextUrl.pathname.split('/').filter(Boolean);
   const locale = segments[0];
   const section = segments[1];
+
+  if (
+    (routing.locales as readonly string[]).includes(locale) &&
+    section &&
+    THROTTLED_SEGMENTS.includes(section)
+  ) {
+    const ip = clientIdentity(
+      request.headers.get('x-forwarded-for'),
+      request.headers.get('x-real-ip') ?? ''
+    );
+    const verdict = checkRateLimit(
+      `${ip}:${section}`,
+      THROTTLE_LIMIT,
+      THROTTLE_WINDOW_MS
+    );
+    if (!verdict.allowed) {
+      return new NextResponse('Too many requests. Please wait a minute and try again.', {
+        status: 429,
+        headers: {
+          'Retry-After': String(Math.ceil(verdict.resetAfterMs / 1000)),
+          'Content-Type': 'text/plain; charset=utf-8'
+        }
+      });
+    }
+  }
 
   if (
     !user &&

@@ -24,7 +24,8 @@ export const scripturesTopics: LearnTopic[] = [
       {
         heading: {en: 'What they contain', hi: 'इनमें क्या है'},
         body: {
-          en: 'Vedic literature includes hymns (samhitas), ritual manuals (brahmanas), forest reflections (aranyakas) and philosophical inquiries (upanishads). Later articles can explore each layer in depth.'
+          en: 'Vedic literature includes hymns (samhitas), ritual manuals (brahmanas), forest reflections (aranyakas) and philosophical inquiries (upanishads). Later articles can explore each layer in depth.',
+          hi: 'वैदिक साहित्य में स्तुति-सूक्त (संहिता), कर्मकांड ग्रंथ (ब्राह्मण), वन-चिंतन (आरण्यक) और दार्शनिक अन्वेषण (उपनिषद्) शामिल हैं। आगे के लेखों में प्रत्येक स्तर को विस्तार से देखा जा सकता है।'
         }
       }
     ],
@@ -58,7 +59,8 @@ export const scripturesTopics: LearnTopic[] = [
       {
         heading: {en: 'Key ideas', hi: 'मुख्य विचार'},
         body: {
-          en: 'Central themes include atman (the self), Brahman (ultimate reality) and their relationship — interpreted differently by later philosophical schools.'
+          en: 'Central themes include atman (the self), Brahman (ultimate reality) and their relationship — interpreted differently by later philosophical schools.',
+          hi: 'केंद्रीय विषयों में आत्मा, ब्रह्म (परम तत्व) और उनका परस्पर संबंध शामिल हैं — जिनकी व्याख्या परवर्ती दार्शनिक मतों ने अलग-अलग की है।'
         }
       }
     ],

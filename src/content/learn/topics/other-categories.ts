@@ -19,7 +19,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Hindu philosophy is traditionally grouped into six orthodox schools (shad-darshana) that accept the authority of the Vedas. Each school has its own methods and emphases, and later Vedanta sub-schools — Advaita, Vishishtadvaita, Dvaita — differ on key questions.'
+          en: 'Hindu philosophy is traditionally grouped into six orthodox schools (shad-darshana) that accept the authority of the Vedas. Each school has its own methods and emphases, and later Vedanta sub-schools — Advaita, Vishishtadvaita, Dvaita — differ on key questions.',
+          hi: 'हिंदू दर्शन परंपरागत रूप से छह आस्तिक मतों (षड्दर्शन) में बाँटा गया है, जो वेदों का प्रामाण्य स्वीकार करते हैं। प्रत्येक मत की अपनी पद्धति और बलाघात हैं, और परवर्ती वेदांत उपमत — अद्वैत, विशिष्टाद्वैत, द्वैत — प्रमुख प्रश्नों पर भिन्न हैं।'
         }
       }
     ],
@@ -42,7 +43,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Advaita teaches the non-difference of atman and Brahman. Other Vedanta schools read the same texts differently — future versions of this topic should present those readings side by side.'
+          en: 'Advaita teaches the non-difference of atman and Brahman. Other Vedanta schools read the same texts differently — future versions of this topic should present those readings side by side.',
+          hi: 'अद्वैत आत्मा और ब्रह्म के अभेद का उपदेश देता है। अन्य वेदांत मत उन्हीं ग्रंथों को अलग तरह से पढ़ते हैं — इस विषय के भावी संस्करणों में वे व्याख्याएँ साथ-साथ प्रस्तुत होनी चाहिए।'
         }
       }
     ],
@@ -66,7 +68,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Vishnu is worshipped as the preserver and protector of cosmic order. Vaishnava traditions hold him as the supreme being, while other traditions honor him within a broader pantheon.'
+          en: 'Vishnu is worshipped as the preserver and protector of cosmic order. Vaishnava traditions hold him as the supreme being, while other traditions honor him within a broader pantheon.',
+          hi: 'विष्णु विश्व-व्यवस्था के पालनकर्ता और रक्षक के रूप में पूजित हैं। वैष्णव परंपराएँ उन्हें परम तत्व मानती हैं, जबकि अन्य परंपराएँ व्यापक देवसमूह में उनका सम्मान करती हैं।'
         }
       }
     ],
@@ -89,7 +92,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Shiva is associated with meditation, asceticism and the cyclical renewal of the cosmos. Shaiva traditions hold him as supreme; symbolism such as the lingam, damru and third eye carries layered meanings explored in later articles.'
+          en: 'Shiva is associated with meditation, asceticism and the cyclical renewal of the cosmos. Shaiva traditions hold him as supreme; symbolism such as the lingam, damru and third eye carries layered meanings explored in later articles.',
+          hi: 'शिव ध्यान, तपस्या और विश्व के चक्रीय नवीकरण से जुड़े हैं। शैव परंपराएँ उन्हें परम मानती हैं; लिंग, डमरू और तीसरे नेत्र जैसे प्रतीकों के बहुस्तरीय अर्थ आगे के लेखों में देखे जाएँगे।'
         }
       }
     ],
@@ -113,7 +117,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Puja typically involves offerings such as flowers, incense, light and food before a consecrated image or symbol, accompanied by prayers or mantras. Forms vary widely by region, tradition and occasion.'
+          en: 'Puja typically involves offerings such as flowers, incense, light and food before a consecrated image or symbol, accompanied by prayers or mantras. Forms vary widely by region, tradition and occasion.',
+          hi: 'पूजा में प्रायः प्रतिष्ठित मूर्ति या प्रतीक के समक्ष फूल, धूप, दीप और नैवेद्य अर्पित किए जाते हैं, साथ में प्रार्थना या मंत्र होते हैं। क्षेत्र, परंपरा और अवसर के अनुसार रूप बहुत भिन्न होते हैं।'
         }
       }
     ],
@@ -136,7 +141,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Japa is the repeated recitation of a mantra, often counted on a mala of 108 beads. Traditions describe different modes — audible, whispered and mental — with distinct roles in practice.'
+          en: 'Japa is the repeated recitation of a mantra, often counted on a mala of 108 beads. Traditions describe different modes — audible, whispered and mental — with distinct roles in practice.',
+          hi: 'जप मंत्र की बार-बार आवृत्ति है, प्रायः 108 मनकों की माला पर गिना जाता है। परंपराएँ अलग-अलग प्रकार बताती हैं — वाचिक, उपांशु और मानसिक — जिनकी साधना में अलग भूमिकाएँ हैं।'
         }
       }
     ],
@@ -209,7 +215,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'The word yoga comes from a root meaning “to join”. Classical texts describe yoga as the stilling of the movements of the mind, with physical postures (asana) as one limb among eight in Patanjali’s system.'
+          en: 'The word yoga comes from a root meaning “to join”. Classical texts describe yoga as the stilling of the movements of the mind, with physical postures (asana) as one limb among eight in Patanjali’s system.',
+          hi: 'योग शब्द “जोड़ना” अर्थ वाली धातु से आया है। शास्त्रीय ग्रंथ योग को चित्त की वृत्तियों का निरोध बताते हैं, जिसमें शारीरिक आसन पतंजलि की व्यवस्था के आठ अंगों में से एक है।'
         }
       }
     ],
@@ -232,7 +239,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Patanjali’s Yoga Sutras outline eight limbs: ethical restraints (yama), observances (niyama), posture (asana), breath regulation (pranayama), sense withdrawal (pratyahara), concentration (dharana), meditation (dhyana) and absorption (samadhi).'
+          en: 'Patanjali’s Yoga Sutras outline eight limbs: ethical restraints (yama), observances (niyama), posture (asana), breath regulation (pranayama), sense withdrawal (pratyahara), concentration (dharana), meditation (dhyana) and absorption (samadhi).',
+          hi: 'पतंजलि के योगसूत्र आठ अंग बताते हैं: यम, नियम, आसन, प्राणायाम, प्रत्याहार, धारणा, ध्यान और समाधि।'
         }
       }
     ],
@@ -283,7 +291,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Temples are traditionally understood as dwelling places of the deity, designed according to architectural treatises. Daily rituals, festivals and pilgrimages structure communal religious life around them.'
+          en: 'Temples are traditionally understood as dwelling places of the deity, designed according to architectural treatises. Daily rituals, festivals and pilgrimages structure communal religious life around them.',
+          hi: 'मंदिर परंपरागत रूप से देवता के निवासस्थान माने जाते हैं, जिनका निर्माण शिल्पशास्त्रों के अनुसार होता है। दैनिक अनुष्ठान, उत्सव और तीर्थयात्राएँ इनके चारों ओर सामुदायिक धार्मिक जीवन गढ़ती हैं।'
         }
       }
     ],
@@ -306,7 +315,8 @@ export const otherTopics: LearnTopic[] = [
       {
         heading: {en: 'Overview', hi: 'परिचय'},
         body: {
-          en: 'Pilgrimage (tirtha-yatra) journeys to sacred rivers, mountains and temples are an ancient practice. Well-known circuits include the Char Dham, while countless regional sites matter deeply to local traditions.'
+          en: 'Pilgrimage (tirtha-yatra) journeys to sacred rivers, mountains and temples are an ancient practice. Well-known circuits include the Char Dham, while countless regional sites matter deeply to local traditions.',
+          hi: 'पवित्र नदियों, पर्वतों और मंदिरों की तीर्थयात्रा प्राचीन परंपरा है। प्रसिद्ध परिपथों में चार धाम शामिल हैं, वहीं असंख्य क्षेत्रीय स्थल स्थानीय परंपराओं के लिए गहरे महत्व के हैं।'
         }
       }
     ],

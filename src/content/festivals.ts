@@ -136,7 +136,7 @@ export const festivalGuides: FestivalGuide[] = [
       en: 'Offer daily prayer during the festival days and join a local celebration if one is held nearby. Many communities now choose clay idols and symbolic immersion; follow local environmental guidance for visarjan.',
       hi: 'पर्व के दिनों में दैनिक प्रार्थना करें और पास में आयोजन हो तो स्थानीय उत्सव में भाग लें। कई समुदाय अब मिट्टी की मूर्तियों और प्रतीकात्मक विसर्जन को चुनते हैं; विसर्जन के लिए स्थानीय पर्यावरण निर्देशों का पालन करें।'
     },
-    related: '/learn/practices/puja',
+    related: '/learn/deities/ganesha',
     source: {
       label: 'Drik Panchang · festival calendar (dates vary by year and tradition)',
       href: 'https://www.drikpanchang.com/'

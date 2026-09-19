@@ -14,7 +14,7 @@ export default function RootNotFound() {
           </p>
           <Link
             href="/en"
-            className="inline-flex h-11 items-center justify-center rounded-lg bg-[#c0611d] px-5 text-sm font-medium text-white hover:opacity-90"
+            className="inline-flex h-11 items-center justify-center rounded-lg bg-[#a94f16] px-5 text-sm font-medium text-white hover:opacity-90"
           >
             Back home
           </Link>

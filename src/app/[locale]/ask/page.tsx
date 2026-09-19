@@ -23,8 +23,8 @@ export default async function AskPage({
   const results = q ? searchContent(q, locale).slice(0, 5) : [];
   const questions =
     locale === 'hi'
-      ? ['धर्म क्या है?', 'एकादशी क्या है?', 'कर्म क्या है?']
-      : ['What is dharma?', 'What is Ekadashi?', 'What is karma?'];
+      ? ['धर्म क्या है?', 'एकादशी क्या है?', 'कर्म क्या है?', 'हनुमान कौन हैं?', 'दीपावली कब है?', 'मोक्ष क्या है?']
+      : ['What is dharma?', 'What is Ekadashi?', 'What is karma?', 'Who is Hanuman?', 'When is Navratri?', 'What is moksha?'];
   return (
     <section className="mx-auto max-w-3xl px-4 py-14 lg:px-8">
       <p className="text-xs uppercase tracking-widest text-primary">

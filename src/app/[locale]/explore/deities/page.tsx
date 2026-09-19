@@ -8,7 +8,10 @@ const TOPICS = [
   ['deities', 'vishnu'],
   ['deities', 'shiva'],
   ['deities', 'devi'],
-  ['deities', 'krishna']
+  ['deities', 'krishna'],
+  ['deities', 'rama'],
+  ['deities', 'hanuman'],
+  ['deities', 'ganesha']
 ] as const;
 
 export async function generateMetadata({

@@ -4,6 +4,7 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN || undefined,
   sendDefaultPii: false,
   tracesSampleRate: 0.1,
+  debug: process.env.SENTRY_DEBUG === 'true',
   beforeSend(event) {
     if (event.request?.url) {
       try {

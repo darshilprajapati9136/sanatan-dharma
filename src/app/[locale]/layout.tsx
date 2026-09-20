@@ -4,6 +4,7 @@ import {Inter, Lora, Noto_Sans_Devanagari} from 'next/font/google';
 import {hasLocale, NextIntlClientProvider} from 'next-intl';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {routing} from '@/i18n/routing';
+import {siteUrl} from '@/lib/site-url';
 import {SiteHeader} from '@/components/layout/site-header';
 import {SiteFooter} from '@/components/layout/site-footer';
 import {MobileNav} from '@/components/layout/mobile-nav';
@@ -39,8 +40,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const {locale} = await params;
   const t = await getTranslations({locale, namespace: 'metadata'});
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-  const base = raw.endsWith('/') ? raw.slice(0, -1) : raw;
+  const base = siteUrl();
   const title = t('title');
   const description = t('description');
 
@@ -79,8 +79,7 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
   const daily = await getTranslations("daily");
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-  const base = raw.endsWith('/') ? raw.slice(0, -1) : raw;
+  const base = siteUrl();
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [

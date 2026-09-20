@@ -2,11 +2,7 @@ import type {MetadataRoute} from 'next';
 import {festivalGuides} from '@/content/festivals';
 import {getLearnCategories} from '@/content/learn';
 import {routing} from '@/i18n/routing';
-
-function siteUrl(): string {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-  return raw.endsWith('/') ? raw.slice(0, -1) : raw;
-}
+import {siteUrl} from '@/lib/site-url';
 
 /** Public, indexable routes. Auth/library/profile pages stay out. */
 export default function sitemap(): MetadataRoute.Sitemap {

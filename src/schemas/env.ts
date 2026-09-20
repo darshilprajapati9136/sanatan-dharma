@@ -1,7 +1,13 @@
 import {z} from 'zod';
 
 export const clientEnvSchema = z.object({
-  NEXT_PUBLIC_SITE_URL: z.string().url().default('http://localhost:3000'),
+  // Empty string tolerated (dashboard placeholder) — siteUrl() falls back.
+  NEXT_PUBLIC_SITE_URL: z
+    .string()
+    .trim()
+    .url()
+    .or(z.literal(''))
+    .default('http://localhost:3000'),
   NEXT_PUBLIC_SITE_NAME: z.string().min(1).default('Sanatan Dharma'),
   NEXT_PUBLIC_DEFAULT_LOCALE: z.enum(['en', 'hi']).default('en'),
   NEXT_PUBLIC_SUPABASE_URL: z.string().url().optional(),

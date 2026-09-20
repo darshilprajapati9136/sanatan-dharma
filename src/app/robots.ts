@@ -1,8 +1,8 @@
 import type {MetadataRoute} from 'next';
+import {siteUrl} from '@/lib/site-url';
 
 export default function robots(): MetadataRoute.Robots {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
-  const base = raw.endsWith('/') ? raw.slice(0, -1) : raw;
+  const base = siteUrl();
   return {
     rules: {
       userAgent: '*',

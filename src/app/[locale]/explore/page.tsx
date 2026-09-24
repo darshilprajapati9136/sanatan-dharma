@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
+import {Reveal} from '@/components/ui/reveal';
 import {getLearnTopic} from '@/content/learn';
 import {pickLocalizedText} from '@/lib/localized';
 
@@ -44,12 +45,15 @@ export default async function ExplorePage({
   };
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:py-16 lg:px-8">
-      <header className="flex flex-col gap-3 border-b border-border pb-8">
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
-          {navT('explore')}
-        </h1>
-      </header>
-      <div className="divide-y divide-border">
+      <Reveal>
+        <header className="flex flex-col gap-3 border-b border-border pb-8">
+          <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
+            {navT('explore')}
+          </h1>
+        </header>
+      </Reveal>
+      <Reveal>
+        <div className="divide-y divide-border stagger">
         {DESTINATIONS.map((dest) => {
           const description =
             dest.key === 'mantras'
@@ -79,7 +83,8 @@ export default async function ExplorePage({
             </Link>
           );
         })}
-      </div>
+        </div>
+      </Reveal>
     </div>
   );
 }

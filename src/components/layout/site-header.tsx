@@ -11,6 +11,7 @@ const navItems = [
   {href: '/', key: 'today'},
   {href: '/panchang', key: 'panchang'},
   {href: '/practise', key: 'practise'},
+  {href: '/japa', key: 'japa'},
   {href: '/learn', key: 'learn'},
   {href: '/scriptures', key: 'scriptures'}
 ] as const;
@@ -135,6 +136,7 @@ export async function SiteHeader() {
                   {href: '/', key: 'today'},
                   {href: '/panchang', key: 'panchang'},
                   {href: '/practise', key: 'practise'},
+                  {href: '/japa', key: 'japa'},
                   {href: '/learn', key: 'learn'},
                   {href: '/scriptures', key: 'scriptures'},
                   ...exploreItems.map((item) => ({...item, href: item.href})),

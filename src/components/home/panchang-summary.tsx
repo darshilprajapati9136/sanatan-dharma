@@ -51,7 +51,10 @@ export async function PanchangSummary({
         {Object.entries(day.values)
           .filter(([key]) => full || !['muhurat', 'observance'].includes(key))
           .map(([key, value]) => (
-            <div key={key} className="border-b border-border py-4">
+            <div
+              key={key}
+              className="panchang-value border-b border-border py-4"
+            >
               <dt className="flex items-center gap-2 text-xs text-muted">
                 <Icon
                   name={

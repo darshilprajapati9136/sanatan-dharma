@@ -92,6 +92,162 @@ test('getDayPanchang falls back on empty live payload, never live-with-nulls', a
   }
 });
 
+test('getDayPanchang falls back to sample when token request is rejected', async () => {
+  const savedId = process.env.PROKERALA_CLIENT_ID;
+  const savedSecret = process.env.PROKERALA_CLIENT_SECRET;
+  const savedFetch = globalThis.fetch;
+  const savedError = console.error;
+  process.env.PROKERALA_CLIENT_ID = 'test-id';
+  process.env.PROKERALA_CLIENT_SECRET = 'test-secret';
+  __clearPanchangCachesForTests();
+  console.error = () => {};
+  globalThis.fetch = (async (url: unknown) => {
+    const href = String(url);
+    if (href.includes('/token')) {
+      return {ok: false, status: 401, json: async () => ({})} as Response;
+    }
+    return {ok: true, json: async () => ({status: 'ok', data: {}})} as Response;
+  }) as typeof fetch;
+  try {
+    const data = await getDayPanchang({
+      date: '2026-09-19',
+      location: 'New Delhi',
+      timeZone: 'Asia/Kolkata',
+      latitude: 28.6139,
+      longitude: 77.209
+    });
+    assert.equal(data.status, 'sample');
+    assert.equal(data.provenance.calculatedAt, null);
+  } finally {
+    globalThis.fetch = savedFetch;
+    console.error = savedError;
+    if (savedId !== undefined) process.env.PROKERALA_CLIENT_ID = savedId;
+    else delete process.env.PROKERALA_CLIENT_ID;
+    if (savedSecret !== undefined) process.env.PROKERALA_CLIENT_SECRET = savedSecret;
+    else delete process.env.PROKERALA_CLIENT_SECRET;
+    __clearPanchangCachesForTests();
+  }
+});
+
+test('getDayPanchang falls back to sample when required English endpoint fails', async () => {
+  const savedId = process.env.PROKERALA_CLIENT_ID;
+  const savedSecret = process.env.PROKERALA_CLIENT_SECRET;
+  const savedFetch = globalThis.fetch;
+  const savedError = console.error;
+  process.env.PROKERALA_CLIENT_ID = 'test-id';
+  process.env.PROKERALA_CLIENT_SECRET = 'test-secret';
+  __clearPanchangCachesForTests();
+  console.error = () => {};
+  globalThis.fetch = (async (url: unknown) => {
+    const href = String(url);
+    if (href.includes('/token')) {
+      return {ok: true, json: async () => ({access_token: 'tok', expires_in: 3600})} as Response;
+    }
+    if (href.includes('la=en')) {
+      return {ok: false, status: 500, json: async () => ({})} as Response;
+    }
+    return {ok: true, json: async () => ({status: 'ok', data: {}})} as Response;
+  }) as typeof fetch;
+  try {
+    const data = await getDayPanchang({
+      date: '2026-09-19',
+      location: 'New Delhi',
+      timeZone: 'Asia/Kolkata',
+      latitude: 28.6139,
+      longitude: 77.209
+    });
+    assert.equal(data.status, 'sample');
+  } finally {
+    globalThis.fetch = savedFetch;
+    console.error = savedError;
+    if (savedId !== undefined) process.env.PROKERALA_CLIENT_ID = savedId;
+    else delete process.env.PROKERALA_CLIENT_ID;
+    if (savedSecret !== undefined) process.env.PROKERALA_CLIENT_SECRET = savedSecret;
+    else delete process.env.PROKERALA_CLIENT_SECRET;
+    __clearPanchangCachesForTests();
+  }
+});
+
+test('getDayPanchang falls back to sample on invalid date, never throws', async () => {
+  const savedId = process.env.PROKERALA_CLIENT_ID;
+  const savedSecret = process.env.PROKERALA_CLIENT_SECRET;
+  const savedError = console.error;
+  process.env.PROKERALA_CLIENT_ID = 'test-id';
+  process.env.PROKERALA_CLIENT_SECRET = 'test-secret';
+  __clearPanchangCachesForTests();
+  console.error = () => {};
+  try {
+    const data = await getDayPanchang({
+      date: 'not-a-date',
+      location: 'New Delhi',
+      timeZone: 'Asia/Kolkata',
+      latitude: 28.6139,
+      longitude: 77.209
+    });
+    assert.equal(data.status, 'sample');
+  } finally {
+    console.error = savedError;
+    if (savedId !== undefined) process.env.PROKERALA_CLIENT_ID = savedId;
+    else delete process.env.PROKERALA_CLIENT_ID;
+    if (savedSecret !== undefined) process.env.PROKERALA_CLIENT_SECRET = savedSecret;
+    else delete process.env.PROKERALA_CLIENT_SECRET;
+    __clearPanchangCachesForTests();
+  }
+});
+
+test('getDayPanchang stays live with English fallback when Hindi endpoint fails', async () => {
+  const savedId = process.env.PROKERALA_CLIENT_ID;
+  const savedSecret = process.env.PROKERALA_CLIENT_SECRET;
+  const savedFetch = globalThis.fetch;
+  process.env.PROKERALA_CLIENT_ID = 'test-id';
+  process.env.PROKERALA_CLIENT_SECRET = 'test-secret';
+  __clearPanchangCachesForTests();
+  globalThis.fetch = (async (url: unknown) => {
+    const href = String(url);
+    if (href.includes('/token')) {
+      return {ok: true, json: async () => ({access_token: 'tok', expires_in: 3600})} as Response;
+    }
+    if (href.includes('la=hi')) {
+      return {ok: false, status: 503, json: async () => ({})} as Response;
+    }
+    if (href.includes('/auspicious-period') || href.includes('/inauspicious-period')) {
+      return {ok: false, status: 500, json: async () => ({})} as Response;
+    }
+    return {
+      ok: true,
+      json: async () => ({
+        status: 'ok',
+        data: {
+          tithi: [{name: 'Ashtami', paksha: 'Krishna Paksha', start: '2026-09-19T00:00:00+05:30', end: '2026-09-19T15:27:00+05:30'}],
+          nakshatra: [{name: 'Moola', start: '2026-09-19T00:00:00+05:30', end: '2026-09-20T01:43:00+05:30'}],
+          sunrise: '2026-09-19T06:08:00+05:30',
+          sunset: '2026-09-19T18:25:00+05:30'
+        }
+      })
+    } as Response;
+  }) as typeof fetch;
+  try {
+    const data = await getDayPanchang({
+      date: '2026-09-19',
+      location: 'New Delhi',
+      timeZone: 'Asia/Kolkata',
+      latitude: 28.6139,
+      longitude: 77.209
+    });
+    assert.equal(data.status, 'live');
+    // Hindi names fall back to English values, never null when English exists.
+    assert.equal(data.values.tithi?.en, 'Ashtami');
+    assert.equal(data.values.tithi?.hi, 'Ashtami');
+    assert.equal(data.values.nakshatra?.hi, 'Moola');
+  } finally {
+    globalThis.fetch = savedFetch;
+    if (savedId !== undefined) process.env.PROKERALA_CLIENT_ID = savedId;
+    else delete process.env.PROKERALA_CLIENT_ID;
+    if (savedSecret !== undefined) process.env.PROKERALA_CLIENT_SECRET = savedSecret;
+    else delete process.env.PROKERALA_CLIENT_SECRET;
+    __clearPanchangCachesForTests();
+  }
+});
 test('getDayPanchang degrades gracefully when muhurat endpoints fail', async () => {
   const savedId = process.env.PROKERALA_CLIENT_ID;
   const savedSecret = process.env.PROKERALA_CLIENT_SECRET;

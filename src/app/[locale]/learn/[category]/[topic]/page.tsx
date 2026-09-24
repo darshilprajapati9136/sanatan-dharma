@@ -4,6 +4,7 @@ import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {Breadcrumb} from '@/components/ui/breadcrumb';
 import {Icon} from '@/components/ui/icon';
+import {Reveal} from '@/components/ui/reveal';
 import {TopicArticle} from '@/components/learn/topic-article';
 import {pickLocalizedText} from '@/lib/localized';
 import {getLearnCategories, getLearnCategory, getLearnTopic} from '@/content/learn';
@@ -67,7 +68,9 @@ export default async function LearnTopicPage({
         ]}
       />
 
-      <TopicArticle topic={topic} locale={locale} />
+      <Reveal>
+        <TopicArticle topic={topic} locale={locale} />
+      </Reveal>
 
       <nav
         aria-label={categoryTitle}

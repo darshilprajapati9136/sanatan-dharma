@@ -3,6 +3,7 @@ import {pickLocalizedText} from '@/lib/localized';
 import type {LearnTopic} from '@/content/learn/types';
 import {BookmarkButton} from './bookmark-button';
 import {TopicMeta} from './topic-meta';
+import {Reveal} from '@/components/ui/reveal';
 
 /**
  * List row for a single topic. The title links to the topic page; the
@@ -22,22 +23,24 @@ export function TopicCard({
   const summary = pickLocalizedText(locale, topic.summary.en, topic.summary.hi);
 
   return (
-    <li className="flex items-start justify-between gap-4 border-b border-border py-5 last:border-b-0 last:pb-0 first:pt-0">
-      <div className="flex min-w-0 flex-1 flex-col gap-2">
-        <Link
-          href={href}
-          className="font-serif text-lg font-semibold tracking-tight text-foreground hover:text-primary"
-        >
-          {title}
-        </Link>
-        {summary ? <p className="text-sm leading-relaxed text-muted">{summary}</p> : null}
-        <TopicMeta
-          difficulty={topic.difficulty}
-          readingTimeMinutes={topic.readingTimeMinutes}
-          status={topic.status}
-        />
-      </div>
-      <BookmarkButton contentId={`${topic.category}/${topic.slug}`} />
+    <li className="border-b border-border py-5 last:border-b-0 last:pb-0 first:pt-0">
+      <Reveal className="flex items-start justify-between gap-4">
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <Link
+            href={href}
+            className="font-serif text-lg font-semibold tracking-tight text-foreground hover:text-primary"
+          >
+            {title}
+          </Link>
+          {summary ? <p className="text-sm leading-relaxed text-muted">{summary}</p> : null}
+          <TopicMeta
+            difficulty={topic.difficulty}
+            readingTimeMinutes={topic.readingTimeMinutes}
+            status={topic.status}
+          />
+        </div>
+        <BookmarkButton contentId={`${topic.category}/${topic.slug}`} />
+      </Reveal>
     </li>
   );
 }

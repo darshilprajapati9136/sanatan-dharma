@@ -2,6 +2,7 @@ import {notFound} from 'next/navigation';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Breadcrumb} from '@/components/ui/breadcrumb';
 import {EmptyState} from '@/components/ui/empty-state';
+import {Reveal} from '@/components/ui/reveal';
 import {Link} from '@/i18n/navigation';
 import {getScriptureSection, getScriptureStructure, getSectionVerses} from '@/server/services/content';
 import {ProgressReporter} from '@/components/scriptures/progress-reporter';
@@ -69,16 +70,19 @@ export default async function ScriptureSectionPage({
         ]}
       />
 
-      <div className="mb-8 mt-4 flex flex-col gap-2">
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
-          {sectionTitle || section.slug}
-        </h1>
-      </div>
+      <Reveal>
+        <div className="mb-8 mt-4 flex flex-col gap-2">
+          <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
+            {sectionTitle || section.slug}
+          </h1>
+        </div>
+      </Reveal>
 
       {verses.length === 0 ? (
         <EmptyState icon="book" title={t('emptyTitle')} description={t('emptyDescription')} />
       ) : (
-        <div className="flex flex-col gap-6">
+        <Reveal>
+          <div className="flex flex-col gap-6">
           {verses.map((verse) => (
             <article
               key={verse.id}
@@ -121,6 +125,7 @@ export default async function ScriptureSectionPage({
             </article>
           ))}
         </div>
+        </Reveal>
       )}
 
       <p className="mt-8">

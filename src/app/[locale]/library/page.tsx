@@ -1,6 +1,7 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {getLearnCategories} from '@/content/learn';
 import {pickLocalizedText} from '@/lib/localized';
+import {Reveal} from '@/components/ui/reveal';
 import {ReadingList} from '@/components/learn/reading-list';
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params;
@@ -25,11 +26,15 @@ export default async function LibraryPage({
     }));
   return (
     <section className="mx-auto max-w-3xl px-4 py-14 lg:px-8">
-      <h1 className="font-serif text-4xl">{t('library')}</h1>
-      <p className="my-6 text-sm leading-relaxed text-muted">
-        {t('libraryIntro')}
-      </p>
-      <ReadingList topics={topics} />
+      <Reveal>
+        <h1 className="font-serif text-4xl">{t('library')}</h1>
+        <p className="my-6 text-sm leading-relaxed text-muted">
+          {t('libraryIntro')}
+        </p>
+      </Reveal>
+      <Reveal>
+        <ReadingList topics={topics} />
+      </Reveal>
     </section>
   );
 }

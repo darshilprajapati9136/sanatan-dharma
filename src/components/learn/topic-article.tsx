@@ -3,6 +3,7 @@ import {pickLocalizedText} from '@/lib/localized';
 import type {LearnTopic, SourceKind} from '@/content/learn/types';
 import {getRelatedTopics} from '@/content/learn';
 import {TopicCard} from './topic-card';
+import {TopicDiagram} from './topic-diagram';
 import {TopicMeta} from './topic-meta';
 import {BookmarkButton} from './bookmark-button';
 
@@ -80,6 +81,7 @@ export async function TopicArticle({topic, locale}: {topic: LearnTopic; locale: 
       ) : null}
 
       {locale === 'hi' && topic.sections.some(section => !section.body.hi) && <p className="text-sm text-muted">{daily('translationPending')}</p>}
+      {topic.diagram ? <TopicDiagram diagram={topic.diagram} locale={locale} /> : null}
       <div className="flex flex-col gap-8">
         {topic.sections.map((section, index) => (
           <section key={sectionAnchor(index, section.heading.en)} id={sectionAnchor(index, section.heading.en)} className="scroll-mt-24">

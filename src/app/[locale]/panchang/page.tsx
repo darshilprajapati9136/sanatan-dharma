@@ -1,5 +1,6 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {PanchangSummary} from '@/components/home/panchang-summary';
+import {Reveal} from '@/components/ui/reveal';
 import {defaultPanchangContext, getDayPanchang} from '@/server/services/panchang-live';
 export async function generateMetadata({params}: {params: Promise<{locale: string}>}) {
   const {locale} = await params;
@@ -55,45 +56,53 @@ export default async function PanchangPage({
   }));
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 lg:px-8">
-      <p className="text-xs uppercase tracking-widest text-primary">
-        {t('todayNav')} / {t('understand')}
-      </p>
-      <h1 className="mb-8 mt-3 font-serif text-4xl">{t('panchangNav')}</h1>
-      <PanchangSummary locale={locale} full data={data} />
-      <details className="my-6 rounded-xl border border-border bg-surface p-6">
-        <summary className="cursor-pointer font-semibold">
-          {t('detailed')}
-        </summary>
-        <p className="mt-4 text-sm text-muted">{t('detailsNote')}</p>
-        <dl className="mt-4 grid gap-x-8 sm:grid-cols-2">
-          {rows.map((row) => (
-            <div
-              className="flex justify-between gap-4 border-b border-border py-3 text-sm"
-              key={row.label}
-            >
-              <dt>{row.label}</dt>
-              <dd className="text-muted">{row.value}</dd>
-            </div>
+      <Reveal>
+        <p className="text-xs uppercase tracking-widest text-primary">
+          {t('todayNav')} / {t('understand')}
+        </p>
+        <h1 className="mb-8 mt-3 font-serif text-4xl">{t('panchangNav')}</h1>
+      </Reveal>
+      <Reveal>
+        <PanchangSummary locale={locale} full data={data} />
+      </Reveal>
+      <Reveal>
+        <details className="my-6 rounded-xl border border-border bg-surface p-6">
+          <summary className="cursor-pointer font-semibold">
+            {t('detailed')}
+          </summary>
+          <p className="mt-4 text-sm text-muted">{t('detailsNote')}</p>
+          <dl className="mt-4 grid gap-x-8 sm:grid-cols-2">
+            {rows.map((row) => (
+              <div
+                className="flex justify-between gap-4 border-b border-border py-3 text-sm"
+                key={row.label}
+              >
+                <dt>{row.label}</dt>
+                <dd className="text-muted">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </details>
+      </Reveal>
+      <Reveal>
+        <section id="glossary" className="scroll-mt-24 py-8">
+          <h2 className="font-serif text-2xl">{t('glossary')}</h2>
+          {['tithi', 'nakshatra', 'paksha', 'rahu', 'karana', 'yogaTerm', 'muhuratTerm'].map((key) => (
+            <details id={key} className="border-b border-border py-5" key={key}>
+              <summary className="cursor-pointer font-medium">{t(key)}</summary>
+              <p className="mt-3 leading-relaxed text-muted">
+                {t(`${key}Meaning`)}
+              </p>
+            </details>
           ))}
-        </dl>
-      </details>
-      <section id="glossary" className="scroll-mt-24 py-8">
-        <h2 className="font-serif text-2xl">{t('glossary')}</h2>
-        {['tithi', 'nakshatra', 'paksha', 'rahu', 'karana', 'yogaTerm', 'muhuratTerm'].map((key) => (
-          <details id={key} className="border-b border-border py-5" key={key}>
-            <summary className="cursor-pointer font-medium">{t(key)}</summary>
-            <p className="mt-3 leading-relaxed text-muted">
-              {t(`${key}Meaning`)}
-            </p>
-          </details>
-        ))}
-        <a
-          href="https://www.drikpanchang.com/"
-          className="mt-5 inline-block text-sm text-primary underline"
-        >
-          {t('glossarySource')} ↗
-        </a>
-      </section>
+          <a
+            href="https://www.drikpanchang.com/"
+            className="mt-5 inline-block text-sm text-primary underline"
+          >
+            {t('glossarySource')} ↗
+          </a>
+        </section>
+      </Reveal>
       <aside className="border-t border-border pt-6 text-xs leading-relaxed text-muted">
         <h2 className="font-semibold">{t('provider')}</h2>
         {data.status === 'live' ? (

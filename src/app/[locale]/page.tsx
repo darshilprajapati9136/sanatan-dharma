@@ -25,6 +25,7 @@ export default async function HomePage({
   const {locale} = await params;
   setRequestLocale(locale);
   const t = await getTranslations('daily');
+  const navT = await getTranslations('nav');
   const v = await getTranslations('visual');
   const date = new Intl.DateTimeFormat(locale === 'hi' ? 'hi-IN' : 'en-IN', {
     weekday: 'long',
@@ -136,6 +137,17 @@ export default async function HomePage({
               <h2 className="section-title">{t('practice')}</h2>
               <p className="body-copy">{t('practiceIntro')}</p>
               <PracticeList />
+              <div className="home-japa-links">
+                <Link href="/japa" className="text-link">
+                  {locale === 'hi'
+                    ? '📿 नाम जप काउंटर खोलें'
+                    : '📿 Open Naam Japa Counter'}{' '}
+                  <span aria-hidden="true">↗</span>
+                </Link>
+                <Link href="/explore/mantras" className="text-link">
+                  {navT('mantras')} <span aria-hidden="true">↗</span>
+                </Link>
+              </div>
             </div>
             <Link href="/learn/foundations/dharma" className="reading-feature">
               <div className="reading-feature-image">
@@ -157,6 +169,83 @@ export default async function HomePage({
               </div>
             </Link>
           </section>
+        </Reveal>
+        <Reveal>
+          <Link href="/japa" className="japa-banner home-japa-banner">
+            <span className="home-japa-shine" aria-hidden="true" />
+            <span className="home-japa-om home-japa-om-1" aria-hidden="true">
+              ॐ
+            </span>
+            <span className="home-japa-om home-japa-om-2" aria-hidden="true">
+              ॐ
+            </span>
+            <span className="home-japa-om home-japa-om-3" aria-hidden="true">
+              ॐ
+            </span>
+            <div className="home-japa-copy">
+              <p className="eyebrow">
+                {locale === 'hi' ? 'नाम जप' : 'Naam Japa'}
+              </p>
+              <h2>
+                {locale === 'hi'
+                  ? 'जप गिनें, ध्यान बनाए रखें।'
+                  : 'Count your japa, hold your focus.'}
+              </h2>
+              <p>
+                {locale === 'hi'
+                  ? 'माला-प्रेरित काउंटर, मंत्र संग्रह और अपनी इष्टदेव फोटो — सब एक जगह।'
+                  : 'Mala-inspired counter, mantra library and your own deity photo — in one place.'}
+              </p>
+              <span className="home-japa-cta">
+                {locale === 'hi' ? '📿 जप शुरू करें' : '📿 Start Japa'}
+                <span className="home-japa-arrow" aria-hidden="true">
+                  →
+                </span>
+              </span>
+            </div>
+            <div className="home-japa-visual" aria-hidden="true">
+              <svg className="japa-mala-ring" viewBox="0 0 200 200">
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="78"
+                  fill="none"
+                  stroke="#f2d9a822"
+                  strokeWidth="1.5"
+                />
+                <circle
+                  className="japa-mala-progress"
+                  cx="100"
+                  cy="100"
+                  r="78"
+                  fill="none"
+                  stroke="#ffd57e"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  transform="rotate(-90 100 100)"
+                />
+                {Array.from({length: 27}).map((_, i) => {
+                  const a = (i / 27) * Math.PI * 2;
+                  const cx = 100 + 78 * Math.cos(a);
+                  const cy = 100 + 78 * Math.sin(a);
+                  const sumeru = i % 9 === 0;
+                  return (
+                    <circle
+                      key={i}
+                      cx={cx}
+                      cy={cy}
+                      r={sumeru ? 7 : 5}
+                      className={sumeru ? 'japa-bead sumeru' : 'japa-bead'}
+                    />
+                  );
+                })}
+              </svg>
+              <div className="home-japa-center">
+                <span>ॐ</span>
+                <small>108</small>
+              </div>
+            </div>
+          </Link>
         </Reveal>
         <Reveal>
           <section className="festival-section">
@@ -223,12 +312,18 @@ export default async function HomePage({
                 ['/learn/foundations', 'foundation', 'lotus'],
                 ['/scriptures', 'scriptures', 'book'],
                 ['/explore/festivals', 'festivals', 'flame'],
-                ['/learn/yoga-meditation', 'yoga', 'temple']
+                ['/learn/yoga-meditation', 'yoga', 'temple'],
+                ['/japa', 'japa', 'sparkles'],
+                ['/explore/mantras', 'mantras', 'book']
               ].map(([href, key, icon], i) => (
                 <Link href={href} key={key} className="discovery-item">
                   <span className="discovery-index">0{i + 1}</span>
                   <Icon name={icon as IconName} className="h-8 w-8" />
-                  <h3>{t(key)}</h3>
+                  <h3>
+                    {key === 'japa' || key === 'mantras'
+                      ? navT(key)
+                      : t(key)}
+                  </h3>
                   <span className="discovery-arrow" aria-hidden="true">
                     ↗
                   </span>

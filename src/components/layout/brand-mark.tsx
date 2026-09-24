@@ -5,7 +5,7 @@ export function BrandMark({className = ''}: {className?: string}) {
       viewBox="0 0 48 48"
       fill="none"
       aria-hidden="true"
-      className={className}
+      className={`brand-mark ${className}`}
     >
       <rect x="1" y="1" width="46" height="46" rx="15" fill="currentColor" />
       <g

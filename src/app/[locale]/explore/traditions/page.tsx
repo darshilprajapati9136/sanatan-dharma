@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
+import {Reveal} from '@/components/ui/reveal';
 import {TopicCard} from '@/components/learn/topic-card';
 import {getLearnTopic} from '@/content/learn';
 
@@ -36,14 +37,16 @@ export default async function ExploreTraditionsPage({
   ).filter((topic) => topic != null);
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-12 sm:py-16 lg:px-8">
-      <header className="flex flex-col gap-3 border-b border-border pb-8">
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
-          {t('categories.temples-traditions.title')}
-        </h1>
-        <p className="text-lg leading-relaxed text-muted">
-          {t('categories.temples-traditions.description')}
-        </p>
-      </header>
+      <Reveal>
+        <header className="flex flex-col gap-3 border-b border-border pb-8">
+          <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
+            {t('categories.temples-traditions.title')}
+          </h1>
+          <p className="text-lg leading-relaxed text-muted">
+            {t('categories.temples-traditions.description')}
+          </p>
+        </header>
+      </Reveal>
       <ul className="mt-2 flex flex-col">
         {topics.map((topic) => (
           <TopicCard

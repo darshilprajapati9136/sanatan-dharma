@@ -81,3 +81,25 @@ test('new interface messages are complete in both locales', () => {
   assert.deepEqual(Object.keys(en.daily).sort(), Object.keys(hi.daily).sort());
   for (const value of Object.values(hi.daily)) assert.ok(value.length > 0);
 });
+test('topic diagrams are well-formed, sequential and bilingual', () => {
+  const topics = getLearnCategories().flatMap((c) => c.topics);
+  const withDiagram = topics.filter((t) => t.diagram);
+  assert.ok(withDiagram.length >= 1, 'expected at least one diagram pilot');
+  for (const topic of withDiagram) {
+    const diagram = topic.diagram!;
+    assert.equal(diagram.kind, 'sequence', topic.slug);
+    assert.ok(diagram.title.en.length > 0 && diagram.title.hi!.length > 0, topic.slug);
+    assert.ok(diagram.steps.length >= 2, `${topic.slug} needs at least two steps`);
+    for (const step of diagram.steps) {
+      assert.ok(step.label.en.length > 0 && step.label.hi!.length > 0, topic.slug);
+      if (step.detail) {
+        assert.ok(step.detail.en.length > 0 && step.detail.hi!.length > 0, topic.slug);
+      }
+      if (step.href) {
+        assert.ok(step.href.startsWith('/learn/'), `${topic.slug} ${step.href}`);
+        const [, , category, slug] = step.href.split('/');
+        assert.ok(getLearnTopic(category, slug), `${topic.slug} ${step.href}`);
+      }
+    }
+  }
+});

@@ -2,6 +2,7 @@ import {notFound} from 'next/navigation';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {Link} from '@/i18n/navigation';
 import {Breadcrumb} from '@/components/ui/breadcrumb';
+import {Reveal} from '@/components/ui/reveal';
 import {getScriptureStructure} from '@/server/services/content';
 import {pickLocalizedText} from '@/lib/localized';
 
@@ -103,22 +104,26 @@ export default async function ScriptureDetailPage({
 
   return (
     <section className="mx-auto w-full max-w-3xl px-4 py-16 lg:px-8">
-      <Breadcrumb
-        items={[
-          {label: navT('scriptures'), href: '/scriptures'},
-          {label: title || scripture.slug}
-        ]}
-      />
+      <Reveal>
+        <Breadcrumb
+          items={[
+            {label: navT('scriptures'), href: '/scriptures'},
+            {label: title || scripture.slug}
+          ]}
+        />
 
-      <div className="mb-8 mt-4 flex flex-col gap-2">
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
-          {title || scripture.slug}
-        </h1>
-        {description ? <p className="text-muted">{description}</p> : null}
-      </div>
+        <div className="mb-8 mt-4 flex flex-col gap-2">
+          <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">
+            {title || scripture.slug}
+          </h1>
+          {description ? <p className="text-muted">{description}</p> : null}
+        </div>
+      </Reveal>
 
-      <h2 className="mb-4 font-serif text-2xl font-semibold text-foreground">{t('chapters')}</h2>
-      <SectionTree sections={scripture.sections} parentId={null} slug={scripture.slug} locale={locale} />
+      <Reveal>
+        <h2 className="mb-4 font-serif text-2xl font-semibold text-foreground">{t('chapters')}</h2>
+        <SectionTree sections={scripture.sections} parentId={null} slug={scripture.slug} locale={locale} />
+      </Reveal>
     </section>
   );
 }

@@ -5,6 +5,7 @@ import {Link} from '@/i18n/navigation';
 import {Breadcrumb} from '@/components/ui/breadcrumb';
 import {EmptyState} from '@/components/ui/empty-state';
 import {Icon} from '@/components/ui/icon';
+import {Reveal} from '@/components/ui/reveal';
 import {TopicCard} from '@/components/learn/topic-card';
 import {getLearnCategories, getLearnCategory, isLearnCategorySlug} from '@/content/learn';
 
@@ -58,13 +59,15 @@ export default async function LearnCategoryPage({
         items={[{label: t('title'), href: '/learn'}, {label: title}]}
       />
 
-      <header className="flex flex-col gap-3 border-b border-border pb-8">
-        <p className="text-sm font-medium uppercase tracking-wide text-primary">
-          {t('topicsCount', {count: category.topics.length})}
-        </p>
-        <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">{title}</h1>
-        <p className="text-lg leading-relaxed text-muted">{description}</p>
-      </header>
+      <Reveal>
+        <header className="flex flex-col gap-3 border-b border-border pb-8">
+          <p className="text-sm font-medium uppercase tracking-wide text-primary">
+            {t('topicsCount', {count: category.topics.length})}
+          </p>
+          <h1 className="font-serif text-4xl font-semibold tracking-tight text-foreground">{title}</h1>
+          <p className="text-lg leading-relaxed text-muted">{description}</p>
+        </header>
+      </Reveal>
 
       {category.topics.length > 0 ? (
         <ul className="mt-2 flex flex-col">
@@ -96,23 +99,25 @@ export default async function LearnCategoryPage({
         </div>
       )}
 
-      <nav aria-label={t('moreCategories')} className="mt-12 border-t border-border pt-6">
-        <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
-          {t('moreCategories')}
-        </h2>
-        <ul className="flex flex-wrap gap-2">
-          {siblings.map((sibling) => (
-            <li key={sibling.slug}>
-              <Link
-                href={`/learn/${sibling.slug}`}
-                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-sm text-foreground transition-colors hover:border-primary hover:text-primary"
-              >
-                {t(`categories.${sibling.slug}.title`)}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <Reveal>
+        <nav aria-label={t('moreCategories')} className="mt-12 border-t border-border pt-6">
+          <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-muted">
+            {t('moreCategories')}
+          </h2>
+          <ul className="flex flex-wrap gap-2">
+            {siblings.map((sibling) => (
+              <li key={sibling.slug}>
+                <Link
+                  href={`/learn/${sibling.slug}`}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-sm text-foreground transition-colors hover:border-primary hover:text-primary"
+                >
+                  {t(`categories.${sibling.slug}.title`)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </Reveal>
     </div>
   );
 }

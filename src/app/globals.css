@@ -107,6 +107,36 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   white-space: nowrap;
   letter-spacing: -0.5px;
 }
+.brand-mark {
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.2, 1, 0.3, 1);
+}
+a:hover .brand-mark {
+  transform: rotate(-4deg) scale(1.06);
+}
+.brand-mark g path {
+  stroke-dasharray: 100;
+  animation: brand-line-draw 1.1s cubic-bezier(0.2, 1, 0.3, 1) both;
+}
+.brand-mark g path:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.brand-mark g path:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.brand-mark g path:nth-child(4) {
+  animation-delay: 0.28s;
+}
+@keyframes brand-line-draw {
+  from {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
 .header-signin {
   display: inline-flex;
   align-items: center;
@@ -171,6 +201,58 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   padding: 36px 48px 40px;
   gap: 40px;
 }
+.home-editorial {
+  animation: page-arrival 0.55s ease-out both;
+}
+@keyframes page-arrival {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Page-level entrance — played by [locale]/template.tsx on every navigation. */
+.page-entrance {
+  animation: page-entrance 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes page-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+/* Scroll-reveal cascade for list containers wrapped in Reveal. Uses
+   fill-mode: backwards so hover transforms still apply once done. */
+.reveal-active .stagger > * {
+  animation: stagger-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.reveal-active .stagger > *:nth-child(2) {
+  animation-delay: 0.08s;
+}
+.reveal-active .stagger > *:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.reveal-active .stagger > *:nth-child(4) {
+  animation-delay: 0.24s;
+}
+.reveal-active .stagger > *:nth-child(n + 5) {
+  animation-delay: 0.32s;
+}
+@keyframes stagger-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 .hero-copy {
   padding: 57px 0 20px 32px;
   display: flex;
@@ -230,10 +312,40 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   background: #d9bb8d;
   isolation: isolate;
 }
+.hero-art::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: -30% 35% 35% -20%;
+  background: radial-gradient(circle, #fff1bd52 0, transparent 66%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: morning-light 8s ease-in-out infinite alternate;
+}
 .hero-art img {
   object-fit: cover;
   object-position: 57% center;
-  animation: hero-image-in 1.5s cubic-bezier(0.2, 1, 0.3, 1) both;
+  animation:
+    hero-image-in 1.5s cubic-bezier(0.2, 1, 0.3, 1) both,
+    hero-breathe 14s 1.5s ease-in-out infinite alternate;
+}
+@keyframes morning-light {
+  from {
+    opacity: 0.5;
+    transform: translate3d(-2%, 2%, 0) scale(0.95);
+  }
+  to {
+    opacity: 0.9;
+    transform: translate3d(8%, -3%, 0) scale(1.08);
+  }
+}
+@keyframes hero-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.045) translate3d(-0.7%, -0.5%, 0);
+  }
 }
 .hero-art:after {
   content: '';
@@ -411,6 +523,19 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   background: #f4ecdc;
   color: var(--primary);
 }
+.reveal-active .calendar-seal {
+  animation: calendar-pop 0.65s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+@keyframes calendar-pop {
+  from {
+    opacity: 0;
+    transform: rotate(-12deg) scale(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
 .calendar-status {
   padding: 5px 10px;
   border-radius: 99px;
@@ -432,6 +557,14 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   height: 5px;
   border-radius: 50%;
   background: #688257;
+  box-shadow: 0 0 0 0 #68825766;
+  animation: live-pulse 2.4s ease-out infinite;
+}
+@keyframes live-pulse {
+  55%,
+  100% {
+    box-shadow: 0 0 0 7px transparent;
+  }
 }
 .panchang-panel dl {
   margin-top: 10px;
@@ -440,6 +573,34 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   font-family: var(--font-serif);
   font-size: 18px;
   line-height: 1.5;
+}
+.reveal-active .panchang-value {
+  animation: value-rise 0.5s ease-out both;
+}
+.reveal-active .panchang-value:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.reveal-active .panchang-value:nth-child(3) {
+  animation-delay: 0.12s;
+}
+.reveal-active .panchang-value:nth-child(4) {
+  animation-delay: 0.18s;
+}
+.reveal-active .panchang-value:nth-child(5) {
+  animation-delay: 0.24s;
+}
+.reveal-active .panchang-value:nth-child(6) {
+  animation-delay: 0.3s;
+}
+@keyframes value-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .section-title {
   font-family: var(--font-serif);
@@ -560,6 +721,31 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   color: #fff7e8;
   isolation: isolate;
 }
+.festival-art-link::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  left: 40%;
+  top: 43%;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffd57e70, #ed7d2130 42%, transparent 70%);
+  filter: blur(3px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: diya-glow 2.6s ease-in-out infinite alternate;
+}
+@keyframes diya-glow {
+  from {
+    opacity: 0.45;
+    transform: translate(-2px, 2px) scale(0.82);
+  }
+  to {
+    opacity: 0.9;
+    transform: translate(2px, -3px) scale(1.15);
+  }
+}
 .festival-art-link img {
   object-fit: cover;
   transition: transform 0.7s;
@@ -607,6 +793,25 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   gap: 20px;
   padding: 25px 0;
   border-bottom: 1px solid var(--border);
+}
+.reveal-active .festival-editorial-list > a {
+  animation: list-slide-in 0.6s ease-out both;
+}
+.reveal-active .festival-editorial-list > a:nth-child(2) {
+  animation-delay: 0.08s;
+}
+.reveal-active .festival-editorial-list > a:nth-child(3) {
+  animation-delay: 0.16s;
+}
+@keyframes list-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 .festival-editorial-list > a:first-child {
   padding-top: 0;
@@ -672,6 +877,14 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   color: var(--secondary);
   margin: 10px 0 22px;
 }
+.discovery-item:hover > svg {
+  animation: icon-blessing 0.65s cubic-bezier(0.2, 1.3, 0.4, 1);
+}
+@keyframes icon-blessing {
+  40% {
+    transform: translateY(-5px) rotate(-4deg);
+  }
+}
 .discovery-item h3 {
   font-family: var(--font-serif);
   font-size: 21px;
@@ -709,6 +922,14 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   line-height: 1;
   flex-shrink: 0;
   font-style: italic;
+}
+.reveal-active .ask-mark {
+  animation: question-float 3s ease-in-out infinite;
+}
+@keyframes question-float {
+  50% {
+    transform: translateY(-6px) rotate(2deg);
+  }
 }
 .ask-band h2 {
   font-family: var(--font-serif);
@@ -1145,7 +1366,18 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-enter,
-  .hero-art img {
+  .hero-art img,
+  .hero-art::before,
+  .brand-mark g path,
+  .calendar-status.is-live::before,
+  .festival-art-link::before,
+  .reveal-active .calendar-seal,
+  .reveal-active .panchang-value,
+  .reveal-active .festival-editorial-list > a,
+  .reveal-active .ask-mark,
+  .reveal-active .stagger > *,
+  .page-entrance,
+  .home-editorial {
     animation: none;
   }
   .action-button:hover,
@@ -1156,6 +1388,528 @@ nav[aria-label='Mobile primary'] a[aria-current='page'] {
   }
   .reading-feature:hover img,
   .festival-art-link:hover img {
+    transform: none;
+  }
+}
+
+/* Mantras + Naam Japa — September 2026 */
+.mantra-hero { border-bottom: 1px solid var(--border); padding-bottom: 28px; }
+.mantra-hero h1 { margin-top: 12px; }
+.mantra-hero-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 22px; }
+.mantra-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--secondary); color: #fff8e9;
+  padding: 13px 22px; border-radius: 999px;
+  font-size: 13px; font-weight: 600;
+}
+.mantra-cta:hover { background: var(--secondary-hover); }
+.mantra-library { margin-top: 26px; }
+.mantra-toolbar { display: flex; flex-direction: column; gap: 14px; }
+.mantra-search {
+  width: 100%; padding: 13px 18px; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--surface);
+  font-size: 14px; color: var(--foreground);
+}
+.mantra-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.mantra-chip {
+  padding: 8px 14px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); background: var(--surface); color: var(--muted-foreground);
+}
+.mantra-chip[data-active='true'] { background: var(--secondary); color: #fff8e9; border-color: var(--secondary); }
+.mantra-count { margin: 18px 0 14px; font-size: 12px; color: var(--muted-foreground); }
+.mantra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; list-style: none; padding: 0; }
+.mantra-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 22px; display: flex; flex-direction: column; gap: 10px;
+}
+.mantra-card-top { display: flex; justify-content: space-between; gap: 10px; font-size: 11px; color: var(--muted-foreground); }
+.mantra-deity { font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
+.mantra-devanagari { font-family: var(--font-serif); font-size: 20px; line-height: 1.7; color: var(--foreground); }
+.mantra-translit { font-size: 12px; font-style: italic; color: var(--muted-foreground); line-height: 1.6; }
+.mantra-meaning { font-size: 13px; line-height: 1.75; color: var(--foreground); }
+.mantra-actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.mantra-btn {
+  padding: 10px 16px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  border: 1px solid var(--border); background: var(--surface-strong); color: var(--foreground);
+}
+.mantra-btn:disabled { opacity: 0.45; }
+.mantra-btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; text-decoration: none; display: inline-flex; align-items: center; }
+.mantra-foot { margin-top: 30px; border-top: 1px solid var(--border); padding-top: 22px; font-size: 13px; color: var(--muted-foreground); line-height: 1.8; display: flex; flex-direction: column; gap: 12px; }
+.japa-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  background: linear-gradient(135deg, #592d31, #a64f23); color: #fff6e7;
+  border-radius: 18px; padding: 26px 28px; margin: 26px 0;
+}
+.japa-banner .eyebrow { color: #f2d9a8; }
+.japa-banner h2 { font-family: var(--font-serif); font-size: 26px; margin: 8px 0; }
+.japa-banner p { font-size: 13px; opacity: 0.9; line-height: 1.7; }
+.japa-banner .mantra-cta { background: #fff6e7; color: #592d31; flex-shrink: 0; }
+.home-japa-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.home-japa-links .text-link {
+  gap: 8px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; padding: 10px 18px;
+  transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+}
+.home-japa-links .text-link span { display: inline-block; transition: transform 0.22s; }
+.home-japa-links .text-link:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 8px 20px #592d3118; }
+.home-japa-links .text-link:hover span { transform: translate(2px, -2px); }
+.home-japa-banner {
+  position: relative; overflow: hidden; text-decoration: none;
+  display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 24px;
+  margin: 10px 0 0; cursor: pointer;
+  background: linear-gradient(120deg, #592d31, #a64f23, #7a4a1f, #592d31);
+  background-size: 300% 300%;
+  animation: japa-gradient-pan 12s ease infinite;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+@keyframes japa-gradient-pan {
+  0%, 100% { background-position: 0% 40%; }
+  50% { background-position: 100% 60%; }
+}
+.home-japa-banner:hover { transform: translateY(-4px); box-shadow: 0 18px 44px #592d3140; }
+.home-japa-shine {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 40%, #ffffff2e 50%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.9s ease;
+}
+.home-japa-banner:hover .home-japa-shine { transform: translateX(120%); }
+.home-japa-om {
+  position: absolute; font-family: var(--font-serif); color: #fff6e7;
+  opacity: 0.1; pointer-events: none;
+  animation: japa-om-float 6s ease-in-out infinite alternate;
+}
+.home-japa-om-1 { font-size: 120px; top: -30px; right: 6%; }
+.home-japa-om-2 { font-size: 64px; bottom: -12px; left: 38%; animation-delay: 1.4s; }
+.home-japa-om-3 { font-size: 44px; top: 12px; left: 4%; animation-delay: 2.6s; }
+@keyframes japa-om-float {
+  from { transform: translateY(-8px) rotate(-4deg); }
+  to { transform: translateY(10px) rotate(5deg); }
+}
+.home-japa-copy { position: relative; z-index: 1; }
+.home-japa-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-top: 18px; background: #fff6e7; color: #592d31;
+  padding: 13px 24px; border-radius: 999px; font-size: 13px; font-weight: 700;
+  animation: japa-cta-pulse 2.6s ease-in-out infinite;
+}
+@keyframes japa-cta-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 #fff6e700; }
+  50% { box-shadow: 0 0 0 9px #fff6e722; }
+}
+.home-japa-arrow { display: inline-block; transition: transform 0.22s; }
+.home-japa-banner:hover .home-japa-arrow { transform: translateX(7px); }
+.home-japa-visual {
+  position: relative; z-index: 1; display: grid; place-items: center;
+  min-height: 240px;
+}
+.japa-mala-ring { width: min(230px, 60vw); height: auto; }
+.japa-mala-ring .japa-bead { fill: #f2d9a8; opacity: 0.85; }
+.japa-mala-ring .japa-bead.sumeru { fill: #ffd57e; }
+.japa-mala-progress {
+  stroke-dasharray: 490; stroke-dashoffset: 490;
+  filter: drop-shadow(0 0 5px #ffd57e);
+  animation: japa-mala-fill 9s linear infinite;
+}
+@keyframes japa-mala-fill {
+  0% { stroke-dashoffset: 490; }
+  80% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+.home-japa-center {
+  position: absolute; display: flex; flex-direction: column; align-items: center;
+  color: #fff6e7; animation: japa-om-float 5s ease-in-out infinite alternate;
+}
+.home-japa-center span { font-family: var(--font-serif); font-size: 54px; line-height: 1; text-shadow: 0 0 26px #ffd57e88; }
+.home-japa-center small { font-size: 11px; letter-spacing: 0.2em; opacity: 0.85; margin-top: 6px; }
+.japa-hero { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 26px; }
+.japa-hero h1 { margin-top: 12px; }
+.japa-crumbs { margin-top: 14px; font-size: 13px; }
+.japa-crumbs a { color: var(--primary); font-weight: 600; }
+.japa-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.japa-focus, .japa-panel {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px;
+}
+.japa-photo { position: relative; height: 300px; border-radius: 14px; overflow: hidden; background: #2d201d; display: grid; place-items: center; }
+.japa-photo img { width: 100%; height: 100%; object-fit: cover; }
+.japa-photo-empty { font-size: 90px; color: #ad8847; font-family: var(--font-serif); }
+.japa-photo-flash { outline: 3px solid var(--accent); }
+.japa-mantra-line { margin-top: 18px; }
+.japa-devanagari { font-family: var(--font-serif); font-size: 22px; line-height: 1.7; }
+.japa-translit { font-size: 12px; font-style: italic; color: var(--muted-foreground); margin-top: 6px; }
+.japa-meaning { font-size: 13px; margin-top: 8px; line-height: 1.75; }
+.japa-image-picker { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px; }
+.japa-image-picker summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--secondary); }
+.japa-presets { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.japa-preset {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  border: 2px solid var(--border); border-radius: 12px; padding: 6px; background: var(--surface);
+  width: 78px;
+}
+.japa-preset[data-active='true'] { border-color: var(--primary); }
+.japa-preset img { border-radius: 8px; object-fit: cover; width: 64px; height: 64px; }
+.japa-preset-none { width: 64px; height: 64px; display: grid; place-items: center; font-size: 28px; background: #f1eadf; border-radius: 8px; }
+.japa-upload { border-style: dashed; }
+.japa-image-actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.japa-hint { font-size: 11px; color: var(--muted-foreground); line-height: 1.7; margin-top: 12px; }
+.japa-selects { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.japa-selects label { display: flex; flex-direction: column; gap: 6px; font-size: 12px; font-weight: 700; }
+.japa-selects select {
+  padding: 11px 12px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--surface-strong); font-size: 13px;
+}
+.japa-progress { height: 10px; border-radius: 99px; background: #eee5d4; margin-top: 18px; overflow: hidden; }
+.japa-progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--primary)); transition: width 0.25s; }
+.japa-progress-text { font-size: 12px; font-weight: 700; margin-top: 8px; color: var(--secondary); }
+.japa-complete { margin-top: 12px; padding: 12px 16px; border-radius: 12px; background: #edf2e7; color: #48603e; font-size: 13px; font-weight: 600; }
+.japa-big-btn {
+  width: 100%; margin-top: 16px; padding: 34px 20px; border-radius: 20px;
+  background: radial-gradient(circle at 50% 30%, #a64f23, #592d31);
+  color: #fff6e7; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  transition: transform 0.12s;
+}
+.japa-big-btn:active, .japa-big-btn-flash { transform: scale(0.98); }
+.japa-big-count { font-family: var(--font-serif); font-size: 64px; line-height: 1; }
+.japa-big-hint { font-size: 12px; opacity: 0.85; }
+.japa-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.japa-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0; }
+.japa-stats div { background: var(--surface-strong); border-radius: 12px; padding: 12px; text-align: center; }
+.japa-stats dt { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-foreground); }
+.japa-stats dd { font-family: var(--font-serif); font-size: 24px; margin-top: 4px; }
+
+/* ──────────────────────────────────────────
+   Bhagavad Gita — premium reading experience
+   ────────────────────────────────────────── */
+
+/* Feature card (Scriptures index) */
+.gita-feature-card {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  background: linear-gradient(115deg, #3a1c14 0%, #592d31 55%, #a64f23 100%);
+  color: #fff6e7; border-radius: 20px; padding: 30px 34px; text-decoration: none;
+  position: relative; overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.gita-feature-card::before {
+  content: '॥'; position: absolute; right: -14px; top: -26px;
+  font-family: var(--font-serif); font-size: 180px; opacity: 0.07; pointer-events: none;
+}
+.gita-feature-card:hover { transform: translateY(-3px); box-shadow: 0 16px 40px #3a1c1426; }
+.gita-feature-card .eyebrow { color: #d9b06a; }
+.gita-feature-card h2 { font-family: var(--font-serif); font-size: 32px; margin: 8px 0; letter-spacing: -0.5px; }
+.gita-feature-card p { font-size: 13px; line-height: 1.8; opacity: 0.92; max-width: 560px; }
+.gita-feature-card span:not(.gita-feature-om) { display: inline-block; margin-top: 14px; font-size: 13px; font-weight: 700; }
+.gita-feature-om { font-family: var(--font-serif); font-size: 88px; line-height: 1; opacity: 0.3; flex-shrink: 0; }
+
+/* Page shell */
+.gita-page { overflow: hidden; }
+
+/* Hero (chapter index) */
+.gita-hero {
+  position: relative; background: linear-gradient(120deg, #2e1610 0%, #592d31 58%, #7c3f1e 100%);
+  color: #fff6e7; padding: 56px 0 64px; text-align: center;
+}
+.gita-hero::before, .gita-chapter-hero::before {
+  content: ''; position: absolute; inset: 0; opacity: 0.16; pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 30%, #d9a44155 0, transparent 34%),
+    radial-gradient(circle at 88% 70%, #d9a4414d 0, transparent 30%);
+}
+.gita-hero::after, .gita-chapter-hero::after {
+  content: '॥ ॥ ॥'; position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%);
+  font-family: var(--font-serif); font-size: 22px; letter-spacing: 22px; color: #d9a441; opacity: 0.4;
+  pointer-events: none;
+}
+.gita-hero-om {
+  position: absolute; right: -12px; top: -44px; font-family: var(--font-serif);
+  font-size: 240px; line-height: 1; color: #fff6e7; opacity: 0.06; pointer-events: none;
+}
+.gita-hero-inner { position: relative; }
+.gita-hero-inner nav { margin-bottom: 30px; }
+.gita-hero-inner nav a, .gita-chapter-hero nav a { color: #e9c98f; }
+.gita-hero-inner nav a:hover, .gita-chapter-hero nav a:hover { color: #fff6e7; }
+.gita-hero-inner nav [aria-current='page'] { color: #fff6e7; font-weight: 600; }
+.gita-hero-inner nav time, .gita-chapter-hero nav time, .gita-hero-inner nav span.sep, .gita-chapter-hero nav span.sep { color: #d9a441cc; }
+.gita-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #d9b06a; font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+}
+.gita-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: #d9a441; box-shadow: 0 0 0 4px #d9a4412e; }
+.gita-hero-title {
+  font-family: var(--font-serif); font-size: clamp(42px, 6vw, 60px); line-height: 1.08;
+  letter-spacing: -1px; margin: 18px 0 16px; font-weight: 600;
+}
+.gita-hero-sub { max-width: 640px; margin: 0 auto; color: #f4e6ce; font-size: 15px; line-height: 1.8; }
+.gita-hero-stats {
+  display: flex; justify-content: center; gap: 40px; margin-top: 34px;
+}
+.gita-stat { font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: #d9b06a; }
+.gita-stat strong {
+  display: block; font-family: var(--font-serif); font-size: 26px; font-weight: 600;
+  color: #fff6e7; letter-spacing: 0;
+}
+.gita-hero-border {
+  position: absolute; left: 12%; right: 12%; bottom: -1px; height: 1px;
+  background: linear-gradient(90deg, transparent, #d9a441, transparent);
+}
+
+/* Source note */
+.gita-note {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-bottom: 28px; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--surface); padding: 14px 18px;
+}
+.gita-note-icon { color: #a64f23; font-size: 12px; margin-top: 3px; }
+.gita-note p { font-size: 12px; line-height: 1.75; color: var(--muted-foreground); }
+
+/* Section heading */
+.gita-section-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  margin-bottom: 22px;
+}
+.gita-section-head h2 {
+  font-family: var(--font-serif); font-size: 28px; color: var(--foreground); letter-spacing: -0.4px;
+}
+.gita-section-count {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #a64f23; border: 1px solid #a64f2336; border-radius: 999px; padding: 6px 14px;
+}
+
+/* Chapter grid & cards */
+.gita-chapter-grid {
+  list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px;
+}
+.gita-chapter-card {
+  position: relative; display: block; height: 100%;
+  border: 1px solid var(--border); border-radius: 18px; padding: 24px;
+  background: var(--surface); overflow: hidden;
+  transition: transform 0.24s, border-color 0.24s, box-shadow 0.24s;
+}
+.gita-card-om {
+  position: absolute; right: -16px; top: -34px; font-family: var(--font-serif);
+  font-size: 120px; line-height: 1; color: #592d31; opacity: 0.06; pointer-events: none;
+  transition: transform 0.4s, opacity 0.4s;
+}
+.gita-chapter-open { text-decoration: none; cursor: pointer; }
+.gita-chapter-open:hover {
+  transform: translateY(-4px); border-color: #a64f23;
+  box-shadow: 0 18px 42px #3a1c141a;
+}
+.gita-chapter-open:hover .gita-card-om { transform: scale(1.15) rotate(-6deg); opacity: 0.11; }
+.gita-chapter-locked { opacity: 0.6; cursor: not-allowed; filter: saturate(0.7); }
+.gita-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.gita-chapter-num {
+  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%;
+  background: linear-gradient(135deg, #592d31, #873d1b); color: #fff6e7;
+  font-family: var(--font-serif); font-size: 17px; font-weight: 600;
+  box-shadow: 0 6px 16px #592d3126;
+}
+.gita-chapter-locked .gita-chapter-num { background: #d8cdba; color: #7c705f; box-shadow: none; }
+.gita-verse-pill {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #6b5f50; background: var(--surface-strong); border-radius: 999px; padding: 5px 12px;
+}
+.gita-chapter-card h3 {
+  font-family: var(--font-serif); font-size: 21px; line-height: 1.3; color: var(--foreground);
+  letter-spacing: -0.3px;
+}
+.gita-chapter-open:hover h3 { color: #873d1b; }
+.gita-card-hi {
+  font-family: var(--font-devanagari); font-size: 14px; color: #a64f23; margin: 3px 0 0;
+  letter-spacing: 0;
+}
+.gita-card-summary { font-size: 13px; line-height: 1.7; color: var(--muted-foreground); margin-top: 10px; }
+.gita-card-bar {
+  height: 5px; border-radius: 999px; background: var(--surface-strong);
+  overflow: hidden; margin-top: 18px;
+}
+.gita-card-bar i {
+  display: block; height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, #a64f23, #d9a441);
+}
+.gita-card-cta {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-top: 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: #a64f23;
+}
+.gita-card-soon { color: #8a7d6b; justify-content: flex-start; }
+
+/* ── Chapter detail ──────────────────────── */
+
+/* Chapter hero */
+.gita-chapter-hero {
+  position: relative; background: linear-gradient(120deg, #2e1610 0%, #592d31 60%, #7c3f1e 100%);
+  color: #fff6e7; padding: 52px 0 58px;
+}
+.gita-chapter-hero nav { margin-bottom: 28px; }
+.gita-chapter-hero-inner { text-align: center; }
+.gita-adhyaya-pill {
+  display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #d9b06a; border: 1px solid #d9a44155; border-radius: 999px;
+  padding: 7px 16px; background: #d9a44114;
+}
+.gita-chapter-title {
+  font-family: var(--font-serif); font-size: clamp(36px, 5vw, 50px); font-weight: 600;
+  letter-spacing: -0.8px; line-height: 1.12; margin-top: 20px;
+}
+.gita-chapter-alt {
+  font-family: var(--font-devanagari); font-size: 18px; color: #e6c98e; margin-top: 8px;
+}
+.gita-divider {
+  display: flex; align-items: center; justify-content: center; gap: 14px; margin: 22px auto;
+  color: #d9a441;
+}
+.gita-divider::before, .gita-divider::after {
+  content: ''; height: 1px; width: 90px;
+  background: linear-gradient(90deg, transparent, #d9a44188);
+}
+.gita-divider::after { background: linear-gradient(90deg, #d9a44188, transparent); }
+.gita-divider span { font-size: 14px; opacity: 0.9; }
+.gita-chapter-summary {
+  max-width: 620px; margin: 0 auto; color: #f4e6ce; font-size: 15px; line-height: 1.85;
+}
+.gita-chapter-meta {
+  display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 26px;
+}
+.gita-chapter-meta span {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #d9b06a;
+}
+.gita-chapter-meta strong { font-family: var(--font-serif); font-size: 20px; color: #fff6e7; }
+.gita-meta-dot { color: #d9a441; }
+.gita-chapter-hero .gita-hero-border { position: absolute; left: 12%; right: 12%; bottom: -1px; height: 1px; background: linear-gradient(90deg, transparent, #d9a441, transparent); }
+
+/* Verse index */
+.gita-verse-index {
+  margin-bottom: 30px; border: 1px solid var(--border); border-radius: 14px;
+  background: var(--surface); overflow: hidden; box-shadow: 0 4px 18px #3a1c140d;
+}
+.gita-verse-toggle {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; padding: 15px 18px; cursor: pointer;
+  font-size: 13px; font-weight: 700; color: #873d1b; background: none; border: 0;
+  transition: background 0.2s;
+}
+.gita-verse-toggle:hover { background: #fbf3e6; }
+.gita-verse-toggle-label { display: inline-flex; align-items: center; gap: 10px; }
+.gita-verse-toggle-icon {
+  font-family: var(--font-serif); font-size: 16px; color: #a64f23;
+}
+.gita-verse-chevron { display: inline-block; transition: transform 0.22s; color: #a64f23; }
+.gita-verse-chevron[data-open='true'] { transform: rotate(180deg); }
+.gita-verse-grid {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 2px 16px 16px;
+  border-top: 1px dashed var(--border); padding-top: 14px;
+}
+.gita-verse-dot {
+  display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
+  font-size: 12px; font-weight: 600; color: #873d1b;
+  border: 1px solid var(--border); background: var(--surface-strong); text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.gita-verse-dot:hover {
+  background: linear-gradient(135deg, #592d31, #873d1b); color: #fff6e7; transform: scale(1.08);
+}
+
+/* Verse cards */
+.gita-verse-card {
+  position: relative; scroll-margin-top: 90px;
+  border: 1px solid var(--border); border-radius: 18px;
+  background: var(--surface); padding: 24px 26px;
+  box-shadow: 0 4px 18px #3a1c140d;
+  transition: box-shadow 0.22s, border-color 0.22s;
+}
+.gita-verse-card::before {
+  content: ''; position: absolute; left: 0; top: 22px; bottom: 22px; width: 4px;
+  border-radius: 0 4px 4px 0; background: linear-gradient(180deg, #d9a441, #a64f23);
+  opacity: 0.85;
+}
+.gita-verse-card:hover { box-shadow: 0 10px 30px #3a1c1417; }
+.gita-verse-card:target { border-color: #a64f23; box-shadow: 0 0 0 4px #a64f2320, 0 10px 30px #3a1c1420; }
+.gita-verse-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.gita-verse-no {
+  font-family: var(--font-serif); font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #a64f23;
+}
+.gita-speaker {
+  font-size: 11px; font-weight: 700; color: #fff6e7;
+  border-radius: 999px; padding: 5px 12px; white-space: nowrap;
+}
+.gita-speaker-krishna { background: linear-gradient(120deg, #592d31, #873d1b); }
+.gita-speaker-arjuna { background: linear-gradient(120deg, #8a6d1d, #b08d2d); color: #fff8e8; }
+.gita-speaker-sanjaya { background: #5c5c54; color: #f2efe4; }
+.gita-speaker-dhritarashtra { background: #74512f; color: #f2e6d6; }
+.gita-verse-sa {
+  margin-top: 18px; font-family: var(--font-serif); font-size: 21px; line-height: 1.95;
+  color: var(--foreground);
+}
+.gita-verse-tr {
+  margin-top: 10px; font-size: 13px; letter-spacing: 0.02em; color: var(--muted-foreground);
+  font-style: italic;
+}
+.gita-verse-meaning {
+  margin-top: 18px; border-top: 1px dashed #d9c9a8; padding-top: 16px;
+}
+.gita-meaning-rule {
+  display: block; width: 34px; height: 3px; border-radius: 999px;
+  background: linear-gradient(90deg, #d9a441, #a64f23); margin-bottom: 12px;
+}
+.gita-verse-meaning p { line-height: 1.8; font-size: 14px; color: var(--foreground); }
+
+/* Chapter footer nav */
+.gita-chapter-foot {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 36px;
+}
+.gita-foot-card {
+  display: flex; flex-direction: column; gap: 4px;
+  border: 1px solid var(--border); border-radius: 14px; background: var(--surface);
+  padding: 16px 18px; text-decoration: none; transition: border-color 0.22s, transform 0.22s, box-shadow 0.22s;
+}
+.gita-foot-card:hover { border-color: #a64f23; transform: translateY(-2px); box-shadow: 0 10px 26px #3a1c1414; }
+.gita-foot-card small {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #a64f23;
+}
+.gita-foot-card strong { font-family: var(--font-serif); font-size: 15px; color: var(--foreground); }
+.gita-foot-next { text-align: right; }
+.gita-foot-soon { opacity: 0.6; cursor: default; }
+@media (max-width: 900px) {
+  .mantra-grid, .japa-wrap { grid-template-columns: 1fr; }
+  .japa-photo { height: 250px; }
+  .japa-selects { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .home-japa-banner { grid-template-columns: 1fr; padding: 26px 24px; }
+  .home-japa-visual { min-height: 200px; }
+  .japa-mala-ring { width: min(190px, 55vw); }
+  .home-japa-om-1 { font-size: 84px; }
+  .gita-feature-card { padding: 24px; }
+  .gita-feature-card h2 { font-size: 26px; }
+  .gita-feature-om { font-size: 56px; }
+  .gita-hero { padding: 44px 0 54px; }
+  .gita-hero-om { font-size: 160px; }
+  .gita-hero-stats { gap: 26px; }
+  .gita-chapter-hero { padding: 44px 0 50px; }
+  .gita-chapter-grid { grid-template-columns: 1fr; }
+  .gita-verse-card { padding: 20px; }
+  .gita-verse-sa { font-size: 19px; }
+  .gita-chapter-foot { grid-template-columns: 1fr; }
+  .gita-foot-next { text-align: left; }
+  .gita-divider::before, .gita-divider::after { width: 50px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gita-chapter-open { transition: none; }
+  .gita-verse-dot, .gita-foot-card { transition: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-japa-banner,
+  .home-japa-om,
+  .home-japa-cta,
+  .home-japa-center,
+  .japa-mala-progress {
+    animation: none;
+  }
+  .japa-mala-progress { stroke-dashoffset: 0; }
+  .home-japa-banner:hover,
+  .home-japa-links .text-link:hover {
     transform: none;
   }
 }

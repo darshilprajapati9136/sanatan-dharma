@@ -68,6 +68,8 @@ export interface LearnTopic {
   readingTimeMinutes: number;
   status: ContentStatus;
   sources: LearnSourceRef[];
+  /** Optional journey visual, rendered between the contents and the sections. */
+  diagram?: TopicDiagram;
   /** Free-form provenance note for editors (not rendered). */
   sourceNotes?: string;
   updatedAt: string;
@@ -77,4 +79,29 @@ export interface LearnCategory {
   slug: LearnCategorySlug;
   icon: IconName;
   topics: LearnTopic[];
+}
+
+/** One step in a sequence diagram (e.g. a stage of an epic journey). */
+export interface DiagramStep {
+  label: LocalizedText;
+  detail?: LocalizedText;
+  /**
+   * Optional doorway to deeper reading. Internal Learn paths only
+   * (e.g. `/learn/foundations/karma`) — resolved and tested, so a step
+   * can never point at a page that does not exist.
+   */
+  href?: string;
+}
+
+/**
+ * Optional data-driven visual attached to a topic. Rendered by the shared
+ * TopicArticle layout as a semantic ordered list styled as a journey —
+ * a visual summary, never a replacement for the text sections, which
+ * remain the source of truth for SEO, search and screen readers.
+ * Only `sequence` exists today; add new kinds deliberately, not speculatively.
+ */
+export interface TopicDiagram {
+  kind: 'sequence';
+  title: LocalizedText;
+  steps: DiagramStep[];
 }
